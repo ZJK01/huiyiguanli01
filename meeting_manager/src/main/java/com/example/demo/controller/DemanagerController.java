@@ -4,7 +4,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.entity.Employee;
 import com.example.demo.entity.Meeting;
-import com.example.demo.service.ManagerService;
 import com.example.demo.service.MeetingService;
 import com.example.demo.service.serviceImpl.EmployeeServiceImpl;
 
@@ -23,30 +22,22 @@ import com.example.demo.service.serviceImpl.EmployeeServiceImpl;
 @RequestMapping("/demanager")
 public class DemanagerController {
 
-	@Resource(name = "ManagerServiceImpl")
-	private ManagerService managerService;
-	
 	@Resource(name = "EmployeeServiceImpl")
 	private EmployeeServiceImpl employeeServiceImpl;
-	
-//	@Resource(name = "meetingServiceImpl")
-//	private MeetingService meetingService;
 
-	@GetMapping("/")
-	public String main() {
-		return "html/login.html";
-	}
+	@Resource(name = "MeetingServiceImpl")
+	private MeetingService meetingService;
+
 
 	@GetMapping("/zc")
 	public String zcc() {
-		return "html/reg";
+		return "/demanager/reg";
 	}
 
 	@PostMapping("httt")
 	public String htt() {
-		return "html/ht";
+		return "/demanager/ht";
 	}
-	
 
 	// 分页
 //	@PostMapping("/pagefy")
@@ -72,6 +63,29 @@ public class DemanagerController {
 //		return "html/pagefy ";
 //
 //	}
+	@GetMapping("/pagefy/{id}")
+	public String huiyi(@RequestParam(defaultValue = "0",name="id") Integer id,Model model) {
+
+		Integer count = employeeServiceImpl.count();// 总行数
+		Integer pages; // 总页数
+		Integer pageCount = 3; // 每页浏览行数
+		if (count % pageCount == 0) {
+			pages = count / pageCount;
+		} else {
+			pages = count / pageCount + 1;
+		}
+		Integer pagecurrent = 0; // 当前页数
+		if (0 != id) {
+			pagecurrent = id; // 当前页数=id
+		}
+		Page<Employee> list = employeeServiceImpl.fy(pagecurrent, pageCount);
+		model.addAttribute("list", list);
+		model.addAttribute("pagecurrent", pagecurrent);
+		model.addAttribute("pages", pages);
+
+		return "/demanager/pagefy";
+
+	}
 
 	// 登陆进入预约页面
 //	@PostMapping("/yuyue")
@@ -89,16 +103,21 @@ public class DemanagerController {
 //
 //		}
 //	}
+	@PostMapping("/yuyue")
+	public String managerlogin(HttpServletRequest request, Model model, @ModelAttribute Employee employee,
+			HttpSession session) {
+		String error = "账号或者密码错误";
+		session.setAttribute("user1", employee);
+		if (null != employee) {
+			model.addAttribute("user1", employee);
+			return "/demanager/yuyue";
+		} else {
+			model.addAttribute("error", error);
+			return "/demanager/login";
 
-	// 个人页面
-	@GetMapping("/geren")
-	public String geren(Model model, HttpSession session, HttpServletRequest request) {
-
-		User user2 = (User) session.getAttribute("user1");// 从上一个sessin获取值
-		session.setAttribute("user2", user2);// 丢到下一个视图层
-		model.addAttribute("user2", user2);// 放入模型从点开页面geren.html获取
-		return "html/geren";
+		}
 	}
+
 
 	// 注册用户
 //	@PostMapping("reg")
@@ -143,8 +162,32 @@ public class DemanagerController {
 //		}
 //
 //	}
+	@PostMapping("reg")
+	public String adduser(@ModelAttribute Employee employee, HttpSession session, Model model) {
+		if (!employee.getEmployeeName().equals("")) {
+			if (employee.getEmployeePassword() != "") {
+				if (employee.getEmployeeEmail() != "") {
+					if (employee.getPower() != "") {
+						employeeServiceImpl.add(employee);
+						return "/demanager/zc";
+					} else {
+						return "redirect:zc";
+					}
+				} else {
+					return "redirect:zc";
+				}
+			} else {
+				return "redirect:zc";
+			}
+		} else {
+			return "redirect:zc";
+		}
+	}
+	
+
 
 	// 预定会议
+
 //	@PostMapping("/ht1")
 //	public String ht(@ModelAttribute Meeting meeting, Model model) {
 //
@@ -172,5 +215,32 @@ public class DemanagerController {
 //		}
 //
 //	}
+	@PostMapping("/ht1")
+	public String ht(@ModelAttribute Meeting meeting, Model model) {
+
+		if (meeting.getReservationtime() !=null) {
+			if (meeting.getStarttime() !=null) {
+				if (meeting.getBroomid() !=null) {
+					if (meeting.getMeetingstas() != "") {
+						if (meeting.getEndtime()!=null) {
+							meetingService.add(meeting);
+							return "/demanager/sucess_send";
+						} else {
+							return "redirect:httt";
+						}
+					} else {
+						return "redirect:httt";
+					}
+				} else {
+					return "redirect:httt";
+				}
+			} else {
+				return "redirect:httt";
+			}
+		} else {
+			return "redirect:httt";
+		}
+
+	}
 
 }
