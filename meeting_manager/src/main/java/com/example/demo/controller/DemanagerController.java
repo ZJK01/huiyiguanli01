@@ -6,8 +6,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/demanager")
 public class DemanagerController {
-	
-	
-	
 		
 }	
