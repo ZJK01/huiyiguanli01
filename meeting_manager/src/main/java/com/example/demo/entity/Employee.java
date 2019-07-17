@@ -81,6 +81,14 @@ public class Employee implements Serializable {
 	public Employee() {
 		super();
 	}
+	
+	
+	public Employee(String employeeName, String employeePassword) {
+		super();
+		this.employeeName = employeeName;
+		this.employeePassword = employeePassword;
+	}
+	
 	@Override
 	public String toString() {
 		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", employeeAccount="

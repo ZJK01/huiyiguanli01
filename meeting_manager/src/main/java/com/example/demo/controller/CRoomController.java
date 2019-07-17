@@ -23,7 +23,6 @@ public class CRoomController {
 
 	@PostMapping
 	public String addCroom(@ModelAttribute Boradroom boradroom) {
-		
 		return "/croom/croom";
 	}
 
