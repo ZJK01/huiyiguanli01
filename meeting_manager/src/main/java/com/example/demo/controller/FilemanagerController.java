@@ -24,7 +24,7 @@ public class FilemanagerController {
 	@Resource(name = "MatterServiceImpl")
 	MatterService matterService;
 
-	@GetMapping("/")
+	@GetMapping("/send")
 	public String filemain() {
 		return "filemanager/sendfile";
 	}
