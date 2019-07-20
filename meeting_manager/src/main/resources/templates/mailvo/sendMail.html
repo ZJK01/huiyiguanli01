@@ -115,7 +115,7 @@ ul, li {
         	$("#dd").click(function(){
                  $.ajax({
                      url:"/mail/send",
-                     type: "post",
+                     type: "POST",
                      data:$("#mailForm").serialize(),
                      
                      success: function (result) {

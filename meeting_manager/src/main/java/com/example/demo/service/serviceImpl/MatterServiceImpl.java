@@ -16,11 +16,17 @@ public class MatterServiceImpl implements MatterService {
 
 	@Override
 	public void save(Matter entity) {
-		MatterDao.save(entity);
+		MatterDao.saveAndFlush(entity);
 	}
 
 	@Override
 	public List<Matter> findBydeptnoId(String deptnoId) {
 		return MatterDao.findByDeptnoId(deptnoId);
+	}
+
+	@Override
+	public Matter findBypasswordAndmatterid(String ispassword,Integer matterid) {
+		return MatterDao.findBypasswordAndmatterid(ispassword,matterid);
+		
 	}
 }

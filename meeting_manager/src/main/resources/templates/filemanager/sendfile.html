@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title></title>
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
+<script type="text/javascript" src="/js/clickHandler.js"></script>
 <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
 <script type="text/javascript"
@@ -34,7 +35,7 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputPassword1">上传人(工号)</label> <input
-					type="text" class="form-control" placeholder="上传人" id="matterid">
+					type="text" class="form-control"  placeholder="上传人" disabled="disabled" id="matterUserid" th:value="${id}">
 			</div>
 			<div class="checkbox">
 				<label> 
@@ -43,12 +44,12 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputFile">加密密码</label> <input type="password"
-					class="form-control" id="matterPassword" placeholder="加密密码" />
+					class="form-control" id="matterPassword"  disabled="disabled" placeholder="加密密码" />
 			</div>
 			<div class="form-group">
 				<select id="deptnoId">
-					<option value="公网">公网
-					<option value="部门">部门
+					<option value="40">公网
+					<option th:if="${deptno!=null}" th:value="${deptno}">部门					
 				</select>
 			</div>
 			<div id="div1">
@@ -59,14 +60,6 @@
 
 	</div>
 	<script type="text/javascript">
-		function clickHandler(e) {
-			var v11 = document.getElementById(e);
-			if (v11.style.display == "block") {
-				v11.style.display = "none";
-			} else {
-				v11.style.display = "block";
-			}
-		}
 
 		//wangeditor
 		var E = window.wangEditor;
@@ -98,22 +91,20 @@
   			$("p").slideToggle();
 		});
 		 
-		 //根据是否加密来选择输入密码(初始情况)
-		 $('#matterPassword').attr("disabled","true");
 		 //根据是否加密来调整密码框的情况
 		function matter(){
 			/* alert($('#matterEncryption').is(":checked")); */
 			if($('#matterEncryption').is(":checked")){ 
-				$('#matterPassword').attr("disabled","disabled");
-			}else{
 				$("#matterPassword").removeAttr("disabled");
+			}else{
+				$('#matterPassword').attr("disabled","disabled");
 			}
 		}
 		
 		//写入文件进入word文件
 		$("#sub").click(function(){
 			var matterName=$('#matterName').val();
-			var matteruserid=$('#matterid').val();
+			var matteruserid=$('#matterUserid').val();
 			var matterEncryption=$('#matterEncryption').val();
 			var matterPassword=$('#matterPassword').val();
 			var deptnoId=$('#deptnoId').val();
@@ -125,7 +116,7 @@
 				    data:"String",
 				    data:{ 
 				       matterName:matterName,
-				       matteruserid:matteruserid,
+				       matterUserid:matteruserid,
 			 		   matterEncryption:matterEncryption,
 			 		   matterPassword:matterPassword,
 			 		   deptnoId:deptnoId,
@@ -134,6 +125,7 @@
 				    type: "POST",
 				    success: function(e){
 				    	alert("写入成功");
+				    	window.location.reload();
 				    }
 				});
 		 });
