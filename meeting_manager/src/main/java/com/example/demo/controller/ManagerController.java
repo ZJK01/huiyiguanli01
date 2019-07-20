@@ -4,12 +4,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.demo.dao.EmployeeDao;
 import com.example.demo.entity.Employee;
 import com.example.demo.entity.Manager;
 import com.example.demo.service.EmployeeService;
@@ -27,7 +25,9 @@ public class ManagerController {
 	private EmployeeService employeeService;
 	
 	@GetMapping("/")
-	public String main() {
+	public String main(HttpSession session) {
+		// 销毁session
+		session.invalidate();
 		return "index";
 	}
 	
@@ -38,13 +38,20 @@ public class ManagerController {
 		manager.setManagerPassword(password);
 		Manager man=managerService.search(manager);
 		if(man!=null) {
-			session.setAttribute("user",man);
-			return "yuyue";
+			session.removeAttribute("Emplpyee");
+			session.setAttribute("Manager",man);
+			return "/yuyue";
 		}else {
 			Employee employee=new Employee(username,password);
 			Employee emp=employeeService.findByEmployeeNameAndEmployeePassword(employee);
-			session.setAttribute("user1",emp);
-			return "index";
+			if(emp!=null) {
+				session.removeAttribute("Manager");
+				session.setAttribute("Employee",emp);
+				return "/yuyue";
+			}else {
+				return "/index";
+			}
+			
 		}
 		
 	}

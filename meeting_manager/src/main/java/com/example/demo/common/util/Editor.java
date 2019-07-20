@@ -15,9 +15,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Editor {
+	public static final String FILEADDRESS=new String("E:\\file\\");
 
 	public void docFile(String context, String filename) throws Exception {
-		InputStream cssIs2 = new FileInputStream("E:\\zzh练习文件\\manager\\src\\main\\resources\\static\\css\\zyf.css");
+		InputStream cssIs2 = new FileInputStream("D:\\java\\zyf.css");
 		String body = context;
 		String css2 = this.getContent(cssIs2);
 		// 拼一个标准的HTML格式文档
@@ -26,7 +27,7 @@ public class Editor {
 		if (filename == null) {
 			filename = new Date().getTime() + "";
 		}
-		OutputStream os = new FileOutputStream("E:\\file\\" + filename + ".doc");
+		OutputStream os = new FileOutputStream(FILEADDRESS+ filename + ".doc");
 		this.inputStreamToWord(is, os);
 	}
 
@@ -38,7 +39,6 @@ public class Editor {
 	 * @throws IOException
 	 */
 	private void inputStreamToWord(InputStream is, OutputStream os) throws IOException {
-
 		POIFSFileSystem fs = new POIFSFileSystem();
 		// 对应于org.apache.poi.hdf.extractor.WordDocument
 		fs.createDocument(is, "WordDocument");
@@ -54,7 +54,7 @@ public class Editor {
 	 * @return
 	 * @throws IOException
 	 */
-	private String getContent(InputStream... ises) throws IOException {
+	public String getContent(InputStream... ises) throws IOException {
 		if (ises != null) {
 			StringBuilder result = new StringBuilder();
 			BufferedReader br;
@@ -69,4 +69,5 @@ public class Editor {
 		}
 		return null;
 	}
+	
 }

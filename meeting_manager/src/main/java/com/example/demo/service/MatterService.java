@@ -8,4 +8,6 @@ public interface MatterService {
 	public void save(Matter matter);
 
 	public List<Matter> findBydeptnoId(String deptnoId);
+
+	public Matter findBypasswordAndmatterid(String ispassword, Integer matterid);
 }

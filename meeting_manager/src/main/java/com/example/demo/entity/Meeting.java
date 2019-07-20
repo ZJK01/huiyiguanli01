@@ -14,9 +14,7 @@ import javax.persistence.Id;
 @Entity
 public class Meeting implements Serializable {
 	
-
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer meetingId; 	// 会议id
