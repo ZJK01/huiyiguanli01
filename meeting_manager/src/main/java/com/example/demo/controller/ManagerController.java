@@ -16,43 +16,40 @@ import com.example.demo.service.ManagerService;
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
-	
-	@Resource(name="ManagerServiceImpl")
+
+	@Resource(name = "ManagerServiceImpl")
 	private ManagerService managerService;
-	
-	@Resource(name="EmployeeServiceImpl")
+
+	@Resource(name = "EmployeeServiceImpl")
 	private EmployeeService employeeService;
-	
+
 	@GetMapping("/")
 	public String main(HttpSession session) {
 		// 销毁session
 		session.invalidate();
 		return "index";
 	}
-	
+
 	@PostMapping("/yuyue")
-	public String managerlogin(String username,String password,HttpSession session) {
-		Manager manager=new Manager();
+	public String managerlogin(String username, String password, HttpSession session) {
+		Manager manager = new Manager();
 		manager.setManagerName(username);
 		manager.setManagerPassword(password);
-		Manager man=managerService.search(manager);
-		if(man!=null) {
+		Manager man = managerService.search(manager);
+		if (man != null) {
 			session.removeAttribute("Emplpyee");
-			session.setAttribute("Manager",man);
+			session.setAttribute("Manager", man);
 			return "/yuyue";
-		}else {
-			Employee employee=new Employee(username,password);
-			Employee emp=employeeService.findByEmployeeNameAndEmployeePassword(employee);
-			if(emp!=null) {
+		} else {
+			Employee employee = new Employee(username, password);
+			Employee emp = employeeService.findByEmployeeNameAndEmployeePassword(employee);
+			if (emp != null) {
 				session.removeAttribute("Manager");
-				session.setAttribute("Employee",emp);
+				session.setAttribute("Employee", emp);
 				return "/yuyue";
-			}else {
+			} else {
 				return "/index";
 			}
-			
 		}
-		
 	}
-		
-}	
+}

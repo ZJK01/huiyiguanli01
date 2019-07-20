@@ -32,28 +32,35 @@
 
 	<div
 		style="position: absolute; left: 263px; top: 51px; width: 83.5%; border: 2px solid red;">
-		<form style="width: 720px;" class="container" method="post" id="fileForm">
+		<form style="width: 720px;" class="container" method="post">
+			<input type="text"  id="matterId"
+				   th:value="${matter.matterId}" hidden="hidden">
 			<div class="form-group">
 				<label for="exampleInputEmail1">文件名</label> <input type="text"
-					class="form-control" id="matterName" placeholder="文件名"
+					class="form-control" id="matterName" 
 					th:value="${matter.matterName}">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputPassword1">上传人(工号)</label> <input
-					type="text" class="form-control" placeholder="上传人"
+					type="text" class="form-control" 
 					disabled="disabled" id="matterUserid"
 					th:value="${matter.matterUserid}">
 			</div>
-			<div class="checkbox">
+			<div class="checkbox" th:if="${userid !='no'}">
 				<label> <input type="checkbox" id="matterEncryption"
-					onclick="matter()" th:value="matter.matterEncryption">加密密码
+					onclick="matter()" th:value="${matter.matterEncryption}">修改密码
 				</label>
 			</div>
-			<div class="form-group">
-				<label for="exampleInputFile">加密密码</label> <input type="password"
+			<div class="form-group" th:if="${userid !='no'}">
+				<label for="exampleInputFile">新修改密码</label> <input type="password"
 					class="form-control" id="matterPassword" disabled="disabled"
-					placeholder="加密密码" th:value="${matter.matterPassword}" />
+					 th:value="${matter.matterPassword}" />
 			</div>
+			<!-- 隐藏 -->
+			<input type="password"
+					class="form-control" id="matterPassword" hidden="hidden"
+					 th:value="${matter.matterPassword}" />
+					 
 			<div class="form-group">
 				<select id="deptnoId">
 					<option value="40">公网
@@ -65,7 +72,7 @@
 			<button type="button" class="btn btn-default" id="sub1">提交修改</button>
 			<button type="button" class="btn btn-default" id="sub2">恢复初始状态</button>
 		</form>
-		<p th:text="${matter.matterContent}" id="txt" hidden="hidden"></p>
+		<p th:text="${matter.matterContent}" id="txt"      hidden="hidden"></p>
 	</div>
 
 	<script type="text/javascript">
@@ -108,16 +115,32 @@
 		$('#sub2').click(function() {
 			window.location.reload();
 		})
-		
-		
+	
 		//提交修改
 		$('#sub1').click(function(){
+			var matterId=$('#matterId').val();
+			var matterName=$('#matterName').val();
+			var matteruserid=$('#matterUserid').val();
+			var matterEncryption=$('#matterEncryption').val();
+			var matterPassword=$('#matterPassword').val();
+			var deptnoId=$('#deptnoId').val();
+			var editorhtml=editor.txt.html()+"";
+			
 			$.ajax({
 				url : "/filemanager/updatefile",
 				type : "POST",
-				data : $('#fileForm').serialize(),
+				data:{ 
+					   matterId : matterId,
+				       matterName:matterName,
+				       matterUserid:matteruserid,
+			 		   matterEncryption:matterEncryption,
+			 		   matterPassword:matterPassword,
+			 		   deptnoId:deptnoId,
+			 		   mattercontent:editorhtml
+				    },
 				success : function(result){
-					alert(result);
+					alert("修改成功正在返回页面");
+					window.location.replace("http://localhost/filemanager/look");  //跳转页面
 				},
 				error : function() {
 					alert("更新失败");

@@ -104,7 +104,20 @@ public class FilemanagerController {
 	 * */
 	@GetMapping("/passwordsuccess")
 	public String passwordSuccess(HttpSession session,ModelMap model) {
-		Matter matter=(Matter) session.getAttribute("file");
+		Matter matter=(Matter) session.getAttribute("file");   //文件内容
+		String userString=null; 							   //当前上传人id
+		if(null!=session.getAttribute("Employee")) {           
+			Employee employee=(Employee) session.getAttribute("Employee");
+			userString=employee.getEmployeeAccount();
+		}else {
+			Manager manager=(Manager) session.getAttribute("Manager");
+			userString=manager.getManagerId()+"";
+		}
+		if ((matter.getMatterUserid()+"").equals(userString)) {		//判断权限
+			model.addAttribute("userid", "yes");					//给与权限	
+		}else {
+			model.addAttribute("userid", "no");
+		}
 		model.addAttribute("matter",matter);
 		return "/filemanager/fileshow";
 	}

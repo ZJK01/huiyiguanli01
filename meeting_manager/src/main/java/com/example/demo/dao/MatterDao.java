@@ -14,4 +14,7 @@ public interface MatterDao extends JpaRepository<Matter, Integer>, JpaSpecificat
 	
 	@Query("from Matter where matterPassword=:#{#ispassword} and matterId=:#{#matterid}")
 	public Matter findBypasswordAndmatterid(String ispassword, Integer matterid);
+
+	public Matter findByMatterId(Integer matterId);
+	
 }

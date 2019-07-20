@@ -29,4 +29,10 @@ public class MatterServiceImpl implements MatterService {
 		return MatterDao.findBypasswordAndmatterid(ispassword,matterid);
 		
 	}
+
+	@Override
+	public Matter findBymatterId(Integer matterId) {
+		return MatterDao.findByMatterId(matterId);
+	}
+
 }
