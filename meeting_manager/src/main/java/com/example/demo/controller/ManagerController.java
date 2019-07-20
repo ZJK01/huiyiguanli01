@@ -15,6 +15,7 @@ import com.example.demo.entity.Manager;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.ManagerService;
 
+/*管理员控制层*/
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {

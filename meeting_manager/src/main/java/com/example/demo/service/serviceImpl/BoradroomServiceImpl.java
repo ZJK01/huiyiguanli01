@@ -1,7 +1,13 @@
 package com.example.demo.service.serviceImpl;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.BoradroomDao;
@@ -18,6 +24,33 @@ public class BoradroomServiceImpl implements BoradroomService {
 	public void addCroom(Boradroom boradroom) {
 		// TODO Auto-generated method stub
 		boradroomDao.save(boradroom);
+	}
+
+	@Override
+//	@Cacheable(cacheNames = "crooms", key = "123")
+	public List<Boradroom> getCrooms() {
+		// TODO Auto-generated method stub
+		return boradroomDao.findAll();
+	}
+
+	@Override
+//	@Cacheable(cacheNames = "croom", key = "#bid.toString()")
+	public Optional<Boradroom> getCroom(Integer bid) {
+		// TODO Auto-generated method stub
+		return boradroomDao.findById(bid);
+	}
+
+	@Override
+//	@CachePut(cacheNames = "crooms", key = "123")
+	public void updateCroom(Boradroom boradroom) {
+		// TODO Auto-generated method stub
+		boradroomDao.saveAndFlush(boradroom);
+	}
+
+	@Override
+	public void deleteCroom(Integer bid) {
+		// TODO Auto-generated method stub
+		boradroomDao.deleteById(bid);
 	}
 
 }
