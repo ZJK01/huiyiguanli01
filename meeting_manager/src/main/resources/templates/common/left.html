@@ -24,7 +24,7 @@ body {
 	top: 51px;
 	width: 265px;
 	height: 100%;
-/* 	border: 3px #12B7F5 solid; */
+	/* 	border: 3px #12B7F5 solid; */
 }
 
 ul, li {
@@ -32,14 +32,13 @@ ul, li {
 	list-style: none;
 	text-align: center;
 }
-
 </style>
 </head>
 <body>
-<!-- border: 1px #12B7F5 solid; -->
-	<div style=" width: 260px; height: 35px;"
-		th:fragment="left">
-		<div class="div01" style="border-right:0px;border-left:0px;border-bottom:0px;border-top:solid 1px lightgray;cursor:pointer; width: 258px;height: 35px; text-align: center;line-height:35px;"
+	<!-- border: 1px #12B7F5 solid; -->
+	<div style="width: 260px; height: 35px;" th:fragment="left">
+		<div class="div01"
+			style="border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px; text-align: center; line-height: 35px;"
 			onclick="clickHandler(11)">
 			个人中心<b class="caret"></b>
 		</div>
@@ -50,18 +49,22 @@ ul, li {
 
 
 		<div class="" id="2"
-			style=" text-align: center;line-height:35px;border-right:0px;border-left:0px;border-bottom:0px;border-top:solid 1px lightgray;cursor:pointer; width: 258px; height: 35px;">会议预定</div>
+			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;">
+			<a th:href="@{/percenter/}">会议预订</a>
+		</div>
 
-		<div class="" style=" text-align: center;line-height:35px;border-right:0px;border-left:0px;border-bottom:0px;border-top:solid 1px lightgray;cursor:pointer; width: 258px; height: 35px;"
+		<div class=""
+			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
 			onclick="clickHandler(33)">
 			会议室管理<b class="caret"></b>
 		</div>
-		<ul id="33" style="display: none;padding: 0px;">
+		<ul id="33" style="display: none; padding: 0px;">
 			<li><a th:href="@{/croom/}">添加会议室</a></li>
-			<li><a href="#">查看会议室</a></li>
+			<li><a th:href="@{/croom/lookcroom}">查看会议室</a></li>
 		</ul>
 
-		<div class="" style="text-align: center;line-height:35px;border-right:0px;border-left:0px;border-bottom:0px;border-top:solid 1px lightgray;cursor:pointer;width: 258px; height: 35px;"
+		<div class=""
+			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
 			onclick="clickHandler(44)">
 			部门管理 <b class="caret"></b>
 		</div>
@@ -72,16 +75,18 @@ ul, li {
 		</ul>
 
 
-		<div class="" style="text-align: center;line-height:35px;border-right:0px;border-left:0px;border-bottom:0px;border-top:solid 1px lightgray;cursor:pointer;width: 258px; height: 35px;"
+		<div class=""
+			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
 			onclick="clickHandler(55)">
 			邮件管理<b class="caret"></b>
 		</div>
-		<ul id="55" style="display: none;padding: 0px;">
-			<li><a th:href="@{/mailvo/}">发送邮件</a></li>
+		<ul id="55" style="display: none; padding: 0px;">
+			<li><a th:href="@{/email/}">发送邮件</a></li>
 			<li><a href="#">查看邮件</a></li>
 		</ul>
 
-		<div class="" style="text-align: center;line-height:35px;border-right:0px;border-left:0px;border-bottom:0px;border-top:solid 1px lightgray;cursor:pointer;width: 258px; height: 35px;"
+		<div class=""
+			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
 			onclick="clickHandler(66)">
 			文件管理<b class="caret"></b>
 		</div>
@@ -90,7 +95,10 @@ ul, li {
 			<li><a th:href="@{/filemanager/}">发送文件</a></li>
 		</ul>
 
-		<div class="" style="text-align: center;line-height:35px;cursor:pointer;width: 258px; height: 35px;"><a th:href="@{/calendar/}">会议日历</a></div>
+		<div class=""
+			style="text-align: center; line-height: 35px; cursor: pointer; width: 258px; height: 35px;">
+			<a th:href="@{/calendar/}">会议日历</a>
+		</div>
 	</div>
 </body>
 </html>

@@ -12,8 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.entity.MailVo;
 import com.example.demo.service.MailVoService;
 
+/*邮件控制层*/
 @Controller
-//@RequestMapping("email")
+@RequestMapping("email")
 public class EmailController {
 
 	@Autowired
@@ -21,7 +22,7 @@ public class EmailController {
 
 	@GetMapping("/")
 	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView("mailvo/sendMail");// 打开发送邮件的页面
+		ModelAndView mv = new ModelAndView("email/sendMail");// 打开发送邮件的页面
 		mv.addObject("from", mailVoService.getMailSendFrom());
 		return mv;
 	}

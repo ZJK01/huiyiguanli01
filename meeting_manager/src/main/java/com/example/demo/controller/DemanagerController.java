@@ -18,6 +18,8 @@ import com.example.demo.entity.Meeting;
 import com.example.demo.service.MeetingService;
 import com.example.demo.service.serviceImpl.EmployeeServiceImpl;
 
+
+/*部门管理控制层*/
 @Controller
 @RequestMapping("/demanager")
 public class DemanagerController {
