@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title></title>
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
+<link href="/css/zyf.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/clickHandler.js"></script>
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<link href="/wangEditor-fullscreen/wangEditor-fullscreen-plugin.css"
+	type="text/css">
+<script type="text/javascript"
+	src="/wangeditor/release/wangEditor.min.js"></script>
+<!-- 要放在前面 -->
+<script type="text/javascript"
+	src="/wangEditor-fullscreen/wangEditor-fullscreen-plugin.js"></script>
+</head>
+<body>
+
+	<!-- 上部分 -->
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		style="background: #23527C;">
+		<div th:include="common/header :: header"></div>
+	</nav>
+
+	<!-- 左边start  -->
+	<div id="x">
+		<div th:replace="common/left :: left"></div>
+	</div>
+	<!-- 左边end -->
+
+	<div
+		style="position: absolute; left: 263px; top: 51px; width: 83.5%; border: 2px solid red;">
+		<form style="width: 720px;" class="container" method="post">
+			<input type="text"  id="matterId"
+				   th:value="${matter.matterId}" hidden="hidden">
+			<div class="form-group">
+				<label for="exampleInputEmail1">文件名</label> <input type="text"
+					class="form-control" id="matterName" 
+					th:value="${matter.matterName}">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">上传人(工号)</label> <input
+					type="text" class="form-control" 
+					disabled="disabled" id="matterUserid"
+					th:value="${matter.matterUserid}">
+			</div>
+			<div class="checkbox">
+				<label> <input type="checkbox" id="matterEncryption"
+					onclick="matter()" th:value="${matter.matterEncryption}">修改密码
+				</label>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputFile">新修改密码</label> <input type="password"
+					class="form-control" id="matterPassword" disabled="disabled"
+					 th:value="${matter.matterPassword}" />
+			</div>
+			<!-- 隐藏 -->
+			<input type="password"
+					class="form-control" id="matterPassword" hidden="hidden"
+					 th:value="${matter.matterPassword}" />
+					 
+			<div class="form-group">
+				<select id="deptnoId">
+					<option value="40">公网
+					<option th:if="${matter.deptnoId!=null}"
+						th:value="${matter.deptnoId}">部门
+				</select>
+			</div>
+			<div id="div1"></div>
+			<button type="button" class="btn btn-default" id="sub1">提交修改</button>
+			<button type="button" class="btn btn-default" id="sub2">恢复初始状态</button>
+		</form>
+		<p th:text="${matter.matterContent}" id="txt"      hidden="hidden"></p>
+	</div>
+
+	<script type="text/javascript">
+		//wangeditor
+		var E = window.wangEditor;
+		var editor = new E('#div1');
+		editor.customConfig.uploadImgShowBase64 = true; // 使用 base64 保存图片
+		editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+		editor.customConfig.showLinkImg = false // 隐藏“网络图片”tab
+		// 自定义菜单配置
+		editor.customConfig.menus = [ 'head', // 标题
+		'bold', // 粗体
+		'fontSize', // 字号
+		'fontName', // 字体
+		'underline', // 下划线
+		'strikeThrough', // 删除线
+		'foreColor', // 文字颜色
+		'link', // 插入链接
+		'list', // 列表
+		'image', // 插入图片
+		'table', // 表格
+		'video', // 插入视频
+		'code', // 插入代码
+		'undo', // 撤销
+		'redo' // 重复
+		]
+
+		editor.create();
+		//全屏显示
+		E.fullscreen.init('#div1');
+
+		//赋值
+		$(function() {
+			//设置文本框值
+			var txt = $('#txt').text();
+			editor.txt.html(txt);
+		})
+
+		//恢复文件未修改状态(刷新页面)
+		$('#sub2').click(function() {
+			window.location.reload();
+		})
+	
+		//提交修改
+		$('#sub1').click(function(){
+			var matterId=$('#matterId').val();
+			var matterName=$('#matterName').val();
+			var matteruserid=$('#matterUserid').val();
+			var matterEncryption=$('#matterEncryption').val();
+			var matterPassword=$('#matterPassword').val();
+			var deptnoId=$('#deptnoId').val();
+			var editorhtml=editor.txt.html()+"";
+			
+			$.ajax({
+				url : "/filemanager/updatefile",
+				type : "POST",
+				data:{ 
+					   matterId : matterId,
+				       matterName:matterName,
+				       matterUserid:matteruserid,
+			 		   matterEncryption:matterEncryption,
+			 		   matterPassword:matterPassword,
+			 		   deptnoId:deptnoId,
+			 		   mattercontent:editorhtml
+				    },
+				success : function(result){
+					alert("修改成功正在返回页面");
+					window.location.replace("http://localhost/filemanager/look");  //跳转页面
+				},
+				error : function() {
+					alert("更新失败");
+				}
+			})
+			
+		})
+
+		//根据是否加密来调整密码框的情况
+		function matter() {
+			/* alert($('#matterEncryption').is(":checked")); */
+			if ($('#matterEncryption').is(":checked")) {
+				$("#matterPassword").removeAttr("disabled");
+			} else {
+				$('#matterPassword').attr("disabled", "disabled");
+			}
+		}
+	
+	</script>
+</body>
+</html>
