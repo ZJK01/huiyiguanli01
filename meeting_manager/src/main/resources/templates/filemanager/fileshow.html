@@ -37,7 +37,7 @@
 				   th:value="${matter.matterId}" hidden="hidden">
 			<div class="form-group">
 				<label for="exampleInputEmail1">文件名</label> <input type="text"
-					class="form-control" id="matterName" 
+					class="form-control" id="matterName"  disabled="disabled"
 					th:value="${matter.matterName}">
 			</div>
 			<div class="form-group">
@@ -45,32 +45,9 @@
 					type="text" class="form-control" 
 					disabled="disabled" id="matterUserid"
 					th:value="${matter.matterUserid}">
-			</div>
-			<div class="checkbox" th:if="${userid !='no'}">
-				<label> <input type="checkbox" id="matterEncryption"
-					onclick="matter()" th:value="${matter.matterEncryption}">修改密码
-				</label>
-			</div>
-			<div class="form-group" th:if="${userid !='no'}">
-				<label for="exampleInputFile">新修改密码</label> <input type="password"
-					class="form-control" id="matterPassword" disabled="disabled"
-					 th:value="${matter.matterPassword}" />
-			</div>
-			<!-- 隐藏 -->
-			<input type="password"
-					class="form-control" id="matterPassword" hidden="hidden"
-					 th:value="${matter.matterPassword}" />
-					 
-			<div class="form-group">
-				<select id="deptnoId">
-					<option value="40">公网
-					<option th:if="${matter.deptnoId!=null}"
-						th:value="${matter.deptnoId}">部门
-				</select>
-			</div>
-			<div id="div1"></div>
-			<button type="button" class="btn btn-default" id="sub1">提交修改</button>
-			<button type="button" class="btn btn-default" id="sub2">恢复初始状态</button>
+			</div> 
+			<div id="div1" ></div>
+			<button type="button" class="btn btn-default" id="sub1">返回上一层</button>
 		</form>
 		<p th:text="${matter.matterContent}" id="txt"      hidden="hidden"></p>
 	</div>
@@ -109,56 +86,14 @@
 			//设置文本框值
 			var txt = $('#txt').text();
 			editor.txt.html(txt);
+			// 禁用编辑功能
+			editor.$textElem.attr('contenteditable', false);
 		})
-
-		//恢复文件未修改状态(刷新页面)
-		$('#sub2').click(function() {
-			window.location.reload();
-		})
-	
+		
 		//提交修改
 		$('#sub1').click(function(){
-			var matterId=$('#matterId').val();
-			var matterName=$('#matterName').val();
-			var matteruserid=$('#matterUserid').val();
-			var matterEncryption=$('#matterEncryption').val();
-			var matterPassword=$('#matterPassword').val();
-			var deptnoId=$('#deptnoId').val();
-			var editorhtml=editor.txt.html()+"";
-			
-			$.ajax({
-				url : "/filemanager/updatefile",
-				type : "POST",
-				data:{ 
-					   matterId : matterId,
-				       matterName:matterName,
-				       matterUserid:matteruserid,
-			 		   matterEncryption:matterEncryption,
-			 		   matterPassword:matterPassword,
-			 		   deptnoId:deptnoId,
-			 		   mattercontent:editorhtml
-				    },
-				success : function(result){
-					alert("修改成功正在返回页面");
-					window.location.replace("http://localhost/filemanager/look");  //跳转页面
-				},
-				error : function() {
-					alert("更新失败");
-				}
-			})
-			
+			window.location.replace("http://localhost/filemanager/look");  //跳转页面
 		})
-
-		//根据是否加密来调整密码框的情况
-		function matter() {
-			/* alert($('#matterEncryption').is(":checked")); */
-			if ($('#matterEncryption').is(":checked")) {
-				$("#matterPassword").removeAttr("disabled");
-			} else {
-				$('#matterPassword').attr("disabled", "disabled");
-			}
-		}
-	
 	</script>
 </body>
 </html>

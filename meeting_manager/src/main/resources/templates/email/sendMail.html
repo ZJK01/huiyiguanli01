@@ -40,7 +40,7 @@ ul, li {
 	type="text/css" />
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script th:href="@{/js/bootstrap.min.js}"></script>
-
+<script type="text/javascript" src="/js/clickHandler.js"></script>
 </head>
 
 <body>
@@ -147,14 +147,6 @@ ul, li {
 //             }
 //         });
 
-		function clickHandler(e) {
-			var v11 = document.getElementById(e);
-			if (v11.style.display == "block") {
-				v11.style.display = "none";
-			} else {
-				v11.style.display = "block";
-			}
-		}
     </script>
 	</div>
 </body>

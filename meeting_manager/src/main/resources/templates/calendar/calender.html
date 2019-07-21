@@ -6,6 +6,7 @@
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
 <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/clickHandler.js"></script>
 <style type="text/css">
 body {
 	margin: 0 auto;
@@ -165,16 +166,6 @@ input {
 	</div>
 
 	<script type="text/javascript">
-		//下拉列表
-		function clickHandler(e) {
-			var v = document.getElementById(e);
-			if (v.style.display == "block") {
-				v.style.display = "none";
-			} else {
-				v.style.display = "block";
-			}
-		}
-		
 		//日历
 		$(function(){
 	        var $td = $('tbody').find('td');

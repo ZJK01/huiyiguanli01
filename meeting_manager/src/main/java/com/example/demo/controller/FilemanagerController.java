@@ -22,10 +22,9 @@ import com.example.demo.entity.Manager;
 import com.example.demo.entity.Matter;
 import com.example.demo.service.MatterService;
 
-
 /*文件控制层*/
 @Controller
-@RequestMapping("filemanager") 
+@RequestMapping("filemanager")
 public class FilemanagerController {
 	@Autowired
 	Editor Editor; // 配置类(负责文件富文本框中内容的读写)
@@ -88,42 +87,60 @@ public class FilemanagerController {
 		return "/filemanager/file";
 	}
 
-	// 验证文件密码是否正确
+	/** 验证文件密码是否正确 */
 	@PostMapping("verifypassword")
 	@ResponseBody
-	public String verifypassword(@RequestParam String ispassword, @RequestParam String matterid,HttpSession session) {
+	public String verifypassword(@RequestParam String ispassword, @RequestParam String matterid, HttpSession session) {
 		Matter matter = matterService.findBypasswordAndmatterid(ispassword, Integer.parseInt(matterid));
-		if (matter != null) { 					// 判断密码输入是否失败
+		if (matter != null) { // 判断密码输入是否失败
 			session.setAttribute("file", matter);
-			return "yes";   //去显示页面
+			return "yes"; // 去显示页面
 		}
 		return "no";
 	}
-	
-	
-	/**
-	 *密码成功,查看内容的界面
-	 * */
-	@GetMapping("/passwordsuccess")
-	public String passwordSuccess(HttpSession session,ModelMap model) {
-		Matter matter=(Matter) session.getAttribute("file");   //文件内容
-		String userString=null; 							   //当前上传人id
-		if(null!=session.getAttribute("Employee")) {           
-			Employee employee=(Employee) session.getAttribute("Employee");
-			userString=employee.getEmployeeAccount();
-		}else {
-			Manager manager=(Manager) session.getAttribute("Manager");
-			userString=manager.getManagerId()+"";
+
+	/** 无密码 */
+	@PostMapping("nopassword")
+	@ResponseBody
+	public String nopassword(@RequestParam String matterid, HttpSession session) {
+		Matter matter = matterService.findBymatterId(Integer.parseInt(matterid));
+		if (matter != null) { // 判断密码输入是否失败
+			session.setAttribute("file", matter);
+			return "yes"; // 去显示页面
 		}
-		if ((matter.getMatterUserid()+"").equals(userString)) {		//判断权限
-			model.addAttribute("userid", "yes");					//给与权限	
-		}else {
-			model.addAttribute("userid", "no");
-		}
-		model.addAttribute("matter",matter);
-		return "/filemanager/fileshow";
+		return "no";
 	}
-	
+
+	/**
+	 *查看内容的界面
+	 */
+	@GetMapping("/passwordsuccess")
+	public String passwordSuccess(HttpSession session, ModelMap map) {
+		Matter matter = (Matter) session.getAttribute("file"); // 文件内容
+		String userString = null; 							   // 当前上传人id
+		String sub_deptno = null;							   //当前上传人的部门
+		if (null != session.getAttribute("Employee")) {
+			Employee employee = (Employee) session.getAttribute("Employee");
+			userString = employee.getEmployeeAccount();
+			sub_deptno=employee.getDepartMent();
+		} else {
+			Manager manager = (Manager) session.getAttribute("Manager");
+			userString = manager.getManagerId() + "";
+			sub_deptno=null;
+		}
+		map.addAttribute("matter", matter); // 存储在model
+		map.addAttribute("Sub_department",sub_deptno); //当前登陆人的部门
+		if ((matter.getMatterUserid() + "").equals(userString)) { // 判断权限
+			return "/filemanager/fileshowAll";
+		} else {
+			return "/filemanager/fileshow";
+		}
+
+	}
+
+	/**
+	 * 更新文件内容
+	 */
 	@PostMapping("/updatefile")
 	@ResponseBody
 	public String updateFile(@ModelAttribute Matter matter) {
