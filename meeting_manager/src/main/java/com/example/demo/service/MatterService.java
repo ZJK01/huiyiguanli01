@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.example.demo.entity.Matter;
 
 public interface MatterService {
@@ -13,4 +15,9 @@ public interface MatterService {
 
 
 	public Matter findBymatterId(Integer matterId);
+
+	public Integer count(String deptnoId);
+
+	public Page<Matter> Paging(Integer id, Integer numberpage, Integer deptno);
+
 }

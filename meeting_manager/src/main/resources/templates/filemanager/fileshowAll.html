@@ -132,15 +132,12 @@
 			var length=$.trim($(this).val()).length;				//去除空格
 			if (length ==0) {
 				$('#matterEncryption').val('false');
+				if($('#matterEncryption').prop("checked")){
+						alert("您的密码将设置为空");
+				}
 			}
 		});
 		
-		//复选框select的option值改变
-		$('#deptnoId').change(function(){
-		     console.log($('#deptnoId').val())			//每次选择都会输出选择的当前option的value
-		     /* $('#deptnoId').val($('#deptnoId').val()); */
-		})
-
 		//提交修改
 		$('#sub1')
 				.click(

@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.common.util.Editor;
+import com.example.demo.common.util.NumberPage;
 import com.example.demo.entity.Employee;
 import com.example.demo.entity.Manager;
 import com.example.demo.entity.Matter;
@@ -61,8 +63,8 @@ public class FilemanagerController {
 	}
 
 	// look file
-	@GetMapping("/look")
-	public String lookmain(ModelMap model, HttpSession session) {
+	@GetMapping(value= {"/look/{id}","/look"})
+	public String lookmain(@RequestParam(defaultValue="0")Integer id,@RequestParam(defaultValue="1") Integer deptno,ModelMap model, HttpSession session) {
 		String deptnoId = null;
 		String publicId = "40";
 		try {
@@ -73,17 +75,72 @@ public class FilemanagerController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		Integer deptnoCountInteger=null;	 				//部门总条数
+		Integer publicCountInteger=null;					//公网总条数
+		if(deptnoId!=null) {
+			deptnoCountInteger=matterService.count(deptnoId);		
+		}
+		if(publicId!=null) {
+			publicCountInteger=matterService.count(publicId);		
+		}
+		
+		Integer deptnoPage=null;									//部门总页数
+		if(deptnoCountInteger!=null) {
+			deptnoPage=deptnoCountInteger/NumberPage.Nnumberpage;	
+			if(deptnoCountInteger%NumberPage.Nnumberpage!=0) {
+				deptnoPage++;
+			}
+		}
+		Integer publicPage=null;									//公网总页数
+		if(publicCountInteger!=null) {
+			 publicPage=publicCountInteger/NumberPage.Nnumberpage;	
+			if(publicCountInteger%NumberPage.Nnumberpage!=0) {
+				publicPage++;
+			}
+		}
+		
+		if(deptnoPage==null) {
+			model.addAttribute("deptnoPage",0);					//部门总页数
+		}else {
+			model.addAttribute("deptnoPage",deptnoPage);		
+
+		}
+		if(publicPage==null) {
+			model.addAttribute("publicPage",0);				 	//公共总页数
+		}else {
+			model.addAttribute("publicPage",publicPage);		
+
+		}
+		model.addAttribute("id",id);					   		 //当前页数
 
 		// 得到当前部门所有文件
-		List<Matter> deptnoFile = null;
-		if (deptnoId != null) {
-			deptnoFile = matterService.findBydeptnoId(deptnoId);
-		}
+		Page<Matter>  deptnoFile = null;
+		List<Matter>  deptnoList = null;
+		
 		// 得到公网所有文件
-		List<Matter> publicFile = matterService.findBydeptnoId(publicId);
+		Page<Matter>  publicFile =null;
+		List<Matter>  publicList =null;
+		if (deptnoId != null) {						//部门文件
+			if(deptno==0) {
+				deptnoFile =matterService.Paging(id,NumberPage.Nnumberpage,Integer.parseInt(deptnoId));
+			}else {
+				deptnoFile =matterService.Paging(0,NumberPage.Nnumberpage,Integer.parseInt(deptnoId));
+			}
+		}
+		
+		if(deptno==1) {								//公共文件
+			 publicFile =  matterService.Paging(id, NumberPage.Nnumberpage,Integer.parseInt(publicId));
+		}else {
+			 publicFile =  matterService.Paging(0, NumberPage.Nnumberpage,Integer.parseInt(publicId));
+		}
 		// 写入model
-		model.addAttribute("deptnoFile", deptnoFile);
-		model.addAttribute("publicFile", publicFile);
+		model.addAttribute("deptnoFile", deptnoFile);		//部门文件(分页)
+		model.addAttribute("publicFile", publicFile);		//公共文件(分页)
+		model.addAttribute("deptnoList", deptnoList);		//部门文件(不分页)
+		model.addAttribute("publicList", publicList);		//公共文件(不分页)
+		model.addAttribute("deptno",deptno);				//首页是哪个nav
+		
 		return "/filemanager/file";
 	}
 

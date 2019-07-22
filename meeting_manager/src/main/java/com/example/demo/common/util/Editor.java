@@ -2,7 +2,6 @@ package com.example.demo.common.util;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,11 +17,15 @@ public class Editor {
 	public static final String FILEADDRESS=new String("E:\\file\\");
 
 	public void docFile(String context, String filename) throws Exception {
-		InputStream cssIs2 = new FileInputStream("D:\\java\\zyf.css");
+		/* InputStream cssIs2 = new FileInputStream("D:\\java\\zyf.css"); */
 		String body = context;
-		String css2 = this.getContent(cssIs2);
+		/* String css2 = this.getContent(cssIs2); */
 		// 拼一个标准的HTML格式文档
-		String content = "<html><head><style>" + css2 + "</style></head><body>" + body + "</body></html>";
+		/*
+		 * String content = "<html><head><style>" + css2 + "</style></head><body>" +
+		 * body + "</body></html>";
+		 */		
+		String content = "<html><head></head><body>" + body + "</body></html>";
 		InputStream is = new ByteArrayInputStream(content.getBytes("UTF-8"));
 		if (filename == null) {
 			filename = new Date().getTime() + "";

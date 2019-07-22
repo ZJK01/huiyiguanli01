@@ -38,6 +38,8 @@ spring:
     password: qftwcozqtvlybgfd #邮箱账号密码或者三方登录授权码
     protocol: smtp  #邮件协议 smtp
     default-encoding: utf-8
+  messages:
+    basename: i18n.login        #国际化
 
 server:
   port: 80
@@ -49,8 +51,9 @@ logging:
   file: D:\gz\gz.log
   level:
     root: info #全局设置日志级别
+    
 
-
+  
 
 
   
