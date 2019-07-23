@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,8 +64,8 @@ public class FilemanagerController {
 	}
 
 	// look file
-	@GetMapping(value= {"/look/{id}","/look"})
-	public String lookmain(@RequestParam(defaultValue="0")Integer id,@RequestParam(defaultValue="1") Integer deptno,ModelMap model, HttpSession session) {
+	@GetMapping(value= {"/look/","/look"})
+	public String lookmain(@RequestParam(defaultValue="0",name="id")Integer id,@RequestParam(defaultValue="1") Integer deptno,ModelMap model, HttpSession session) {
 		String deptnoId = null;
 		String publicId = "40";
 		try {
@@ -141,7 +142,7 @@ public class FilemanagerController {
 		model.addAttribute("publicList", publicList);		//公共文件(不分页)
 		model.addAttribute("deptno",deptno);				//首页是哪个nav
 		
-		return "/filemanager/file";
+		return "/filemanager/file1";
 	}
 
 	/** 验证文件密码是否正确 */
@@ -209,5 +210,16 @@ public class FilemanagerController {
 		}
 		matterService.save(matter);
 		return "yes";
+	}
+	
+	/**
+	 * 下载文件,默认存放桌面
+	 * */
+	@GetMapping("downfile/{id}")
+	@ResponseBody
+	public String downfile(@PathVariable Integer id) {
+		Matter matter=matterService.findBymatterId(id);
+		Editor.downfile(matter.getMatterName());
+		return "成功";
 	}
 }

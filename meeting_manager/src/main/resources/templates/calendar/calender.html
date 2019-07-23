@@ -14,7 +14,7 @@ body {
 }
 
 #ct {
-/* 	font-size: 30px; */
+	/* 	font-size: 30px; */
 	color: white;
 }
 
@@ -28,7 +28,7 @@ body {
 	top: 51px;
 	width: 265px;
 	height: 100%;
-/* 	border: 3px #12B7F5 solid; */
+	/* 	border: 3px #12B7F5 solid; */
 }
 
 ul, li {
@@ -58,13 +58,30 @@ input {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+
+#div1 {
+	float: right;
+	display: inline;
+	width: 500px;
+	height: 570px;
+	border: 1px solid red;
+	padding-top: 20px;
+}
+
+#cent {
+	background: url(/images/timg.jpg) no-repeat 4px 5px;
+	position: absolute;
+	left: 263px;
+	top: 51px;
+	width: 1300px;
+}
 </style>
 </head>
 <body>
 
 	<!-- 上部分 -->
 	<nav class="navbar navbar-inverse navbar-fixed-top"
-		style="background: #23527C;position: absolute;">
+		style="background: #23527C; position: absolute;">
 		<div th:replace="common/header :: header"></div>
 	</nav>
 
@@ -75,9 +92,9 @@ input {
 	<!-- 左边end -->
 
 	<!-- 中间内容 -->
-	<div
-		style="position: absolute; left: 263px; top: 51px; width: 1300px;">
-		<div class="container">
+	<div id="cent">
+		<div class="container"
+			style="float: left; display: inline; border: 1px solid red; width: 780px;">
 			<div class="cal-control-box">
 				<span class="glyphicon glyphicon-backward" aria-hidden="true"
 					id="minusyear"></span> <span
@@ -91,7 +108,7 @@ input {
 					aria-hidden="true" id="addyear"></span>
 			</div>
 			<div class="cal-box">
-				<table style="width: 700px; height: 500px;">
+				<table style="width: 740px; height: 500px;">
 					<thead>
 						<tr>
 							<td class="sun">日</td>
@@ -162,7 +179,12 @@ input {
 				</table>
 			</div>
 		</div>
-
+		<div id="div1">
+			<table>
+				<tr  th:each=":${}">
+			</table>
+		</div>
+		
 	</div>
 
 	<script type="text/javascript">

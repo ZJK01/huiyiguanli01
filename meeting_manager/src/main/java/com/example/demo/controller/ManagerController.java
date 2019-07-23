@@ -24,7 +24,7 @@ public class ManagerController {
 	@Resource(name = "EmployeeServiceImpl")
 	private EmployeeService employeeService;
 
-	@GetMapping(value= {"", "/", "/index"})
+	@GetMapping(value= { "/", "/index"})
 	public String main(HttpSession session) {
 		// 销毁session
 		session.invalidate();

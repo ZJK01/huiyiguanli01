@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title></title>
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
+<link href="/css/zyf.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/js/clickHandler.js"></script>
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<link href="/wangEditor-fullscreen/wangEditor-fullscreen-plugin.css"
+	type="text/css">
+<script type="text/javascript"
+	src="/wangeditor/release/wangEditor.min.js"></script>
+<!-- 要放在前面 -->
+<script type="text/javascript"
+	src="/wangEditor-fullscreen/wangEditor-fullscreen-plugin.js"></script>
+</head>
+<body>
+
+	<!-- 上部分 -->
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		style="background: #23527C;">
+		<div th:include="common/header :: header"></div>
+	</nav>
+
+	<!-- 左边start  -->
+	<div id="x">
+		<div th:replace="common/left :: left"></div>
+	</div>
+	<!-- 左边end -->
+
+	<div
+		style="position: absolute; left: 263px; top: 51px; width: 83.5%;">
+		<ul class="nav nav-tabs">
+			<li class="active" id="file1"><a href="#home" data-toggle="tab"
+				style="width: 620px;" id="file11">公司文件</a></li>
+			<li id="file2"><a href="#profile" data-toggle="tab" style="width: 620px;" id="file22">部门文件</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="home">
+				<h1 style="text-align: center">公司文件</h1>
+				<table class="table table-hover" style="text-align: center">
+					<tr>
+						<td>文件序列号</td>
+						<td>文件名</td>
+						<td>上传人</td>
+						<td>是否加密</td>
+						<td>查看</td>
+						<td colspan="2">编辑</td>
+					</tr>
+					<tr th:each="pfile:${publicFile}" th:if="${publicFile !=null}">
+						<td th:text="${pfile.matterId}" th:value="${pfile.matterId}"></td>
+						<td th:text="${pfile.matterName}" th:value="${pfile.matterName}"></td>
+						<td th:text="${pfile.matterUserid}"
+							th:value="${pfile.matterUserid}"></td>
+						<td th:text="${pfile.matterEncryption}"
+							th:value="${pfile.matterEncryption}"></td>
+						<td><button class="btn btn-default"
+								th:onclick="|show(${pfile.matterId},${pfile.matterEncryption})|">查看</button></td>
+						<td colspan="2"><button th:value="${pfile.matterId}" onclick="downfile(this)">下载文件</button></td>
+					</tr>
+					<tr th:each="pfile:${publicList}" th:if="${publicList !=null}">
+						<td th:text="${pfile.matterId}" th:value="${pfile.matterId}"></td>
+						<td th:text="${pfile.matterName}" th:value="${pfile.matterName}"></td>
+						<td th:text="${pfile.matterUserid}"
+							th:value="${pfile.matterUserid}"></td>
+						<td th:text="${pfile.matterEncryption}"
+							th:value="${pfile.matterEncryption}"></td>
+						<td><button class="btn btn-default"
+								th:onclick="|show(${pfile.matterId},${pfile.matterEncryption})|">查看</button></td>
+						<td colspan="2"><button th:value="${pfile.matterId}" onclick="downfile(this)">下载文件</button></td>
+					</tr>
+				</table>
+				<div style="text-align: right; margin-right: 10px;">
+					<a class="btn btn-info"
+						th:href="@{/filemanager/look/(id=0,deptno=1)}">首页</a> <a
+						class="btn btn-info"
+						th:href="@{/filemanager/look/(id=${id-1 lt 0? 0:id-1},deptno=1)}">上一页</a>
+					<a class="btn btn-info"
+						th:href="@{/filemanager/look/(id=${id+1 gt publicPage-1? (publicPage-1<0? 0:publicPage-1):id+1},deptno=1)}">下一页</a>
+					<a class="btn btn-info"
+						th:href="@{/filemanager/look/(id=${publicPage-1<0? 0:publicPage-1},deptno=1)}">末页</a>
+				</div>
+
+			</div>
+			<!--部门文件 -->
+			<div class="tab-pane" id="profile">
+				<h1 style="text-align: center">部门文件</h1>
+				<table class="table table-hover" style="text-align: center">
+					<tr>
+						<td>文件序列号</td>
+						<td>文件名</td>
+						<td>上传人</td>
+						<td>是否加密</td>
+						<td>查看</td>
+						<td colspan="2">编辑</td>
+					</tr>
+					<tr th:each="deptno:${deptnoFile}" th:if="${deptnoFile !=null}">
+						<td th:text="${deptno.matterId}" th:value="${deptno.matterId}"></td>
+						<td th:text="${deptno.matterName}" th:value="${deptno.matterName}"></td>
+						<td th:text="${deptno.matterUserid}"
+							th:value="${deptno.matterUserid}"></td>
+						<td th:text="${deptno.matterEncryption}"
+							th:value="${deptno.matterEncryption}"></td>
+						<td><button class="btn btn-default"
+								th:onclick="|show(${deptno.matterId},${deptno.matterEncryption})|">查看
+							</button></td>
+						<td colspan="2"><a  th:text="${deptno.matterId}" onclick="downfile(this)">下载附件</a></td>
+					</tr>
+					<tr th:each="deptno:${deptnoList}" th:if="${deptnoList !=null}">
+						<td th:text="${deptno.matterId}" th:value="${deptno.matterId}"></td>
+						<td th:text="${deptno.matterName}" th:value="${deptno.matterName}"></td>
+						<td th:text="${deptno.matterUserid}"
+							th:value="${deptno.matterUserid}"></td>
+						<td th:text="${deptno.matterEncryption}"
+							th:value="${deptno.matterEncryption}"></td>
+						<td><button class="btn btn-default"
+								th:onclick="|show(${deptno.matterId},${deptno.matterEncryption})|">查看
+							</button></td>
+						<td colspan="2"><a th:text="${deptno.matterId}" onclick="downfile(this)">下载附件</a></td>
+					</tr>
+				</table>
+				<div style="text-align: right; margin-right: 10px;">
+					<a class="btn btn-info"
+						th:href="@{/filemanager/look/(id=0,deptno=0)}">首页</a> <a
+						class="btn btn-info"
+						th:href="@{/filemanager/look/(id=${id-1 lt 0? 0:id-1},deptno=0)}">上一页</a>
+					<a class="btn btn-info"
+						th:href="@{/filemanager/look/(id=${id+1 gt deptnoPage-1? (deptnoPage-1<0? 0:deptnoPage-1):id+1},deptno=0)}">下一页</a>
+					<a class="btn btn-info"
+						th:href="@{/filemanager/look/(id=${deptnoPage-1<0? 0:deptnoPage-1},deptno=0)}">末页</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:text="${deptno}" id="p"  hidden="hidden"></div>
+	<script type="text/javascript">
+	
+	var defaultpage=$("#p").text();
+	if(defaultpage==0){
+			$("#file1").removeClass("active");
+			$("#home").removeClass("active");
+			$("#file2").addClass("active");
+			$("#profile").addClass("active");
+		}/* else{
+			$("#file2").removeClass("active");
+			$("#prefile").removeClass("active");
+			$("#file1").addClass("active");
+			$("#home").addClass("active");
+		} */
+		
+		function show(e,matter){								//e代表文件id
+			if(!matter){										//取反不要密码
+				var matterid=e;   
+					$.ajax({
+						url:'/filemanager/nopassword',
+						type: "POST",
+						data:{matterid},
+						success:function(e){	
+								if(e=="yes"){
+									alert("正在跳转");
+									window.location.href = "/filemanager/passwordsuccess";
+								}else{
+									alert("跳转错误");
+								}
+						}
+					})  //ajax  end
+			}else{
+				var ispassword= prompt("请输入文件当时的加密密码");	//密码
+		 		var matterid=e;       						 
+		 		if(ispassword!=null){
+					$.ajax({
+						url:'/filemanager/verifypassword',
+						type: "POST",
+						data:{ispassword,matterid},
+						success:function(e){	
+								if(e=="yes"){
+									alert("密码成功");
+									window.location.href = "/filemanager/passwordsuccess";
+								}else{
+									alert("密码错误");
+								}
+						}
+					})  //ajax	end
+		 		}		//if    end
+			}			//else  end	
+		}
+		
+		
+		//下载文件
+		function downfile(e){
+			var dept=$(e).val();
+			$.ajax({
+				url:'/filemanager/downfile/'+dept,
+				type: "GET",
+				success:function(e){
+					alert("下载成功");
+					window.location.reload();
+				}
+			});
+		}
+	</script>
+</body>
+</html>

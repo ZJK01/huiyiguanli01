@@ -39,7 +39,7 @@ spring:
     protocol: smtp  #邮件协议 smtp
     default-encoding: utf-8
   messages:
-    basename: i18n.login        #国际化
+   basename: i18n.login        #国际化
 
 server:
   port: 80
