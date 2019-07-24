@@ -1,21 +1,17 @@
 package com.example.demo.service.serviceImpl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.MettingDao;
-import com.example.demo.entity.Matter;
 import com.example.demo.entity.Meeting;
 import com.example.demo.service.MeetingService;
 
@@ -44,7 +40,17 @@ public class MeetingServiceImpl implements MeetingService {
 
 	@Override
 	public List<Meeting> findMeeting(String firstMonth, String lastMonth) {
-		return  mettingDao.findTime(firstMonth,lastMonth);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date data1=null;
+		Date data2=null;
+		try {
+			 data1=sdf.parse(firstMonth);
+			 data2=sdf.parse(lastMonth);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return  mettingDao.findTime(data1,data2);
 	}
 
 }

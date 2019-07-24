@@ -100,7 +100,7 @@ input {
 					id="minusyear"></span> <span
 					class="glyphicon glyphicon-chevron-left" aria-hidden="true"
 					id="minusmonth"></span> <input type="text"
-					style="width: 50px; text-align: center" id="year" /> <span>年</span>
+					style="width: 50px; text-align: center" id="year"/><span>年</span>
 				<input type="text" style="width: 50px; text-align: center"
 					id="month" /> <span>月</span> <span
 					class="glyphicon glyphicon-chevron-right" aria-hidden="true"
@@ -180,9 +180,11 @@ input {
 			</div>
 		</div>
 		<div id="div1">
-			<table>
-				<tr  th:each=":${}">
-			</table>
+			<!-- <table>
+				<tr  th:each="list:${lists}">
+					<td th:text="list."></td>
+				</tr>
+			</table> -->
 		</div>
 		
 	</div>

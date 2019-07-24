@@ -36,8 +36,8 @@ body {
 				type="password" name="password"  th:placeholder="#{login.Password}" required>
 		<!-- 登陆 -->
         <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-bottom: 5px;" th:text="#{login.Signin}">Sign in</button>
-     	  <a th:href="@{/manager/(l='zh_CN')}" style="font-size:20px;color: #b73333;margin-right:3px;margin-left:150px;">中文</a>
-    	  <a th:href="@{/manager/(l='en_US')}" style="font-size:20px;color: #b73333;">English</a>
+     	  <a th:href="@{/manager/index(l='zh_CN')}" style="font-size:20px;color: #b73333;margin-right:3px;margin-left:150px;">中文</a>
+    	  <a th:href="@{/manager/index(l='en_US')}" style="font-size:20px;color: #b73333;">English</a>
       </form>
     
     </div> <!-- /container -->

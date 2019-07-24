@@ -1,10 +1,11 @@
-package com.example.demo.common.i18;
+package com.example.demo.component;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import com.example.demo.common.i18.MyLocaleResolver;
+
+import com.example.demo.component.MyLocaleResolver;
 
 /***
  * 自定义webmvc配置
