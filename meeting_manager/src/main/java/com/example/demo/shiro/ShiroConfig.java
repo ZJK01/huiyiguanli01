@@ -20,6 +20,7 @@
 	 * 创建shiroFilterFactoryBean
 	 */
 /*
+ * 
  * @Bean public ShiroFilterFactoryBean getShiroFilterFactoryBean(
  * 
  * @Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
@@ -32,6 +33,7 @@
 	 * 如果使用rememberMe的功能可以直接访问 perms： 该资源必须得到资源权限才可以访问 role: 该资源必须得到角色权限才可以访问
 	 */
 /*
+ * 
  * Map<String, String> filterMap = new LinkedHashMap<String, String>();
  * 
  * 
@@ -61,6 +63,7 @@
 	 * 创建DefaultWebSecurityManager(默认需要+rememberMe)
 	 */
 /*
+ * 
  * @Bean(name = "securityManager") public DefaultWebSecurityManager
  * getdeDefaultWebSecurityManager(@Qualifier("MyRealm") MyRealm myRealm) {
  * DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -74,6 +77,7 @@
 	 * 创建Realm
 	 **/
 /*
+ * 
  * @Bean(name = "MyRealm") public MyRealm getRealm() { MyRealm userRealm = new
  * MyRealm(); // 配置加密(在加密后,不配置的话会导致登录密码失败)
  * userRealm.setCredentialsMatcher(hashedCredentialsMatcher()); return
@@ -83,12 +87,14 @@
 	 * 配置ShiroDialect,用于thymeleaf和shiro标签配合使用
 	 */
 /*
+ * 
  * @Bean public ShiroDialect getShiroDialect() { return new ShiroDialect(); }
  * 
  *//**
 	 * 盐加密
 	 */
 /*
+ * 
  * @Bean public HashedCredentialsMatcher hashedCredentialsMatcher() {
  * HashedCredentialsMatcher hashedCredentialsMatcher = new
  * HashedCredentialsMatcher(); // 使用md5,算法进行加密

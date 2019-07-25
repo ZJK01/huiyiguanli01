@@ -27,7 +27,7 @@ import com.example.demo.service.MatterService;
 
 /*文件控制层*/
 @Controller
-@RequestMapping("filemanager")
+@RequestMapping("/filemanager")
 public class FilemanagerController {
 	@Autowired
 	Editor Editor; // 配置类(负责文件富文本框中内容的读写)
@@ -64,7 +64,7 @@ public class FilemanagerController {
 	}
 
 	// look file
-	@GetMapping(value= {"/look/","/look"})
+	@GetMapping(value= {"/look"})
 	public String lookmain(@RequestParam(defaultValue="0",name="id")Integer id,@RequestParam(defaultValue="1") Integer deptno,ModelMap model, HttpSession session) {
 		String deptnoId = null;
 		String publicId = "40";

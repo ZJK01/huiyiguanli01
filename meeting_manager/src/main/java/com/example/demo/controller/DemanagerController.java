@@ -35,6 +35,7 @@ public class DemanagerController {
 	public String zcc() {
 		return "/demanager/reg";
 	}
+	
 
 	@PostMapping("httt")
 	public String htt() {

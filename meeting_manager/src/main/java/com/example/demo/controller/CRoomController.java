@@ -23,7 +23,7 @@ import com.example.demo.service.BoradroomService;
  * 会议室：添加，查看
  * */
 @Controller
-@RequestMapping("croom")
+@RequestMapping("/croom")
 public class CRoomController {
 
 	@Autowired
