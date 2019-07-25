@@ -193,7 +193,6 @@ public class FilemanagerController {
 		} else {
 			return "/filemanager/fileshow";
 		}
-
 	}
 
 	/**
