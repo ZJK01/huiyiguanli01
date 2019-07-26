@@ -14,6 +14,9 @@ public interface EmployeeService {
 	
 	public List<Employee> findAll();
 	
+//	分部门查找员工
+	public List<Employee> findAllByDepatment(String did);
+	
 	public void delEmployee(Integer id);
 	
 	/**

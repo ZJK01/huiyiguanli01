@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>完成左移右移</title>
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<style type="text/css">
+table {
+	background-color: purple;
+}
+
+input {
+	background-color: blue;
+}
+</style>
+<script type="text/javascript">
+	$("document").ready(function() {
+		$("#b1").click(function() {
+			var v1 = $("#k1").find("option:selected").text();
+			if (v1 != null) {
+				$("#k2").append("<option value=''>" + v1 + "</option>");
+				$("#k1 option:selected").remove()
+			}
+		});
+
+		$("#b2").click(function() {
+			var v2 = $("#k2").find("option:selected").text();
+			if (v2 != null) {
+				$("#k1").append("<option value=''>" + v2 + "</option>");
+				$("#k2 option:selected").remove();
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<form action="#" method="post">
+		<table>
+			<tr>
+				<td><select id="k1" size="10" style="width: 200px;">
+						<option id="p1">柠檬学院</option>
+						<option id="p2">柠檬学员</option>
+						<option id="p3">柠檬人</option>
+				</select></td>
+				<td><input type="button" id="b1" value=">>" /> <input
+					type="button" id="b2" value="<<" /></td>
+				<td><select id="k2" size="10" style="width: 200px;">
+						<option>李哥</option>
+				</select></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

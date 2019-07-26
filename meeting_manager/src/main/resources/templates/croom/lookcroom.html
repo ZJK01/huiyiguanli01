@@ -3,43 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>查看会议室</title>
+<link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
 <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
-<style type="text/css">
-body {
-	margin: 0 auto;
-	font-size: 16px;
-}
 
-#ct {
-	font-size: 30px;
-	color: white;
-}
-
-}
-#l {
-	display: inline;
-}
-
-#x {
-	position: absolute;
-	top: 51px;
-	width: 265px;
-	height: 87%;
-	/* 	border: 3px #12B7F5 solid; */
-}
-
-ul, li {
-	margin: 0;
-	list-style: none;
-	text-align: center;
-}
-
-td {
-	width: 50px;
-}
-</style>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top"
@@ -55,8 +23,8 @@ td {
 	<!-- 左边end -->
 	<div
 		style="position: absolute; left: 263px; top: 51px; width: 1300px; text-align: center;">
-		<h3 style=" margin-bottom: 20px;font-size: 20px;font-weight: bold;">会议室</h3>
-		<table  style="margin: auto;" class="table table-condensed">
+		<h3 style="margin-bottom: 20px; font-size: 20px; font-weight: bold;">会议室</h3>
+		<table style="margin: auto;" class="table table-condensed">
 			<tr class="success">
 				<td>会议室编号</td>
 				<td>会议室名称</td>
@@ -67,12 +35,21 @@ td {
 			<tr th:each="broom : ${boradrooms}" class="info">
 				<td style="vertical-align: middle;" th:text="${broom.boradroomId}"></td>
 				<td style="vertical-align: middle;" th:text="${broom.boradroomName}"></td>
-				<td style="vertical-align: middle;" th:text="${broom.boradRoomNumber}"></td>
-				<td style="vertical-align: middle;" th:text="${broom.boradRoomStatus}"></td>
+				<td style="vertical-align: middle;"
+					th:text="${broom.boradRoomNumber}"></td>
+				<td style="vertical-align: middle;"
+					th:text="${broom.boradRoomStatus}"></td>
 				<td style="vertical-align: middle;"><a
-					th:href="@{/croom/updatecroom/{bid}(bid=${broom.boradroomId})}"><button class="btn btn-info">查看详情</button></a></td>
+					th:href="@{/croom/updatecroom/{bid}(bid=${broom.boradroomId})}"><button
+							class="btn btn-info">查看详情</button></a></td>
 			</tr>
 		</table>
+		<div style="padding-left:1020px;">
+		<a th:href="@{/croom/lookcroom/?(id=${0})}" class="btn btn-info">首页</a>
+		<a th:href="@{/croom/lookcroom/?(id=${one-1 ge 0 ? one-1 : 0})}" class="btn btn-info">上一页</a>
+		<a th:href="@{/croom/lookcroom/?(id=${one+1 le start ? one+1 : start})}" class="btn btn-info">下一页</a>
+		<a th:href="@{/croom/lookcroom/?(id=${start})}" class="btn btn-info">末页</a>
+		</div>
 	</div>
 	<script type="text/javascript">
 		function clickHandler(e) {

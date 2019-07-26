@@ -3,6 +3,8 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+
 import com.example.demo.entity.Boradroom;
 
 public interface BoradroomService {
@@ -12,6 +14,9 @@ public interface BoradroomService {
 
 //	查询会议室
 	public List<Boradroom> getCrooms();
+	
+//	根据会议室状态查询
+	public List<Boradroom> getBoradrooms(String status);
 
 //	查询单个会议室
 	public Optional<Boradroom> getCroom(Integer bid);
@@ -21,6 +26,9 @@ public interface BoradroomService {
 
 //	删除会议室
 	public void deleteCroom(Integer bid);
-
+		
+//	分页
+	public Page<Boradroom> getBrooms(Integer pages,Integer page);
 	
+	public Integer getcount();
 }

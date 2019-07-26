@@ -33,8 +33,11 @@ public class EmailController {
 	@ResponseBody
 	@PostMapping("/mail/send")
 	public MailVo sendMail(MailVo mailVo, MultipartFile[] files) {
-		System.out.println(11);
+//		System.out.println(11);
 //		mailVo.setMultipartFiles(files);
+//		for (MultipartFile multipartFile : files) {
+//			System.out.println(multipartFile.getName());
+//		}
 		return mailVoService.sendMail(mailVo, files);// 发送邮件和附件
 	}
    

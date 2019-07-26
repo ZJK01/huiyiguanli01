@@ -14,7 +14,6 @@ body {
 	color: white;
 }
 
-}
 #l {
 	display: inline;
 }
@@ -32,29 +31,34 @@ ul, li {
 	list-style: none;
 	text-align: center;
 }
+
 </style>
 </head>
 <body>
 	<!-- border: 1px #12B7F5 solid; -->
 	<div style="width: 260px; height: 35px;" th:fragment="left">
-		<div class="div01"
-			style="border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px; text-align: center; line-height: 35px;"
+		<div class="pubdiv"
+			style="border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; text-align: center; height:35px; line-height: 35px;"
 			onclick="clickHandler(11)">
 			个人中心<b class="caret"></b>
 		</div>
 		<ul id="11" style="display: none; padding: 0px;">
 			<li><a href="#">我的预定</a></li>
 			<li><a href="#">我的会议</a></li>
+<!-- 			<li><a th:href="@{/percenter/}">会议预订</a></li> -->
+<!-- 			<li><a th:href="@{/calendar/}">会议日历</a></li> -->
 		</ul>
 
 
-		<div class="" id="2"
-			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;">
+		<div class="pubdiv" id="2"
+			style="text-align: center; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height:35px; line-height: 35px;">
 			<a th:href="@{/percenter/}">会议预订</a>
 		</div>
 
-		<div class=""
-			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
+
+
+		<div class="pubdiv"
+			style="text-align: center; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height:35px; line-height: 35px;"
 			onclick="clickHandler(33)">
 			会议室管理<b class="caret"></b>
 		</div>
@@ -63,8 +67,8 @@ ul, li {
 			<li><a th:href="@{/croom/lookcroom}">查看会议室</a></li>
 		</ul>
 
-		<div class=""
-			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
+		<div class="pubdiv"
+			style="text-align: center; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px;height:35px; line-height: 35px;"
 			onclick="clickHandler(44)">
 			部门管理 <b class="caret"></b>
 		</div>
@@ -73,10 +77,8 @@ ul, li {
 			<li><a th:href="@{/demanager/pagefy/0}">员工管理</a></li>
 			<li><a href="#">部门管理</a></li>
 		</ul>
-
-
-		<div class=""
-			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
+		<div class="pubdiv"
+			style="text-align: center; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height:35px; line-height: 35px;"
 			onclick="clickHandler(55)">
 			邮件管理<b class="caret"></b>
 		</div>
@@ -85,18 +87,17 @@ ul, li {
 			<li><a href="#">查看邮件</a></li>
 		</ul>
 
-		<div class=""
-			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
+		<div class="pubdiv"
+			style="text-align: center; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px;height:35px; line-height: 35px;"
 			onclick="clickHandler(66)">
 			文件管理<b class="caret"></b>
 		</div>
 		<ul id="66" style="display: none; padding: 0px;">
-			<li><a href="#">查看文件</a></li>
-			<li><a th:href="@{/filemanager/}">发送文件</a></li>
+			<li><a th:href="@{/filemanager/look}">查看文件</a></li>
+			<li><a th:href="@{/filemanager/send}">发送文件</a></li>
 		</ul>
-
-		<div class=""
-			style="text-align: center; line-height: 35px; cursor: pointer; width: 258px; height: 35px;">
+		<div class="pubdiv"
+			style="text-align: center; cursor: pointer; width: 258px; border-top: solid 1px lightgray; cursor: pointer;height:35px; line-height: 35px;">
 			<a th:href="@{/calendar/}">会议日历</a>
 		</div>
 	</div>

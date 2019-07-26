@@ -26,7 +26,7 @@ body {
 	width: 265px;
 	height: 87%;
 	font-size: 16px;
-	
+
 	/* 	border: 3px #12B7F5 solid; */
 }
 
@@ -35,6 +35,20 @@ ul, li {
 	list-style: none;
 	text-align: center;
 }
+/* .pubdiv { */
+/* 	border-right: 0px; */
+/* 	border-left: 0px; */
+/* 	border-bottom: 0px; */
+/* 	border-top: solid 1px lightgray; */
+/* 	cursor: pointer; */
+/* 	width: 258px; */
+/* 	text-align: center; */
+/* 	height: 60px; */
+/* 	line-height: 60px; */
+/* 	font-weight: bold; */
+/* 	font-size: 24px; */
+/* 	background-color: #a9dbf6; */
+/* } */
 </style>
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
 	type="text/css" />
@@ -57,7 +71,7 @@ ul, li {
 
 	<!-- 左边end -->
 	<div class="col-md-6"
-		style="margin: 20px; padding: 20px; border: #E0E0E0 1px solid; position: absolute; left: 263px; top: 51px; width: 1300px;">
+		style="margin: 20px; padding: 20px; position: absolute; left: 263px; top: 51px; width: 1300px;">
 		<!-- 		<marquee behavior="alternate" onfinish="alert(12)" id="mq" -->
 		<!-- 			onMouseOut="this.start();$('#egg').text('嗯 真听话！');" -->
 		<!-- 			onMouseOver="this.stop();$('#egg').text('有本事放开我呀！');"> -->
@@ -65,69 +79,69 @@ ul, li {
 		<!-- 			<img id="doge" -->
 		<!-- 				src="http://pics.sc.chinaz.com/Files/pic/faces/3709/7.gif" alt=""> -->
 		<!-- 		</marquee> -->
-
-		<form class="form-horizontal" id="mailForm">
-			<div class="form-group">
-				<label class="col-md-2 control-label">邮件发信人:</label>
-				<div class="col-md-6">
-					<input class="form-control" id="from" name="fromone"
-						th:value="${from}" readonly="readonly">
+			<form class="form-horizontal" id="mailForm">
+				<div class="form-group" style="margin-left: 170px;">
+					<label class="col-md-2 control-label">邮件发信人:</label>
+					<div class="col-md-6">
+						<input class="form-control" id="from" name="fromone"
+							th:value="${from}" readonly="readonly">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<!--收件人半自动选择-->
-				<label class="col-md-2 control-label">邮件收件人:</label>
-				<div class="col-md-6">
-					<input class="form-control" id="to" name="touser" title="多个邮箱使用,隔开">
+				<div class="form-group" style="margin-left: 170px;">
+					<!--收件人半自动选择-->
+					<label class="col-md-2 control-label">邮件收件人:</label>
+					<div class="col-md-6">
+						<input class="form-control" id="to" name="touser"
+							title="多个邮箱使用,隔开">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 control-label">邮件主题:</label>
-				<div class="col-md-6">
-					<input class="form-control" id="subject" name="subject">
+				<div class="form-group" style="margin-left: 170px;">
+					<label class="col-md-2 control-label">邮件主题:</label>
+					<div class="col-md-6">
+						<input class="form-control" id="subject" name="subject">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 control-label">邮件内容:</label>
-				<div class="col-md-6">
-					<textarea class="form-control" id="text" name="text" rows="5"></textarea>
+				<div class="form-group" style="margin-left: 170px;">
+					<label class="col-md-2 control-label">邮件内容:</label>
+					<div class="col-md-6">
+						<textarea class="form-control" id="text" name="text" rows="5"></textarea>
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 control-label">邮件附件:</label>
-				<div class="col-md-6">
-					<input class="form-control" id="files" name="files" type="file"
-						multiple="multiple">
+				<div class="form-group" style="margin-left: 170px;">
+					<label class="col-md-2 control-label">邮件附件:</label>
+					<div class="col-md-6">
+						<input class="form-control" id="files" name="files" type="file"
+							multiple="multiple">
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-2 control-label">邮件操作:</label>
-				<div class="col-md-3">
-					<a class="form-control btn btn-primary" id="dd">发送邮件</a>
+				<div class="form-group" style="margin-left: 170px;">
+					<label class="col-md-2 control-label">邮件操作:</label>
+					<div class="col-md-3">
+						<a class="form-control btn btn-primary" onclick="sendMail()">发送邮件</a>
+					</div>
+					<div class="col-md-3">
+						<a class="form-control btn btn-default" onclick="clearForm()">清空</a>
+					</div>
 				</div>
-				<div class="col-md-3">
-					<a class="form-control btn btn-default" onclick="clearForm()">清空</a>
-				</div>
-			</div>
-		</form>
-
+			</form>
 		<script th:inline="javascript">
         var appCtx = [[${#request.getContextPath()}]];
- 
-        	$("#dd").click(function(){
-                 $.ajax({
-                     url:"/email/mail/send",
-                     type: "post",
-                     data:$("#mailForm").serialize(),
-                     
-                     success: function (result) {
-                         alert(result.status === 'ok' ? "发送成功！" : "错误信息：" + result.error);
-                     },
-                     error: function () {
-                         alert("发送失败！");
-                     }
-                 });
-        	})
+        function sendMail() {
+            var formData = new FormData($('#mailForm')[0]);
+            $.ajax({
+                url: appCtx + '/email/mail/send',
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    alert(result.status === 'ok' ? "发送成功！" : "错误信息：" + result.error);
+                },
+                error: function () {
+                    alert("发送失败！");
+                }
+            });
+        }
         	
        
         

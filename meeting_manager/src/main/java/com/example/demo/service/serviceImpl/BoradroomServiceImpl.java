@@ -8,6 +8,9 @@ import javax.annotation.Resource;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.BoradroomDao;
@@ -51,6 +54,27 @@ public class BoradroomServiceImpl implements BoradroomService {
 	public void deleteCroom(Integer bid) {
 		// TODO Auto-generated method stub
 		boradroomDao.deleteById(bid);
+	}
+
+	@Override
+	public Page<Boradroom> getBrooms(Integer pages, Integer page) {
+		// TODO Auto-generated method stub
+		@SuppressWarnings("deprecation")
+		Pageable pg = new PageRequest(pages, page);
+		Page<Boradroom> bPage = boradroomDao.findAll(pg);
+		return bPage;
+	}
+
+	@Override
+	public Integer getcount() {
+		// TODO Auto-generated method stub
+		return (int) boradroomDao.count();
+	}
+
+	@Override
+	public List<Boradroom> getBoradrooms(String status) {
+		// TODO Auto-generated method stub
+		return boradroomDao.findAllByboradRoomStatus(status);
 	}
 
 }

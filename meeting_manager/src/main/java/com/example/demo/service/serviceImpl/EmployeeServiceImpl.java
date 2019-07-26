@@ -93,4 +93,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return (int) employeedao.count();
 	}
 
+	@Override
+	public List<Employee> findAllByDepatment(String did) {
+		// TODO Auto-generated method stub
+		return employeedao.findAllBydepartMent(did);
+	}
+
 }

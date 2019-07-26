@@ -3,37 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>会议室管理</title>
-<style type="text/css">
-body {
-	margin: 0 auto;
-	font-size: 16px;
-}
-
-#ct {
-	font-size: 30px;
-	color: white;
-}
-
-}
-#l {
-	display: inline;
-}
-
-#x {
-	position: absolute;
-	top: 51px;
-	width: 265px;
-	height: 87%;
-	font-size: 16px;
-	/* 	border: 3px #12B7F5 solid;  */
-}
-
-ul, li {
-	margin: 0;
-	list-style: none;
-	text-align: center;
-}
-</style>
+<link th:href="@{/css/common.css}" rel="stylesheet"
+	type="text/css" />
 <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css" />
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script th:href="@{/js/bootstrap.min.js}"></script>
@@ -61,7 +32,7 @@ ul, li {
 
 				</tr>
 				<tr>
-					<td style="width: 150px; height: 50px; font-size: 16px;">会议室名称:</td>
+					<td style="width: 150px; height: 50px; font-size: 16px;font-weight: bold;">会议室名称:</td>
 					<td><input type="hidden" name="boradroomId"
 						th:value="${boradroom.boradroomId}"><input
 						class="form-control" name="boradroomName"
@@ -69,19 +40,19 @@ ul, li {
 						placeholder="例如：第一会议室" maxlength="20" /></td>
 				</tr>
 				<tr>
-					<td style="width: 150px; height: 50px; font-size: 16px;">会议室类型:</td>
+					<td style="width: 150px; height: 50px; font-size: 16px;font-weight: bold;">会议室类型:</td>
 					<td><input class="form-control" name="boradRoomType"
 						th:value="${boradroom.boradRoomType}" type="text"
 						placeholder="例如：中型会议室" maxlength="20" /></td>
 				</tr>
 				<tr>
-					<td style="width: 150px; height: 50px; font-size: 16px;">最多容纳人数：</td>
+					<td style="width: 150px; height: 50px; font-size: 16px;font-weight: bold;">最多容纳人数：</td>
 					<td><input class="form-control" name="boradRoomNumber"
 						th:value="${boradroom.boradRoomNumber}" type="text"
 						placeholder="填写一个正整数" /></td>
 				</tr>
 				<tr>
-					<td style="width: 150px; height: 50px; font-size: 16px;">当前状态：</td>
+					<td style="width: 150px; height: 50px; font-size: 16px;font-weight: bold;">当前状态：</td>
 					<td th:if="${status}eq'启用'  "><input type="radio" id="status" name="boradRoomStatus" checked="checked" value="启用" /> 
 					<label for="status">启用</label> 
 					<input type="radio" id="status" name="boradRoomStatus" value="停用" /> 
@@ -94,7 +65,7 @@ ul, li {
 					</td>
 				</tr>
 				<tr>
-					<td style="width: 150px; height: 150px; font-size: 16px;">备注：</td>
+					<td style="width: 150px; height: 150px; font-size: 16px;font-weight: bold;">备注：</td>
 					<td><textarea class="form-control" name="boradRoomreMark"
 							maxlength="200" rows="5" cols="60" placeholder="200字以内的文字描述"
 							th:text="${boradroom.boradRoomreMark}"></textarea></td>

@@ -17,14 +17,16 @@ public class Department implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer departmentId;      // 部门编号
+	private String departmentId;      // 部门编号
 	private String departMentName;     // 部门名称
 	private String workSet;        	   // 部门办公地点
-	public Integer getDepartmentId() {
+
+
+	public String getDepartmentId() {
 		return departmentId;
 	}
 
-	public void setDepartmentId(Integer departmentId) {
+	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
 	}
 
@@ -44,11 +46,12 @@ public class Department implements Serializable{
 		this.workSet = workset;
 	}
 
-	public Department(Integer departmentId, String departmentname, String workset) {
-		super();
+
+
+	public Department(String departmentId, String departMentName, String workSet) {
 		this.departmentId = departmentId;
-		this.departMentName = departmentname;
-		this.workSet = workset;
+		this.departMentName = departMentName;
+		this.workSet = workSet;
 	}
 
 	public Department() {

@@ -1,0 +1,69 @@
+<html>
+ <head>
+ <meta charset="utf-8">
+ <title>完成左移右移</title>
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+ <style type="text/css">
+     table{background-color:purple;}
+     input{background-color:yellow;}
+ </style>
+ <script type="text/javascript">
+     $(document).ready(function(){
+         $("#b1").click(function(){
+             $("#k2").append($("#k1").find("option:selected"));
+         });
+        
+         $("#b2").click(function(){
+            $("#k1").append($("#k2 option:selected"));
+         });
+        
+         $("#b3").click(function(){
+             $("#k2").append($("#k1 option"));
+         });
+         
+        $("#b4").click(function(){
+             $("#k1").append($("#k2 option"));
+         });
+         
+        $("#add0").click(function(){
+             var a=$("#add").val();
+             $("#k1").append("<option value="+a+0+">"+a+"</option>");
+         });
+     });
+ </script>    
+ </head>
+ <body>
+ <form action="#" method="post">
+ <table>
+     <tr>
+         <td>
+             <select id="k1" size="10" style="width:200px;">
+                <option value="Ning1" id="p1">柠檬学院</option>
+                 <option value="Ning2" id="p2">柠檬学员</option>
+                <option value="Ning3" id="p3">柠檬人</option>
+             </select>
+        </td>
+         <td>
+             <input type="button" id="b1" value=">>"/>
+             <input type="button" id="b3" value="==>>"/><br/>
+            <input type="button" id="b2" value="<<"/>
+             <input type="button" id="b4" value="<<=="/>
+                
+         </td>
+        <td>
+            <select id="k2" value="Ning4" size="10" style="width:200px;">
+                <option>李哥</option>                
+            </select>
+        </td>
+    </tr>
+ </table>
+ </form>    
+ 内容：<input type="text" id="add"/>
+       <input type="button" value="添加" id="add0"/>
+ 
+ 
+ </body>
+ </html>
+
+ 
+ 

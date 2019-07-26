@@ -1,5 +1,7 @@
 package com.example.demo.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +24,6 @@ public interface EmployeeDao extends JpaRepository<Employee, Integer>, JpaSpecif
 	 * */
 	@Query("from Employee where employeeName=:#{#employee.employeeName}  and employeePassword=:#{#employee.employeePassword}")
 	public Employee findByemployeeNameAndemployeePassword(Employee employee);
+	
+	public List<Employee> findAllBydepartMent(String did);
 }

@@ -93,4 +93,10 @@ public class Boradroom implements Serializable {
 				+ ", boradRoomStatus=" + boradRoomStatus + "]";
 	}
 
+
+
+	
+	
+	
+
 }
