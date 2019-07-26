@@ -9,8 +9,14 @@ import com.example.demo.entity.Department;
 
 public interface DepartmentDao extends JpaRepository<Department, Integer>, JpaSpecificationExecutor<Department> {
 
+//	public List<Department> findAllBydepartmentId(String did);
+//
+//	public List<Department> findAllBydepartmentIdNot(String did);
+
 	public List<Department> findAllBydepartmentId(String did);
 
 	public List<Department> findAllBydepartmentIdNot(String did);
+
+	public List<Department> findAllBydepartmentIdNot(Integer idInteger);
 
 }

@@ -20,7 +20,6 @@
  * 
  * public class MyRealm extends AuthorizingRealm {
  * 
- * 
  * @Override // 授权(授权过滤器) protected AuthorizationInfo
  * doGetAuthorizationInfo(PrincipalCollection principals) {
  * System.out.println("执行授权逻辑"); //给资源进行授权 SimpleAuthorizationInfo info=new
@@ -39,7 +38,7 @@
  * return info; }
  * 
  * @Resource(name = "EmployeeServiceImpl") private EmployeeService
- * employeeservice; //必须放在中间,不然莫名报错(会先执行上面的内容)
+ * employeeservice; // 必须放在中间,不然莫名报错(会先执行上面的内容)
  * 
  * @Override // 认证 protected AuthenticationInfo
  * doGetAuthenticationInfo(AuthenticationToken arg0) throws
@@ -62,5 +61,4 @@
  * "MyRealm"); }
  * 
  * }
- * 
  */

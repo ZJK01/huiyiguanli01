@@ -17,7 +17,7 @@ public class Postition implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer positionId; // 部门编号
-	private String positionName; // 部门名称
+	private String positionName; //职位等级
 
 	public Integer getPositionid() {
 		return positionId;

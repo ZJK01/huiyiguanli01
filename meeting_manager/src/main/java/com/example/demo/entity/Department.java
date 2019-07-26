@@ -20,7 +20,7 @@ public class Department implements Serializable{
 	private String departmentId;      // 部门编号
 	private String departMentName;     // 部门名称
 	private String workSet;        	   // 部门办公地点
-
+	
 
 	public String getDepartmentId() {
 		return departmentId;
@@ -30,15 +30,15 @@ public class Department implements Serializable{
 		this.departmentId = departmentId;
 	}
 
-	public String getDepartmentname() {
+	public String getDepartMentName() {
 		return departMentName;
 	}
 
-	public void setDepartmentname(String departmentname) {
-		this.departMentName = departmentname;
+	public void setDepartMentName(String departMentName) {
+		this.departMentName = departMentName;
 	}
 
-	public String getWorkset() {
+	public String getWorkSet() {
 		return workSet;
 	}
 
@@ -46,16 +46,18 @@ public class Department implements Serializable{
 		this.workSet = workset;
 	}
 
-
-
-	public Department(String departmentId, String departMentName, String workSet) {
-		this.departmentId = departmentId;
-		this.departMentName = departMentName;
+	public void setWorkSet(String workSet) {
 		this.workSet = workSet;
 	}
 
 	public Department() {
 		super();
+	}
+
+	public Department(String departmentId, String departMentName, String workSet) {
+		this.departmentId = departmentId;
+		this.departMentName = departMentName;
+		this.workSet = workSet;
 	}
 
 	@Override

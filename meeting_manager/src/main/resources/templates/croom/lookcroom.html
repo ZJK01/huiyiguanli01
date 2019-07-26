@@ -7,7 +7,14 @@
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
 <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/clickHandler.js"></script>
 
+<style type="text/css">
+body {
+	margin: 0 auto;
+	font-size: 16px;
+}
+</style>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top"
@@ -44,22 +51,14 @@
 							class="btn btn-info">查看详情</button></a></td>
 			</tr>
 		</table>
-		<div style="padding-left:1020px;">
-		<a th:href="@{/croom/lookcroom/?(id=${0})}" class="btn btn-info">首页</a>
-		<a th:href="@{/croom/lookcroom/?(id=${one-1 ge 0 ? one-1 : 0})}" class="btn btn-info">上一页</a>
-		<a th:href="@{/croom/lookcroom/?(id=${one+1 le start ? one+1 : start})}" class="btn btn-info">下一页</a>
-		<a th:href="@{/croom/lookcroom/?(id=${start})}" class="btn btn-info">末页</a>
+		<div style="padding-left: 1020px;">
+			<a th:href="@{/croom/lookcroom/?(id=${0})}" class="btn btn-info">首页</a>
+			<a th:href="@{/croom/lookcroom/?(id=${one-1 ge 0 ? one-1 : 0})}"
+				class="btn btn-info">上一页</a> <a
+				th:href="@{/croom/lookcroom/?(id=${one+1 le start ? one+1 : start})}"
+				class="btn btn-info">下一页</a> <a
+				th:href="@{/croom/lookcroom/?(id=${start})}" class="btn btn-info">末页</a>
 		</div>
 	</div>
-	<script type="text/javascript">
-		function clickHandler(e) {
-			var v11 = document.getElementById(e);
-			if (v11.style.display == "block") {
-				v11.style.display = "none";
-			} else {
-				v11.style.display = "block";
-			}
-		}
-	</script>
 </body>
 </html>

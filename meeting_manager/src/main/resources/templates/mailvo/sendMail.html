@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
 <meta charset="UTF-8" />
 <title>发送邮件</title>
@@ -108,7 +107,7 @@ ul, li {
 				</div>
 			</div>
 		</form>
-
+</div>
 		<script th:inline="javascript">
         var appCtx = [[${#request.getContextPath()}]];
  
@@ -153,7 +152,6 @@ ul, li {
 				v11.style.display = "block";
 			}
 		}
-    </script>
-	</div>
+</script>
 </body>
 </html>

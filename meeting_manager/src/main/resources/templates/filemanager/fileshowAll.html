@@ -33,18 +33,18 @@
 	<div
 		style="position: absolute; left: 263px; top: 51px; width: 83.5%; border: 2px solid red;">
 		<form style="width: 720px;" class="container" method="post">
-			<input type="text"  id="matterId"
-				   th:value="${matter.matterId}" hidden="hidden">
+			
+			<input type="text" id="matterId" th:value="${matter.matterId}"
+				hidden="hidden">
 			<div class="form-group">
 				<label for="exampleInputEmail1">文件名</label> <input type="text"
-					class="form-control" id="matterName" 
+					class="form-control" id="matterName"
 					th:value="${matter.matterName}">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputPassword1">上传人(工号)</label> <input
-					type="text" class="form-control" 
-					disabled="disabled" id="matterUserid"
-					th:value="${matter.matterUserid}">
+					type="text" class="form-control" disabled="disabled"
+					id="matterUserid" th:value="${matter.matterUserid}">
 			</div>
 			<div class="checkbox">
 				<label> <input type="checkbox" id="matterEncryption"
@@ -54,27 +54,33 @@
 			<div class="form-group">
 				<label for="exampleInputFile">新修改密码</label> <input type="password"
 					class="form-control" id="matterPassword" disabled="disabled"
-					 th:value="${matter.matterPassword}" />
+					th:value="${matter.matterPassword}" />
 			</div>
-			<!-- 隐藏 -->
-			<input type="password"
-					class="form-control" id="matterPassword" hidden="hidden"
-					 th:value="${matter.matterPassword}" />
-					 
+
 			<div class="form-group">
-				<select id="deptnoId">
-					<option value="40">公网
-					<option th:if="${matter.deptnoId!=null}"
-						th:value="${matter.deptnoId}">部门
+				<!-- 判断是否是经理登陆 -->
+				<select id="deptnoId" th:if="${Sub_department} eq null">
+					<option value="40">公网(默认选中)
+					<option value="10">研发部
+					<option value="20">销售部
+					<option value="30">营业部
+				</select>
+				<!-- 判断是否是普通职员登陆 -->
+				<select id="deptnoId" th:if="${matter.deptnoId} ne 40">
+					<option th:value="${Sub_department}">部门</option>
+					<option value="40">公网</option>
+				</select>
+				<select id="deptnoId" th:if="${matter.deptnoId} eq 40">
+					<option value="40">公网</option>
+					<option th:value="${Sub_department}">部门</option>
 				</select>
 			</div>
 			<div id="div1"></div>
 			<button type="button" class="btn btn-default" id="sub1">提交修改</button>
 			<button type="button" class="btn btn-default" id="sub2">恢复初始状态</button>
 		</form>
-		<p th:text="${matter.matterContent}" id="txt"      hidden="hidden"></p>
+		<p id="txt" hidden="hidden" th:text="${matter.matterContent}"></p>
 	</div>
-
 	<script type="text/javascript">
 		//wangeditor
 		var E = window.wangEditor;
@@ -111,43 +117,62 @@
 			editor.txt.html(txt);
 		})
 
+		//编辑器自带的监听onchange功能
+		editor.customConfig.onchange = function(html) {
+			// html 即编辑器中的内容
+			$("#div1").val(html);
+		};
+
 		//恢复文件未修改状态(刷新页面)
 		$('#sub2').click(function() {
 			window.location.reload();
 		})
-	
-		//提交修改
-		$('#sub1').click(function(){
-			var matterId=$('#matterId').val();
-			var matterName=$('#matterName').val();
-			var matteruserid=$('#matterUserid').val();
-			var matterEncryption=$('#matterEncryption').val();
-			var matterPassword=$('#matterPassword').val();
-			var deptnoId=$('#deptnoId').val();
-			var editorhtml=editor.txt.html()+"";
-			
-			$.ajax({
-				url : "/filemanager/updatefile",
-				type : "POST",
-				data:{ 
-					   matterId : matterId,
-				       matterName:matterName,
-				       matterUserid:matteruserid,
-			 		   matterEncryption:matterEncryption,
-			 		   matterPassword:matterPassword,
-			 		   deptnoId:deptnoId,
-			 		   mattercontent:editorhtml
-				    },
-				success : function(result){
-					alert("修改成功正在返回页面");
-					window.location.replace("http://localhost/filemanager/look");  //跳转页面
-				},
-				error : function() {
-					alert("更新失败");
+
+		$('#matterPassword').blur(function() {  					//获得焦点时
+			var length=$.trim($(this).val()).length;				//去除空格
+			if (length ==0) {
+				$('#matterEncryption').val('false');
+				if($('#matterEncryption').prop("checked")){
+						alert("您的密码将设置为空");
 				}
-			})
-			
-		})
+			}
+		});
+		
+		//提交修改
+		$('#sub1')
+				.click(
+						function() {
+							var matterId = $('#matterId').val();
+							var matterName = $('#matterName').val();
+							var matteruserid = $('#matterUserid').val();
+							var matterEncryption = $('#matterEncryption').val();
+							var matterPassword = $('#matterPassword').val();
+							var deptnoId = $('#deptnoId').val();
+							var editorhtml = editor.txt.html() + "";
+
+							$.ajax({
+										url : "/filemanager/updatefile",
+										type : "POST",
+										data : {
+											matterId : matterId,
+											matterName : matterName,
+											matterUserid : matteruserid,
+											matterEncryption : matterEncryption,
+											matterPassword : matterPassword,
+											deptnoId : deptnoId,
+											mattercontent : editorhtml
+										},
+										success : function(result) {
+											alert("修改成功正在返回页面");
+											window.location
+													.replace("http://localhost/filemanager/look"); //跳转页面
+										},
+										error : function() {
+											alert("更新失败");
+										}
+									})
+
+						})
 
 		//根据是否加密来调整密码框的情况
 		function matter() {
@@ -158,7 +183,6 @@
 				$('#matterPassword').attr("disabled", "disabled");
 			}
 		}
-	
 	</script>
 </body>
 </html>

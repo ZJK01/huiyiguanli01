@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
 <link href=" /css/bootstrap.css" rel="stylesheet" />
-
+<script type="text/javascript" src="/js/clickHandler.js"></script>
 </head>
 <style type="text/css">
 #td {
@@ -97,33 +97,34 @@ body {
 				style="margin: auto;">
 				<div class="form-group">
 					<h3 style="text-align: center;font-size: 20px;font-weight: bold;">员工注册</h3>
-					<label>工号</label> <input type="text" class="form-control"
-						id="employeeaccount" placeholder="employeeaccount">
+					<label>工号</label><input type="text" class="form-control" style="margin: 5px;"
+						id="employeeaccount" placeholder="工号" name="employeeAccount">
 				</div>
 				<div class="form-group">
-					<label>用户名</label> <input class="form-control" style="margin: 5px;"
-						type="text" name="employeeName" placeholder="用户名"
-						onblur="if(this.value.replace(/^ +| +$/g,'')=='')alert('不能为空,字母与数字组合,不能太容易!')" />
+					<label>用户名</label><input class="form-control" style="margin: 5px;"
+						type="text" name="employeeName" placeholder="用户名" />
 				</div>
 				<div class="form-group">
-					<label>密码</label> <input class="form-control" style="margin: 5px;"
-						type="password" name="employeePassword" placeholder="密码"
-						onblur="if(this.value.replace(/^ +| +$/g,'')=='')alert('不能为空!')" />
+					<label>密码</label><input class="form-control" style="margin: 5px;"
+						type="password" name="employeePassword" placeholder="密码" />
 				</div>
-				<div class="form-group">
-					<label>部门</label> <select name="department" class="form-control">
-						<option value="10">研发部</option>
+				<div class="form-group" style="margin: 5px;">
+					<label>部门</label> <select name="departMent" class="form-control" id="departMent">
+						<!-- <option value="10">研发部</option>
 						<option value="20">销售部</option>
-						<option value="30">营业部</option>
+						<option value="30">营业部</option> -->
 					</select>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="margin: 5px;">
+					<label>职位</label> <select name="postitionId" class="form-control" id="postitionId">
+					</select>
+				</div>
+				<div class="form-group" style="margin: 5px;">
 					<label>Email</label> <input class="form-control"
 						style="margin: 5px;" type="text" name="employeeEmail"
-						placeholder="Email"
-						onblur="if(this.value.replace(/^ +| +$/g,'')=='')alert('不能为空!邮箱各式##@qq.com or ##@163.com ....')" />
+						placeholder="Email" />
 				</div>
-				<div class="form-group" style="text-align: center">
+				<div class="form-group" style="text-align: center;">
 					<input type="submit" value="注册"
 					class="btn btn-success" onclick="return checkEmail()"/>
 				</div>
@@ -131,25 +132,39 @@ body {
 		</div>
 	</div>
 	<script type="text/javascript">
-		function checkEmail(e) {
-			console.log(e)
-			var $email = $("#email").val();
-			if (!$email
-					.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
-				alert("格式不正确！请重新输入");
-				$("#email").focus();
-				return false;
-			}
-		}
-
-		function clickHandler(e) {
-			var v11 = document.getElementById(e);
-			if (v11.style.display == "block") {
-				v11.style.display = "none";
-			} else {
-				v11.style.display = "block";
-			}
-		}
+		$(function(){
+			var postitionId=$('#postitionId');
+			$.ajax({
+				url:"/manager/getpostition",
+				type:'GET',
+				success:function(result){
+					result=JSON.parse(result);
+					var ss=""
+					$.each(result,function(index,item){
+						ss+="<option value="+item.positionid+">"+item.positionname+"</option>"
+					});
+					postitionId.append(ss);
+				}
+			});
+			
+			var departMent=$('#departMent');
+			$.ajax({
+				url:"/manager/getdepartment",
+				type:'GET',
+				success:function(result){
+					result=JSON.parse(result);
+					/* var tt=JSON.stringify(result);
+					alert(tt); */
+					var ss=""
+					$.each(result,function(index,item){
+						
+						ss+="<option value="+item.departMentId+">"+item.departMentName+"</option>"
+					});
+					departMent.append(ss);
+				}
+			});
+			
+		});
 	</script>
 </body>
 </html>

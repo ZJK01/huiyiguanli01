@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
-import java.util.List;
 import java.util.Optional;
 
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +21,7 @@ import com.example.demo.service.BoradroomService;
  * 会议室：添加，查看
  * */
 @Controller
-@RequestMapping("croom")
+@RequestMapping("/croom")
 public class CRoomController {
 
 	@Autowired
@@ -35,7 +33,11 @@ public class CRoomController {
 		return "/croom/croom";
 	}
 
+
 //	会议室添加
+
+//	会议室添加
+
 	public String addCroom(@ModelAttribute Boradroom boradroom) {
 		boradroomService.addCroom(boradroom);
 		return "redirect:/croom/lookcroom";

@@ -7,7 +7,37 @@
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
 <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/clickHandler.js"></script>
 <style type="text/css">
+body {
+	margin: 0 auto;
+	font-size: 16px;
+}
+
+#ct {
+	/* 	font-size: 30px; */
+	color: white;
+}
+
+}
+#l {
+	display: inline;
+}
+
+#x {
+	position: absolute;
+	top: 51px;
+	width: 265px;
+	height: 100%;
+	/* 	border: 3px #12B7F5 solid; */
+}
+
+ul, li {
+	margin: 0;
+	list-style: none;
+	text-align: center;
+}
+
 thead td, tbody td {
 	width: 20px;
 	height: 20px;
@@ -29,13 +59,30 @@ input {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+
+#div1 {
+	float: right;
+	display: inline;
+	width: 500px;
+	height: 570px;
+	/* border-left: 1px solid black; */
+	padding-top: 20px;
+}
+
+#cent {
+	background: url(/images/timg.jpg) no-repeat 4px 5px;
+	position: absolute;
+	left: 263px;
+	top: 51px;
+	width: 1300px;
+}
 </style>
 </head>
 <body>
 
 	<!-- 上部分 -->
 	<nav class="navbar navbar-inverse navbar-fixed-top"
-		style="background: #23527C;position: absolute;">
+		style="background: #23527C; position: absolute;">
 		<div th:replace="common/header :: header"></div>
 	</nav>
 
@@ -46,15 +93,15 @@ input {
 	<!-- 左边end -->
 
 	<!-- 中间内容 -->
-	<div
-		style="position: absolute; left: 263px; top: 51px; width: 1300px;">
-		<div class="container">
+	<div id="cent">
+		<div class="container"
+			style="float: left; display: inline; width: 780px;">
 			<div class="cal-control-box">
 				<span class="glyphicon glyphicon-backward" aria-hidden="true"
 					id="minusyear"></span> <span
 					class="glyphicon glyphicon-chevron-left" aria-hidden="true"
 					id="minusmonth"></span> <input type="text"
-					style="width: 50px; text-align: center" id="year" /> <span>年</span>
+					style="width: 50px; text-align: center" id="year" /><span>年</span>
 				<input type="text" style="width: 50px; text-align: center"
 					id="month" /> <span>月</span> <span
 					class="glyphicon glyphicon-chevron-right" aria-hidden="true"
@@ -62,7 +109,7 @@ input {
 					aria-hidden="true" id="addyear"></span>
 			</div>
 			<div class="cal-box">
-				<table style="width: 700px; height: 500px;">
+				<table style="width: 740px; height: 500px;">
 					<thead>
 						<tr>
 							<td class="sun">日</td>
@@ -133,28 +180,44 @@ input {
 				</table>
 			</div>
 		</div>
+		<div id="div1">
+			<h2 style="text-align: center" id="h2">本月会议日程安排</h2>
+			<table class="table table-bordered" id="table">
+				<tr>
+					<td>会议室id</td>
+					<td>会议人数</td>
+					<td>会议开始时间</td>
+					<td>会议结束时间</td>
+					<td>会议内容</td>
+					<td>预定时间</td>
+					<td>预定人</td>
+				</tr>
+				<tr th:each="list:${lists}" style="text-align: center;">
+					<td th:text="${list.broomid}"></td>
+					<td th:text="${list.meetingcount}"></td>
+					<td
+						th:text="${#strings.substring(list.starttime,0,#strings.length(list.starttime)-2)}"></td>
+					<td
+						th:text="${#strings.substring(list.endtime,0,#strings.length(list.endtime)-2)}"></td>
+					<td th:text="${list.meetingstas}"></td>
+					<td
+						th:text="${#strings.substring(list.reservationtime,0,#strings.length(list.reservationtime)-2)}"></td>
+					<td th:text="${list.reservationuserid}"></td>
+				</tr>
+			</table>
+		</div>
 
 	</div>
 
 	<script type="text/javascript">
-		//下拉列表
-		function clickHandler(e) {
-			var v = document.getElementById(e);
-			if (v.style.display == "block") {
-				v.style.display = "none";
-			} else {
-				v.style.display = "block";
-			}
-		}
-		
 		//日历
 		$(function(){
 	        var $td = $('tbody').find('td');
-	 
+	        
 	        var date = new Date(),
-	                year = date.getFullYear(),
-	                month = date.getMonth() + 1,
-	                day = date.getDate(),days;
+	            year = date.getFullYear(),
+	            month = date.getMonth() + 1,
+	            day = date.getDate(),days;
 	 		 $("#year").val(year);
 	 		 $("#month").val(month);
 	 
@@ -189,12 +252,35 @@ input {
 	        }
 	 
 	        initCal(year,month,day);
-	        
+	       
+	 //时间戳转时间函数
+	function dataFormat(num, type) {
+		var dd = new Date(num);
+		var y = dd.getFullYear();
+		var m = dd.getMonth() + 1;
+		var d = dd.getDate();
+		var h = dd.getHours();
+		var i = dd.getMinutes();
+		var s = dd.getSeconds();
+		m = m < 10 ? '0' + m : m;
+		d = d < 10 ? '0' + d : d;
+		h = h < 10 ? '0' + h : h;
+		i = i < 10 ? '0' + i : i;
+		s = s < 10 ? '0' + s : s;
+		if(type) {
+			return y + '-' + m + '-' + d + ' ' + h + ':' + i + ':' + s
+		} else {
+			return y + '-' + m + '-' + d
+		}
+	}
+
+	        //减年份
 			$("#minusyear").click(function(){
 				var years=$("#year").val()-1;
 	        	var months=$("#month").val();
 	        		$("#year").val(years);
 	        	initCal(years,months,day);
+	        	aj(years,months);
 	        });
 	        
 	        $("#minusmonth").click(function(){
@@ -209,6 +295,7 @@ input {
 	        	$("#year").val(years);
 	        	$("#month").val(months);
 	        	initCal(years,months,day);
+	        	aj(years,months);
 	        });
 	        
 	        
@@ -224,6 +311,7 @@ input {
 	        	$("#year").val(years);
 	        	$("#month").val(months);
 	        	initCal(years,months,day);
+	        	aj(years,months);
 	        });
 	        
 	        $("#addyear").click(function(){
@@ -232,8 +320,67 @@ input {
 	        	$("#year").val(years);
 	        	$("#month").val(months);
 	        	initCal(years,months,day);
+	        	 
+	        	aj(years,months);
 	        });
 	        
+	        $('#year').change(function(){
+	        	var years=$("#year").val();
+	        	var months=$("#month").val();
+	        	$("#year").val(years);
+	        	$("#month").val(months);
+	        	initCal(years,months,day);
+	        	aj(years,months);
+	        });
+	        
+ 			$('#month').change(function(){
+ 				var years=$("#year").val();
+	        	var months=$("#month").val();
+	        	$("#year").val(years);
+	        	$("#month").val(months);
+	        	initCal(years,months,day);
+	        	aj(years,months);
+	        });
+ 			
+ 		//发送ajax更新内容
+ 		function aj(years,months){
+ 			//设置内容为空
+	        $.ajax({
+	        		url : "/calendar/flush",
+					type : "POST",
+					data : {
+						year : years,
+						month :months,
+					},
+					success : function(result) {
+						result=JSON.parse(result);
+						var title="<h2 style='text-align: center' id='h2'>本月会议日程安排</h2>"+
+						"<table class='table table-bordered' id='table'><tr><td>会议室id</td><td>会议人数</td>"
+						+"<td>会议开始时间</td><td>会议结束时间</td><td>会议内容</td><td>预定时间</td><td>预定人</td></tr></table>";
+						var ss="";
+						$.each(result,function(index,item){
+							/* alert(item.reservationtime.time); */
+						var reservationtime =dataFormat(item.reservationtime.time,true);
+						var starttime=dataFormat(item.starttime.time,true);
+						var endtime=dataFormat(item.endtime.time,true);
+							ss+="<tr  style='text-align:center;'><td>"+item.broomid+"</td><td>"+item.meetingcount
+								+"</td><td>"+starttime+"</td><td>"+endtime+"</td><td>"+item.meetingstas+"</td><td>"
+								+reservationtime+"</td><td>"+item.reservationuserid+"</td></tr>";
+						});
+						if(ss!=""){
+							$("#div1").empty();
+							$("#div1").append(title);
+							$("#table tr:eq(0)").after(ss);
+						}else{
+							$("#div1").empty();
+							$("#div1").append("<h1 style='text-align:center;margin-top:200px;'>本月没有会议</h1>");
+						}
+					},
+					error : function() {
+						alert("更新失败");
+					}
+	        	})
+ 			}
 	        
 	    })//end
 	</script>

@@ -24,6 +24,7 @@ public class Employee implements Serializable {
 	private String power; // 权力
 	private String employeeEmail; // 邮箱
 	private String departMent; // 所属部门
+	private Integer postitionId; // 职位等级编号
 
 	public Integer getEmployeeId() {
 		return employeeId;
@@ -81,9 +82,16 @@ public class Employee implements Serializable {
 		this.departMent = departMent;
 	}
 
+	public Integer getPostitionId() {
+		return postitionId;
+	}
+
+	public void setPostitionId(Integer postitionId) {
+		this.postitionId = postitionId;
+	}
+
 	public Employee(Integer employeeId, String employeeName, String employeeAccount, String employeePassword,
-			String power, String employeeEmail, String departMent) {
-		super();
+			String power, String employeeEmail, String departMent, Integer postitionId) {
 		this.employeeId = employeeId;
 		this.employeeName = employeeName;
 		this.employeeAccount = employeeAccount;
@@ -91,6 +99,7 @@ public class Employee implements Serializable {
 		this.power = power;
 		this.employeeEmail = employeeEmail;
 		this.departMent = departMent;
+		this.postitionId = postitionId;
 	}
 
 	public Employee() {

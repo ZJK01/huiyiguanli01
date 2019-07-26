@@ -14,7 +14,7 @@ import com.example.demo.service.MailVoService;
 
 /*邮件控制层*/
 @Controller
-@RequestMapping("email")
+@RequestMapping("/email")
 public class EmailController {
 
 	@Autowired

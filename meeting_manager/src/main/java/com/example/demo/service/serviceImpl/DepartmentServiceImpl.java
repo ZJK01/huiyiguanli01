@@ -29,4 +29,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	
 
+	@Autowired
+	DepartmentDao departmentdao;
+	
+	@Override
+	public List<Department> findAll() {
+		return departmentdao.findAll();
+	}
+
+
+	@Override
+	public List<Department> findAllDepartmentIdNot(String idInteger) {
+		
+		return departmentdao.findAllBydepartmentIdNot(idInteger);
+	}
+
 }
