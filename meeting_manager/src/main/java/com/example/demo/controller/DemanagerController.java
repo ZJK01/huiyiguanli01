@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -83,31 +85,20 @@ public class DemanagerController {
 		}
 	}
 
-
 	// 注册用户
 	@PostMapping("reg")
 	public String adduser(@ModelAttribute Employee employee, HttpSession session, Model model) {
-		if (!employee.getEmployeeName().equals("")) {
-			if (employee.getEmployeePassword() != "") {
-				if (employee.getEmployeeEmail() != "") {
-					if (employee.getPower() != "") {
-						employeeServiceImpl.add(employee);
-						return "/demanager/zc";
-					} else {
-						return "redirect:zc";
-					}
-				} else {
-					return "redirect:zc";
-				}
-			} else {
-				return "redirect:zc";
-			}
-		} else {
+		if(employee!=null) {
+			//设置加密规则(shiro)
+			employee.setEmployeePassword((new SimpleHash("MD5",employee.getEmployeePassword(),ByteSource.Util.bytes("123"),1024)).toString());
+			employeeServiceImpl.add(employee);
+			return "/demanager/sucess_send";
+		}else {
 			return "redirect:zc";
 		}
+			
 	}
 	
-
 
 	// 预定会议
 	@PostMapping("/ht1")

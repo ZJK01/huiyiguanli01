@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -59,6 +61,8 @@ public class FilemanagerController {
 			e.printStackTrace();
 		}
 		matter.setMatterTime(new Date());
+		//文件密码加密
+		matter.setMatterPassword((new SimpleHash("MD5",matter.getMatterPassword(),ByteSource.Util.bytes("123"),1024)).toString());
 		matterService.save(matter);
 		return "redirect:./send";
 	}

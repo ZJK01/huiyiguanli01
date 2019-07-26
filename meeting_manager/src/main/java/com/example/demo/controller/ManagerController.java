@@ -5,7 +5,13 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,26 +53,33 @@ public class ManagerController {
 	}
 
 	@PostMapping("yuyue")
-	public String managerlogin(String username, String password, HttpSession session) {
-		Manager manager = new Manager();
-		manager.setManagerName(username);
-		manager.setManagerPassword(password);
-		Manager man = managerService.search(manager);
-		if (man != null) {
-			session.removeAttribute("Emplpyee");
-			session.setAttribute("Manager", man);
-			return "/yuyue";
-		} else {
-			Employee employee = new Employee(username, password);
-			Employee emp = employeeService.findByEmployeeNameAndEmployeePassword(employee);
-			if (emp != null) {
-				session.removeAttribute("Manager");
-				session.setAttribute("Employee", emp);
-				return "/yuyue";
-			} else {
-				return "/index";
+	public String managerlogin(String username, String password, HttpSession session,ModelMap model) {
+		
+		//1.获取subject
+		Subject subject=SecurityUtils.getSubject();
+		//2.封装数据
+		UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+		//3.执行登录方法(判断)
+		try {
+			subject.login(token);
+			Manager manager=null;
+			Employee employee=null;
+			try {
+				manager=(Manager) subject.getPrincipal();		//这一句会报错
+				session.setAttribute("Manager",manager);
+			} catch (Exception e) {
+				employee=(Employee) subject.getPrincipal();
+				session.setAttribute("Employee",employee);
 			}
+			return "/yuyue";
+		} catch (UnknownAccountException e) {
+			model.addAttribute("msg","用户名不存在");
+			return "/index";
+		}catch (IncorrectCredentialsException e) {
+			model.addAttribute("msg", "密码错误");
+			return "/index";
 		}
+	
 	}
 	
 	

@@ -6,4 +6,6 @@ public interface ManagerService {
 
 	public Manager search(Manager manager);
 	
+	public Manager findbymanagerName(String managerName);
+	
 }

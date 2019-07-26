@@ -26,6 +26,7 @@ body {
 	  <div class="container">
       <form class="form-signin" th:action="@{/manager/yuyue}" method="post">
         <h2 class="form-signin-heading" th:text="#{login.System}" style="text-align:center">Meeting reservation system</h2>
+        <h3 th:if="${msg!=null}" th:text="${msg}" style="text-align:center;color:red"></h3>
        	<!-- 账号 -->
         <label for="inputUsername" class="sr-only" th:text="#{login.Username}">Username</label>
         <input class="form-control" type="text" name="username"

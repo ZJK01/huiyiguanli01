@@ -56,6 +56,13 @@ public class Manager implements Serializable {
 		super();
 	}
 
+
+	public Manager(String managerName, String managerPassword) {
+		super();
+		this.managerName = managerName;
+		this.managerPassword = managerPassword;
+	}
+
 	@Override
 	public String toString() {
 		return "Manager [managerId=" + managerId + ", managerName=" + managerName + ", managerPassword="

@@ -19,4 +19,15 @@ public class ManagerServiceImpl implements ManagerService{
 		
 	}
 
+	@Override
+	public Manager findbymanagerName(String managerName) {
+		
+		if(managerName==null) {
+			return null;
+		}else {
+			return managerdao.findBymanagerName(managerName);
+		}
+		
+	}
+
 }

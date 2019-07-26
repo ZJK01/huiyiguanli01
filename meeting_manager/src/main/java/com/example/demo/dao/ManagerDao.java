@@ -10,5 +10,7 @@ public interface ManagerDao extends JpaRepository<Manager,Integer>,JpaSpecificat
 
 	@Query("from Manager where managerName=:#{#manager.managerName} and managerPassword=:#{#manager.managerPassword}")
 	public Manager findByManagerNameAndManagerPassword(Manager manager);
+
+	public Manager findBymanagerName(String managerName);
 	
 }

@@ -1,11 +1,18 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.ManyToAny;
 
 /**
  * 员工表
@@ -25,6 +32,7 @@ public class Employee implements Serializable {
 	private String employeeEmail; // 邮箱
 	private String departMent; // 所属部门
 	private Integer postitionId; //职位等级编号
+	
 
 	public Integer getEmployeeId() {
 		return employeeId;
@@ -89,6 +97,9 @@ public class Employee implements Serializable {
 	public void setPostitionId(Integer postitionId) {
 		this.postitionId = postitionId;
 	}
+
+
+
 
 	public Employee(Integer employeeId, String employeeName, String employeeAccount, String employeePassword,
 			String power, String employeeEmail, String departMent, Integer postitionId) {
