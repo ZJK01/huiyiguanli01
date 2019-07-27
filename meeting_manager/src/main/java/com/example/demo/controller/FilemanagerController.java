@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.common.util.Editor;
 import com.example.demo.common.util.NumberPage;
 import com.example.demo.entity.Employee;
-import com.example.demo.entity.Manager;
 import com.example.demo.entity.Matter;
 import com.example.demo.service.MatterService;
 
@@ -40,15 +39,9 @@ public class FilemanagerController {
 	// send file
 	@GetMapping("/send")
 	public String filemain(ModelMap model, HttpSession session) {
-		if (null != session.getAttribute("Employee")) {
-			Employee employee = (Employee) session.getAttribute("Employee");
-			model.addAttribute("id", employee.getEmployeeAccount());
-			model.addAttribute("deptno", employee.getDepartMent());
-		} else {
-			Manager manager = (Manager) session.getAttribute("Manager");
-			model.addAttribute("id", manager.getManagerId());
-			model.addAttribute("deptno", null);
-		}
+		Employee employee = (Employee) session.getAttribute("Employee");
+		model.addAttribute("id", employee.getEmployeeAccount());
+		model.addAttribute("deptno", employee.getDepartMent());
 		return "/filemanager/sendfile";
 	}
 
@@ -70,8 +63,8 @@ public class FilemanagerController {
 	// look file
 	@GetMapping(value= {"/look"})
 	public String lookmain(@RequestParam(defaultValue="0",name="id")Integer id,@RequestParam(defaultValue="1") Integer deptno,ModelMap model, HttpSession session) {
-		String deptnoId = null;
-		String publicId = "40";
+		Integer deptnoId = null;
+		Integer publicId = 40;
 		try {
 			if (null != session.getAttribute("Employee")) {
 				Employee employee = (Employee) session.getAttribute("Employee");
@@ -84,10 +77,10 @@ public class FilemanagerController {
 		Integer deptnoCountInteger=null;	 				//部门总条数
 		Integer publicCountInteger=null;					//公网总条数
 		if(deptnoId!=null) {
-			deptnoCountInteger=matterService.count(deptnoId);		
+			deptnoCountInteger=matterService.count(deptnoId+"");		
 		}
 		if(publicId!=null) {
-			publicCountInteger=matterService.count(publicId);		
+			publicCountInteger=matterService.count(publicId+"");		
 		}
 		
 		Integer deptnoPage=null;									//部门总页数
@@ -128,16 +121,16 @@ public class FilemanagerController {
 		List<Matter>  publicList =null;
 		if (deptnoId != null) {						//部门文件
 			if(deptno==0) {
-				deptnoFile =matterService.Paging(id,NumberPage.Nnumberpage,Integer.parseInt(deptnoId));
+				deptnoFile =matterService.Paging(id,NumberPage.Nnumberpage,deptnoId);
 			}else {
-				deptnoFile =matterService.Paging(0,NumberPage.Nnumberpage,Integer.parseInt(deptnoId));
+				deptnoFile =matterService.Paging(0,NumberPage.Nnumberpage,deptnoId);
 			}
 		}
 		
 		if(deptno==1) {								//公共文件
-			 publicFile =  matterService.Paging(id, NumberPage.Nnumberpage,Integer.parseInt(publicId));
+			 publicFile =  matterService.Paging(id, NumberPage.Nnumberpage,publicId);
 		}else {
-			 publicFile =  matterService.Paging(0, NumberPage.Nnumberpage,Integer.parseInt(publicId));
+			 publicFile =  matterService.Paging(0, NumberPage.Nnumberpage,publicId);
 		}
 		// 写入model
 		model.addAttribute("deptnoFile", deptnoFile);		//部门文件(分页)
@@ -180,16 +173,11 @@ public class FilemanagerController {
 	public String passwordSuccess(HttpSession session, ModelMap map) {
 		Matter matter = (Matter) session.getAttribute("file"); // 文件内容
 		String userString = null; 							   // 当前上传人id
-		String sub_deptno = null;							   //当前上传人的部门
-		if (null != session.getAttribute("Employee")) {
-			Employee employee = (Employee) session.getAttribute("Employee");
-			userString = employee.getEmployeeAccount();
-			sub_deptno=employee.getDepartMent();
-		} else {
-			Manager manager = (Manager) session.getAttribute("Manager");
-			userString = manager.getManagerId() + "";
-			sub_deptno=null;
-		}
+		Integer sub_deptno = null;							   //当前上传人的部门
+		Employee employee = (Employee) session.getAttribute("Employee");
+		userString = employee.getEmployeeAccount();
+		sub_deptno=employee.getDepartMent();
+		
 		map.addAttribute("matter", matter); // 存储在model
 		map.addAttribute("Sub_department",sub_deptno); //当前登陆人的部门
 		if ((matter.getMatterUserid() + "").equals(userString)) { // 判断权限

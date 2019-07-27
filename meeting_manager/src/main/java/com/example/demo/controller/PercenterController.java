@@ -1,11 +1,11 @@
 package com.example.demo.controller;
 
-import java.io.UnsupportedEncodingException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,13 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.entity.Boradroom;
 import com.example.demo.entity.Department;
 import com.example.demo.entity.Employee;
-import com.example.demo.entity.Manager;
 import com.example.demo.entity.Meeting;
+import com.example.demo.entity.Postition;
 import com.example.demo.service.BoradroomService;
 import com.example.demo.service.DepartmentService;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.MeetingService;
-import com.mysql.cj.xdevapi.JsonArray;
+import com.example.demo.service.PostitionService;
 
 import net.sf.json.JSONArray;
 
@@ -56,6 +55,9 @@ public class PercenterController {
 	@Autowired
 	//会议
 	private MeetingService meetingService;
+	
+	@Autowired
+	private PostitionService postitionService;
 
 	@PostMapping("/meetingroom")
 	@ResponseBody
@@ -106,6 +108,7 @@ public class PercenterController {
 	//根据前端选择的部门信息实时返回部门员工数据
 	public String ajax03(@RequestParam String department) {
 		List<Employee> employees = employeeService.findAllByDepatment(department);
+		
 		JSONArray array = JSONArray.fromObject(employees);
 		return array.toString();
 	}
@@ -114,14 +117,16 @@ public class PercenterController {
 	//根据登录的员工的信息获取部门信息
 	@GetMapping("/")
 	public String index(HttpSession session, Model model) {
-		String did;
+		Integer did;
 //		获取部门信息
 		List<Department> departments;
-		if (null != session.getAttribute("Manager")) {
-			did = "40";
-			departments = departmentService.findallByDepartmentidNot(did);
-		} else {
-			Employee employee = (Employee) session.getAttribute("Employee");
+		Employee employee = (Employee) session.getAttribute("Employee");
+		Integer positionid = employee.getPostitionId();
+		Postition postition = postitionService.findById(positionid).get();
+		if ("经理" ==postition.getPositionname()) {
+			did = 40;
+			departments = departmentService.findAllDepartmentIdNot(did);
+		} else {		
 			did = employee.getDepartMent();
 			departments = departmentService.findallByDepartmentid(did);
 		}

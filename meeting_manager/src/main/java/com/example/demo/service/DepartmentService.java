@@ -8,10 +8,10 @@ public interface DepartmentService {
 	
 	List<Department> findAll();
 
-	List<Department> findAllDepartmentIdNot(String idInteger);
+	List<Department> findAllDepartmentIdNot(Integer idInteger);
 
-	public List<Department> findallByDepartmentid(String did);
+	public List<Department> findallByDepartmentid(Integer did);
 
-	public List<Department> findallByDepartmentidNot(String did);
+//	public List<Department> findallByDepartmentidNot(Integer did);
 	
 }

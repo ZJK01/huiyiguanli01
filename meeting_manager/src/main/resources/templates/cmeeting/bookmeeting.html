@@ -10,7 +10,7 @@
 <!--Jquery -->
 <script type="text/javascript"
 	src="/layDate-v5.0.9/layDate-v5.0.9/laydate/laydate.js"></script>
-	<style type="text/css">
+<style type="text/css">
 body {
 	margin: 0 auto;
 	font-size: 16px;
@@ -31,7 +31,7 @@ body {
 	top: 51px;
 	width: 265px;
 	height: 87%;
-/* 	border: 3px #12B7F5 solid; */
+	/* 	border: 3px #12B7F5 solid; */
 }
 
 ul, li {
@@ -39,21 +39,30 @@ ul, li {
 	list-style: none;
 	text-align: center;
 }
+
+#time1
+{    background-image:url(/images/jedate.png);
+    background-position:right;    
+    background-repeat:no-repeat;
+    }
+#time2
+{    background-image:url(/images/jedate.png);
+    background-position:right;    
+    background-repeat:no-repeat;
+    }
 </style>
 <title>jeDate日期控件(原生JS) - 演示</title>
-<link type="text/css" rel="stylesheet"
-	href="/jedate-6.5.0/test/jeDate-test.css">
-<!--界面样式 -->
-<link type="text/css" rel="stylesheet"
-	href="/jedate-6.5.0/skin/jedate.css">
-<!--日历样式  -->
-<script type="text/javascript" src="/jedate-6.5.0/src/jedate.js"></script>
 <script type="text/javascript" src="/js/clickHandler.js"></script>
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<!--Jquery -->
+<script type="text/javascript"
+	src="/layDate-v5.0.9/layDate-v5.0.9/laydate/laydate.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top"
-		style="background: #23527C;position: absolute;">
-		<div th:replace="common/header :: header" ></div>
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		style="background: #23527C; position: absolute;">
+		<div th:replace="common/header :: header"></div>
 	</nav>
 
 	<!-- 左边start  -->
@@ -62,106 +71,139 @@ ul, li {
 	</div>
 
 	<!-- 左边end -->
-	<div class="page-content" style="position: absolute; left: 263px; top: 51px; width: 1300px;">
+	<div class="page-content"
+		style="position: absolute; left: 263px; top: 51px; width: 1300px;">
 
 		<form>
-				<table style="text-align: center;margin: auto;width: 800px;" border="2">
-				<tr >
-				<td style="width: 150px; height: 60px;font-size: 20px;font-weight: bold;" colspan="2">会议预订</td>	
-				</tr>	
-					<tr>
-						<td  style="width: 400px;height: 50px;font-size: 16px;font-weight: bold;">会议名称：</td>
-						<td>
-							<input class="form-control" style="width: 250px;" name="boradroomName" type="text" maxlength="20" />
-						</td>
-					</tr>
-<!-- 					<tr> -->
-<!-- 						<td  style="width: 400px;height: 50px;font-size: 16px;font-weight: bold;">预计参加人数：</td> -->
-<!-- 						<td style="width: 400px;height: 50px;line-height: 50px;"><input class="form-control" style="width: 150px;" name="boradroomName" id="numofattendents" type="text" maxlength="20" /></td> -->
-<!-- 					</tr> -->
-					
-					<tr>
-						<td  style="width: 400px;height: 50px;font-size: 16px;font-weight: bold;">预计开始时间：</td>
-						<td><input type="text" class="form-control" id="time1" name="startTime"></td>
-					</tr>
-					<tr>
-						<td  style="width: 400px;height: 50px;font-size: 16px;font-weight: bold;">预计结束时间：</td>
-						<td id="dot"><input type="text" class="form-control" id="time2" name="endTime"
-							disabled="disabled"></td>
-					</tr>
-					<tr>
-						<td  style="width: 400px;height: 50px;font-size: 16px;font-weight: bold;">会议室名称：</td>
-						<!--ajax请求-->
-						<td><select name="roomid" id="meetingroom" class="form-control"><option
-									value="-1">--请选择会议室--</option>
-						</select></td>
-					</tr>
-					<tr>
-						<td  style="width: 400px;height: 50px;font-size: 16px;font-weight: bold;">会议说明：</td>
-						<td><textarea rows="8" cols="50"></textarea></td>
-					</tr>
-					<tr>
-						<td  style="width: 400px;height: 50px;font-size: 16px;font-weight: bold;">选择参会人员：</td>
-						<td>
-						<div style="border: 1px solid red;">
-							<div style="width: 100px; height: 160px;border: 1px solid green;position: relative;">
-								<select name="department" id="department" style="width: 100px;" class="form-control">
+			<table style="text-align: center; margin: auto; width: 800px;">
+			
+				<tr>
+					<td
+						style="width: 150px; height: 60px; font-size: 20px; font-weight: bold;"
+						colspan="2">会议预订</td>
+				</tr>
+				<tr>
+					<td
+						style="width: 400px; height: 50px; font-size: 16px; font-weight: bold;">会议名称：</td>
+					<td><input class="form-control" style="width: 250px;"
+						name="boradroomName" type="text" maxlength="20" /></td>
+				</tr>
+				<tr>
+					<td
+						style="width: 400px; height: 50px; font-size: 16px; font-weight: bold;">会议开始时间：</td>
+					<td><input type="text" class="form-control" id="time1"
+						name="startTime" style="width: 250px;"></td>
+				</tr>
+				<tr>
+					<td
+						style="width: 400px; height: 50px; font-size: 16px; font-weight: bold;">会议结束时间：</td>
+					<td id="dot"><input type="text" class="form-control"
+						id="time2" name="endTime" disabled="disabled" style="width: 250px;"></td>
+				</tr>
+				<tr>
+					<td
+						style="width: 400px; height: 50px; font-size: 16px; font-weight: bold;">会议室名称：</td>
+					<!--ajax请求-->
+					<td><select name="broomId" id="meetingroom"
+						class="form-control" style="width: 250px;"><option value="-1">--请选择会议室--</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td
+						style="width: 400px; height: 50px; font-size: 16px; font-weight: bold;">会议说明：</td>
+					<td><textarea rows="6" cols="56" class="form-control" name="meetingStas"></textarea></td>
+				</tr>
+				<tr>
+					<td
+						style="width: 400px; height: 50px; font-size: 16px; font-weight: bold;">选择参会人员：</td>
+					<td>
+						<div style="position: relative;height: 200px;padding-top: 10px;">
+							<div
+								style="width: 120px; height: 120px;position: absolute;">
+								<select name="department" id="department" style="width: 140px;"
+									class="form-control">
 									<option th:text="--请选择部门--" th:value="-1"></option>
-									<option 
-										th:each="department : ${departments}"
+									<option th:each="department : ${departments}"
 										th:text="${department.departMentName}"
 										th:value="${department.departmentId}"></option>
-								</select>
-								<select name="employee" id="employee" size="8" class="form-control" style="width: 100px;height:140px; margin-top: -2px;">
-								</select>
-							</div>
-							<div style="left: 200px;top: 230px;text-align: center;width: 50px;">
-								<input type="button" id="b1" value=">>  "/><br/>
-             					<input type="button" id="b3" value="==>>"/><br/>
-            					<input type="button" id="b2" value="<<"/><br/>
-             					<input type="button" id="b4" value="<<=="/></div>
-							<div style="width: 100px; height: 5px;left: 250px;top: 223px;">
-								<select name="employee" id="k2" class="form-control" size="9" style="width: 100px;">
+								</select> <select name="employee" id="employee" size="8"
+									class="form-control"
+									style="width: 140px; height: 140px; margin-top: -2px;">
 								</select>
 							</div>
+							<div
+								style="position: absolute;left: 140px;text-align: center; width: 80px;height:160px;">
+								<br/><input type="button" id="b1" value="  >>  "  class="btn btn-default btn-sm"/><br/> 
+								<input type="button" id="b3" value="==>>"  class="btn btn-default btn-sm"/><br/> 
+								<input type="button" id="b2" value="<<"  class="btn btn-default btn-sm"/><br/>
+								<input type="button" id="b4" value="<<=="  class="btn btn-default btn-sm"/>
 							</div>
-							
-							
+							<div style="width: 100px; height: 160px;position: absolute;left: 220px;">
+								<select name="employeecopy" id="k2" class="form-control" size="9"
+									style="width: 140px;">
+								</select>
+							</div>
+						</div>
 
-						</td>
-					</tr>
-					<tr>
-						<td class="command" colspan="2"><input type="submit"
-							class="clickbutton" value="预定会议" /> <input type="reset"
-							class="clickbutton" value="重置" /></td>
-					</tr>
-				</table>
+					</td>
+				</tr>
+				<tr>
+					<td class="command" colspan="2"><input type="text" name="hidden" hidden="hidden" value="add()"><input type="submit"
+						id="formid" class="btn btn-default" value="预定会议" /></td>
+				</tr>
+			</table>
 		</form>
 	</div>
 	<script type="text/javascript">
+$("#formid").click(function add() {
+	var arr = [];	
+	op = $("#k2 option");
+	    for (var i = 0; i < op.length; i++){
+	        arr[i] = op[i].innerText;
+	        console.log(arr[i]);
+	    	
+	    }
+	    var add= arr.join(",");
+	    return add;
+	})
+
+
+// $("#formid").click(function () {
+// 	var selects =[];
+// 		$(".test").each(function () {
+//            var option = $(this).text();
+//            console.log(option);
+// //            slects.push(option);
+//         });
+// // 		console.log(selects);
+// });
 	
 	/*列表左右移动的实现*/
 	$(document).ready(function(){
          $("#b1").click(function(){
+        	 //添加选中的option
              $("#k2").append($("#employee").find("option:selected"));
          });
         
          $("#b2").click(function(){
+        	//添加选中的option
             $("#employee").append($("#k2 option:selected"));
          });
         
          $("#b3").click(function(){
+        	 //添加select下的所有option
              $("#k2").append($("#employee option"));
          });
          
         $("#b4").click(function(){
+        	//添加select下的所有option
              $("#employee").append($("#k2 option"));
          });
          
-        $("#add0").click(function(){
-             var a=$("#add").val();
-             $("#employee").append("<option value="+a+0+">"+a+"</option>");
-         });
+//         $("#add0").click(function(){
+//              var a=$("#add").val();
+//              $("#employee").append("<option value="+a+0+">"+a+"</option>");
+//          });
      });
 		//获取选定的部门然后获取对应的所有员工数据
 		$("#department").on("change",function(){
@@ -201,7 +243,7 @@ ul, li {
 				  ins1=date;//选择好时间后的回调
 				 
 				  $("#time2").remove();
-				  var html="<input type='text' id='time2'>";
+				  var html="<input type='text' id='time2' class='form-control' style='width: 250px;'>";
 				  $("#dot").append(html);
 				    
 					laydate.render({	
@@ -213,59 +255,72 @@ ul, li {
 							  ins2=date;//选择好时间后的回调
 							  if (null!=ins2) {
 								  //解除锁定的输入框
-								  $('#endTime').attr("disable",false);
+								  $('#endTime').removeAttr("disabled");
+								  
 									var time1 =Dformat(ins1);
 									var time2 =dformat(ins2);
 									var t1= timecycle(time1);
 									var t2= timecycle(time2);
 									var t3 = t2-t1;
-									if (t3>18000000) {
-										alert("单场会议预订最多五个小时");
+									if (t3<1200) {
+										alert("单场会议预订最少20分钟");
+										$('#meetingroom').attr("disabled","disabled");
 									}else {
-										var parm = {"time1":time1,"time2":time2};											
-										$.ajax({
-											url : "/percenter/meetingroom",
-											data:parm,
-											dataType : "json",
-											type : "post",
-											success : function(result) {
-												$("#meetingroom").empty();
-												$("#meetingroom").append("<option value='-1'>--请选择会议室--</option>");
-												
-												if (""==result) {
-													confirm("预订的会议时间存在冲突，无空闲会议室");
-												}
-//					 							里面的index代表当前循环到第几个索引，
-//					 							item表示遍历后的当前对象，
-												$.each(result, function(index, item) {
-													$("#meetingroom").append(
-															//此处向select中循环绑定数据
-															"<option value="+item.boradroomName+">"
-																	+ item.boradroomName
-																	+ "</option>");
-												});
-											},
-											error : function() {
-												alert("获取会议室信息失败");
-												//重新刷新页面
-												location.reload();
+										
+										if (t3>18000) {
+											alert("单场会议预订最多五个小时");
+											$('#meetingroom').attr("disabled","disabled");
+										}else {
+											var parm = {"time1":time1,"time2":time2};
+											$('#meetingroom').removeAttr("disabled");
+											$.ajax({
+												url : "/percenter/meetingroom",
+												data:parm,
+												dataType : "json",
+												type : "post",
+												success : function(result) {
+													$("#meetingroom").empty();
+													$("#meetingroom").append("<option value='-1'>--请选择会议室--</option>");
+													
+													if (""==result) {
+														confirm("预订的会议时间存在冲突，无空闲会议室");
+													}
+//						 							里面的index代表当前循环到第几个索引，
+//						 							item表示遍历后的当前对象，
+													$.each(result, function(index, item) {
+														$("#meetingroom").append(
+																//此处向select中循环绑定数据
+																"<option value="+item.boradroomName+">"
+																		+ item.boradroomName
+																		+ "</option>");
+													});
+												},
+												error : function() {
+													alert("获取会议室信息失败");
+													//重新刷新页面
+													location.reload();
 
-											}
-										});
+												}
+											});
+										}
 									}
-											
+																	
 								}
 						}
 							});
 			  },
 			  min:time()
 			});
+				//加零函数
+// 				function addzero(m){
+// 		        	return m < 10 ? '0' + m: m
+// 		        }
 		//系统时间或字符串时间转时间戳
 		function timecycle(time) {
-			//注释部分作用把系统时间转字符串时间"2015-03-05 17:59:00.0"
-// 			time = time.substring(0,19);    
-// 			time = time.replace(/-/g,'/'); 
-			var timestamp = new Date(time).getTime();
+			time = time.substring(0,19);
+			time = time.replace(/-/g,'/'); 
+// 			var timestamp = new Date(time).getTime()/1000;
+			var timestamp =Date.parse(time)/1000;
 			return timestamp;
 		}
 		

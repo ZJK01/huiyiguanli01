@@ -23,7 +23,7 @@ public class Employee implements Serializable {
 	private String employeePassword; // 登录密码
 	private String power; // 权力
 	private String employeeEmail; // 邮箱
-	private String departMent; // 所属部门
+	private Integer departMent; // 所属部门
 	private Integer postitionId; // 职位等级编号
 
 	public Integer getEmployeeId() {
@@ -74,11 +74,13 @@ public class Employee implements Serializable {
 		this.employeeEmail = employeeEmail;
 	}
 
-	public String getDepartMent() {
+
+
+	public Integer getDepartMent() {
 		return departMent;
 	}
 
-	public void setDepartMent(String departMent) {
+	public void setDepartMent(Integer departMent) {
 		this.departMent = departMent;
 	}
 
@@ -90,8 +92,10 @@ public class Employee implements Serializable {
 		this.postitionId = postitionId;
 	}
 
+
+
 	public Employee(Integer employeeId, String employeeName, String employeeAccount, String employeePassword,
-			String power, String employeeEmail, String departMent, Integer postitionId) {
+			String power, String employeeEmail, Integer departMent, Integer postitionId) {
 		this.employeeId = employeeId;
 		this.employeeName = employeeName;
 		this.employeeAccount = employeeAccount;

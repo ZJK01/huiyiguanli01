@@ -16,16 +16,16 @@ public class DepartmentServiceImpl implements DepartmentService {
 	private DepartmentDao departmentDao;
 
 	@Override
-	public List<Department> findallByDepartmentid(String did) {
+	public List<Department> findallByDepartmentid(Integer did) {
 		// TODO Auto-generated method stub
 		return departmentDao.findAllBydepartmentId(did);
 	}
 
-	@Override
-	public List<Department> findallByDepartmentidNot(String did) {
-		// TODO Auto-generated method stub
-		return departmentDao.findAllBydepartmentIdNot(did);
-	}
+//	@Override
+//	public List<Department> findallByDepartmentidNot(Integer did) {
+//		// TODO Auto-generated method stub
+//		return departmentDao.findAllBydepartmentIdNot(did);
+//	}
 
 	
 
@@ -39,7 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 
 	@Override
-	public List<Department> findAllDepartmentIdNot(String idInteger) {
+	public List<Department> findAllDepartmentIdNot(Integer idInteger) {
 		
 		return departmentdao.findAllBydepartmentIdNot(idInteger);
 	}

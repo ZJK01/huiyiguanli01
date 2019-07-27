@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.entity.Department;
 import com.example.demo.entity.Employee;
-import com.example.demo.entity.Manager;
 import com.example.demo.entity.Postition;
 import com.example.demo.service.DepartmentService;
 import com.example.demo.service.EmployeeService;
-import com.example.demo.service.ManagerService;
 import com.example.demo.service.PostitionService;
 
 import net.sf.json.JSONArray;
@@ -26,9 +24,6 @@ import net.sf.json.JSONArray;
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
-
-	@Resource(name = "ManagerServiceImpl")
-	private ManagerService managerService;
 
 	@Resource(name = "EmployeeServiceImpl")
 	private EmployeeService employeeService;
@@ -49,25 +44,16 @@ public class ManagerController {
 
 	@PostMapping("yuyue")
 	public String managerlogin(String username, String password, HttpSession session) {
-		Manager manager = new Manager();
-		manager.setManagerName(username);
-		manager.setManagerPassword(password);
-		Manager man = managerService.search(manager);
-		if (man != null) {
-			session.removeAttribute("Emplpyee");
-			session.setAttribute("Manager", man);
-			return "/yuyue";
-		} else {
+
 			Employee employee = new Employee(username, password);
 			Employee emp = employeeService.findByEmployeeNameAndEmployeePassword(employee);
 			if (emp != null) {
-				session.removeAttribute("Manager");
 				session.setAttribute("Employee", emp);
 				return "/yuyue";
 			} else {
 				return "/index";
 			}
-		}
+		
 	}
 	
 	
@@ -89,7 +75,7 @@ public class ManagerController {
 	@GetMapping("getdepartment")
 	@ResponseBody
 	public String getdepartment() {
-		String idInteger="40";
+		Integer idInteger=40;
 		List<Department> Postition=deparmentService.findAllDepartmentIdNot(idInteger);
 		
 		JSONArray jsonArray=JSONArray.fromObject(Postition);

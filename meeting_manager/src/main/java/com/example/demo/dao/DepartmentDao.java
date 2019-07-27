@@ -13,9 +13,9 @@ public interface DepartmentDao extends JpaRepository<Department, Integer>, JpaSp
 //
 //	public List<Department> findAllBydepartmentIdNot(String did);
 
-	public List<Department> findAllBydepartmentId(String did);
+	public List<Department> findAllBydepartmentId(Integer did);
 
-	public List<Department> findAllBydepartmentIdNot(String did);
+//	public List<Department> findAllBydepartmentIdNot(String did);
 
 	public List<Department> findAllBydepartmentIdNot(Integer idInteger);
 

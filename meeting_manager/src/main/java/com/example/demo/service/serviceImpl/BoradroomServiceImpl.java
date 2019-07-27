@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,12 +14,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.common.util.RedisUtil;
 import com.example.demo.dao.BoradroomDao;
 import com.example.demo.entity.Boradroom;
 import com.example.demo.service.BoradroomService;
 
 @Service(value = "BoradroomServiceImpl")
 public class BoradroomServiceImpl implements BoradroomService {
+	
+	@Autowired
+	private RedisUtil redisUtil;
 
 	@Resource
 	private BoradroomDao boradroomDao;
@@ -30,7 +35,6 @@ public class BoradroomServiceImpl implements BoradroomService {
 	}
 
 	@Override
-//	@Cacheable(cacheNames = "crooms", key = "123")
 	public List<Boradroom> getCrooms() {
 		// TODO Auto-generated method stub
 		return boradroomDao.findAll();

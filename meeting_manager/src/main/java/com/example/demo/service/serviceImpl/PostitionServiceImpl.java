@@ -1,6 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,12 @@ public class PostitionServiceImpl implements PostitionService  {
 	@Override
 	public List<Postition> findAll() {
 		return PositionDao.findAll();
+	}
+
+	@Override
+	public Optional<Postition> findById(Integer positioniId) {
+		// TODO Auto-generated method stub
+		return PositionDao.findById(positioniId);
 	}
 	
 }

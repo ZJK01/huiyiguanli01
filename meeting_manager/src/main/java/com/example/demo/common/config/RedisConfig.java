@@ -37,6 +37,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 * @return
 	 */
 	@Bean
+	//自定义序列化方式
 	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
 
 		RedisTemplate<String, Object> template = new RedisTemplate<>();
