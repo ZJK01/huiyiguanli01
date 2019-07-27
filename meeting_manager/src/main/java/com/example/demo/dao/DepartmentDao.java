@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.example.demo.entity.Department;
 
@@ -15,5 +17,11 @@ public interface DepartmentDao extends JpaRepository<Department, Integer>,JpaSpe
 	public List<Department> findAllBydepartmentIdNot(String did);
 
 	public List<Department> findAllBydepartmentIdNot(Integer idInteger);
+
+	@Query("FROM Department WHERE work_set LIKE %:#{#workset}%")
+	public List<Department> like(@Param("workset")String workset);
+    
+    @Query("FROM Department WHERE depart_ment_name LIKE %:#{#departmentname}%") 
+   	public List<Department> likeDepartmentname(@Param("departmentname")String departmentname);
 
 }

@@ -44,9 +44,7 @@ ul, li {
 				</li>
 				<!-- <li><a th:text="${session.user?.managerName?}"></a></li> -->
 				<li><a th:if="${session.Employee!=null}"
-					th:text="${session.Employee.employeeName}"></a> <a
-					th:if="${session.Manager!=null}"
-					th:text="${session.Manager.managerName}"></a>
+					th:text="${session.Employee.employeeName}"></a>
 				<li>
 				<li><a th:href="@{/manager/}">退出管理系统</a></li>
 			</ul>

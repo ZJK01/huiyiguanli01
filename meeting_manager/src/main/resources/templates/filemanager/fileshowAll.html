@@ -58,11 +58,8 @@
 
 			<div class="form-group">
 				<!-- 判断是否是经理登陆 -->
-				<select id="deptnoId" th:if="${Sub_department} eq null">
-					<option value="40">公网(默认选中)
-					<option value="10">研发部
-					<option value="20">销售部
-					<option value="30">营业部
+				<select id="deptnoId" th:if="${Sub_department} eq null" id="departMent">
+					
 				</select>
 				<!-- 判断是否是普通职员登陆 -->
 				<select id="deptnoId" th:if="${matter.deptnoId} ne 40">
@@ -183,6 +180,25 @@
 				$('#matterPassword').attr("disabled", "disabled");
 			}
 		}
+		
+		//部门加载
+		var departMent=$('#departMent');
+		$.ajax({
+			url:"/manager/getdepartment",
+			type:'GET',
+			success:function(result){
+				result=JSON.parse(result);
+				/* var tt=JSON.stringify(result);
+				alert(tt); */
+				var ss="<option value='40'>公网(默认选中)</option>"
+				$.each(result,function(index,item){
+					ss+="<option value="+item.departMentId+">"+item.departMentName+"</option>"
+				});
+				departMent.append(ss);
+			}
+		});
+		
+	});
 	</script>
 </body>
 </html>

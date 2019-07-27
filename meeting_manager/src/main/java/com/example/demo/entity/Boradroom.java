@@ -1,11 +1,13 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  * 会议室表
@@ -22,6 +24,9 @@ public class Boradroom implements Serializable {
 	private String boradRoomreMark; // 描述备注
 	private String boradRoomType; // 类型
 	private String boradRoomStatus; // 会议室状态
+	
+	@ManyToMany(mappedBy="boradrooms")
+	private List<Meeting> meetings;
 
 	public Integer getBoradroomId() {
 		return boradroomId;

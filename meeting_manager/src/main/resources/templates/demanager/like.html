@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>部门模糊查询</title>
+<!-- Bootstrap core CSS -->
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/clickHandler.js"></script>
+</head>
+<style type="text/css">
+#td {
+	font-size: 30px;
+	text-align: center;
+	height: 40px;
+	width: 100px;
+}
+
+#tx {
+	border-radius: 8px;
+	width: 250px;
+}
+
+#header {
+	border: #000000 1px solid;
+	height: 50px;
+	width: 100%;
+	background-color: #000000;
+	position: absolute;
+	top: 0;
+}
+
+a:hover {
+	background: #12b7f5;
+	text-decoration: none;
+	color: white;
+}
+
+#table {
+	position: absolute;
+	left: 300px;
+}
+
+body {
+	margin: 0 auto;
+	font-size: 16px;
+}
+
+#ct {
+	font-size: 30px;
+	color: white;
+}
+
+}
+#l {
+	display: inline;
+}
+
+#x {
+	position: absolute;
+	top: 51px;
+	width: 265px;
+	height: 87%;
+	/* 	border: 3px #12B7F5 solid; */
+}
+
+ul, li {
+	margin: 0;
+	list-style: none;
+	text-align: center;
+}
+
+body {
+	margin: 0 auto;
+	font-size: 16px;
+}
+</style>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		style="background: #23527C; position: absolute;">
+		<div th:replace="common/header :: header"></div>
+	</nav>
+
+	<!-- 左边start  -->
+	<div id="x">
+		<div th:replace="common/left :: left"></div>
+	</div>
+
+	<!-- 左边end -->
+	<div class="col-md-6"
+		style="margin: 20px; padding: 20px; border: #E0E0E0 1px solid; position: absolute; left: 263px; top: 51px; width: 1300px;">
+		<form th:action="@{/demanager/department/like}">
+			<table class="table table-hover">
+				<tr>
+					<td colspan="2"><input class="form-control" type="text"
+						name="workset" required="required" placeholder="请输入你需要查询的名字和部门搜索内容"
+						style="height: 30px; width: 350px;" /></td>
+					<td style="width: 250px;"><input type="submit" value="查询"
+						style="height: 30px;" class="btn btn-success"></td>
+					<td style="width: 250px;"><input type="reset" value="重置"
+						style="height: 30px;" class="btn btn-success" /></td>
+				</tr>
+				<tr style="width: 600px;">
+						<th>部门id</th>
+						<th>部门名称</th>
+						<th>工作地点</th>
+						<th style="text-align: center;">操作</th>
+				</tr>
+				<tbody>
+					<tr th:each="department:${session.dp2}" th:if="${dp2!=null}">
+						<td th:text="${ department.departmentId}"></td>
+						<td th:text="${ department.departMentName}"></td>
+						<td th:text="${ department.workSet}"></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+</body>
+<script th:inline="javascript">
+	function clearForm() {
+		$('#mailForm')[0].reset();
+	}
+</script>
+</body>
+</html>

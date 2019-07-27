@@ -112,7 +112,7 @@ body {
 					<label>部门</label> <select name="departMent" class="form-control" id="departMent"></select>
 				</div>
 				<div class="form-group" style="margin: 5px;">
-					<label>职位</label> <select name="postitionId" class="form-control" id="postitionId">
+					<label>职位</label> <select name="SysRole" class="form-control" id="SysRole">
 					</select>
 				</div>
 				<div class="form-group" style="margin: 5px;">
@@ -129,9 +129,9 @@ body {
 	</div>
 	<script type="text/javascript">
 		$(function(){
-			var postitionId=$('#postitionId');
+			var postitionId=$('#SysRole');
 			$.ajax({
-				url:"/manager/getpostition",
+				url:"/manager/getSysRole",
 				type:'GET',
 				success:function(result){
 					result=JSON.parse(result);

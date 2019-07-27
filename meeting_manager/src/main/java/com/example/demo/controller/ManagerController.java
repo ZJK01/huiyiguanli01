@@ -19,12 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.entity.Department;
 import com.example.demo.entity.Employee;
-import com.example.demo.entity.Manager;
-import com.example.demo.entity.Postition;
+import com.example.demo.entity.SysRole;
 import com.example.demo.service.DepartmentService;
 import com.example.demo.service.EmployeeService;
-import com.example.demo.service.ManagerService;
-import com.example.demo.service.PostitionService;
+import com.example.demo.service.SysRoleService;
 
 import net.sf.json.JSONArray;
 
@@ -33,14 +31,12 @@ import net.sf.json.JSONArray;
 @RequestMapping("/manager")
 public class ManagerController {
 
-	@Resource(name = "ManagerServiceImpl")
-	private ManagerService managerService;
 
 	@Resource(name = "EmployeeServiceImpl")
 	private EmployeeService employeeService;
 	
-	@Resource(name="PostitionServiceImpl")
-	private PostitionService postitionService;
+	@Resource(name="SysRoleServiceImpl")
+	private SysRoleService SysRoleService;
 	
 	@Resource(name="DepartmentServiceImpl")
 	private DepartmentService deparmentService;
@@ -62,15 +58,8 @@ public class ManagerController {
 		//3.执行登录方法(判断)
 		try {
 			subject.login(token);
-			Manager manager=null;
-			Employee employee=null;
-			try {
-				manager=(Manager) subject.getPrincipal();		//这一句会报错
-				session.setAttribute("Manager",manager);
-			} catch (Exception e) {
-				employee=(Employee) subject.getPrincipal();
-				session.setAttribute("Employee",employee);
-			}
+			Employee employee=(Employee) subject.getPrincipal();
+			session.setAttribute("Employee",employee);
 			return "/yuyue";
 		} catch (UnknownAccountException e) {
 			model.addAttribute("msg","用户名不存在");
@@ -86,10 +75,10 @@ public class ManagerController {
 	/**
 	 * 取得职位
 	 * */
-	@GetMapping("getpostition")
+	@GetMapping("getSysRole")
 	@ResponseBody
 	public String getpostition() {
-		List<Postition> Postition=postitionService.findAll();
+		List<SysRole> Postition=SysRoleService.findAll();
 		
 		JSONArray jsonArray=JSONArray.fromObject(Postition);
 		return jsonArray.toString();
@@ -101,10 +90,13 @@ public class ManagerController {
 	@GetMapping("getdepartment")
 	@ResponseBody
 	public String getdepartment() {
-		String idInteger="40";
+		Integer idInteger=40;
 		List<Department> Postition=deparmentService.findAllDepartmentIdNot(idInteger);
 		
 		JSONArray jsonArray=JSONArray.fromObject(Postition);
 		return jsonArray.toString();
 	}
+	
+	
 }
+

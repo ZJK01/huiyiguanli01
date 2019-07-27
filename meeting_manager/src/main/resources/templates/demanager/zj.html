@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>部门模糊查询</title>
+<!-- Bootstrap core CSS -->
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.css">
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/clickHandler.js"></script>
+</head>
+<style type="text/css">
+#td {
+	font-size: 30px;
+	text-align: center;
+	height: 40px;
+	width: 100px;
+}
+
+#tx {
+	border-radius: 8px;
+	width: 250px;
+}
+
+#header {
+	border: #000000 1px solid;
+	height: 50px;
+	width: 100%;
+	background-color: #000000;
+	position: absolute;
+	top: 0;
+}
+
+a:hover {
+	background: #12b7f5;
+	text-decoration: none;
+	color: white;
+}
+
+#table {
+	position: absolute;
+	left: 300px;
+}
+
+body {
+	margin: 0 auto;
+	font-size: 16px;
+}
+
+#ct {
+	font-size: 30px;
+	color: white;
+}
+
+}
+#l {
+	display: inline;
+}
+
+#x {
+	position: absolute;
+	top: 51px;
+	width: 265px;
+	height: 87%;
+	/* 	border: 3px #12B7F5 solid; */
+}
+
+ul, li {
+	margin: 0;
+	list-style: none;
+	text-align: center;
+}
+
+body {
+	margin: 0 auto;
+	font-size: 16px;
+}
+</style>
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		style="background: #23527C; position: absolute;">
+		<div th:replace="common/header :: header"></div>
+		<!-- 		th:replace  页面模板设置 -->
+	</nav>
+
+	<!-- 左边start  -->
+	<div id="x">
+		<div th:replace="common/left :: left"></div>
+	</div>
+
+	<div class="col-md-6"
+		style="margin: 20px; padding: 20px; border: #E0E0E0 1px solid; position: absolute; left: 263px; top: 51px; width: 1300px;">
+		<h2 style="position: relative; left: 500px;">添加部门和工作地点</h2>
+		<form id="Form" th:action="@{/demanager/save}" method="get"
+			style="width: 600px; margin: 0 auto;">
+			<table class="table">
+				<tr>
+					<td><span>部门名称</span></td>
+					<td><input type="text" name="departMentName"
+						placeholder="部门名称" /></td>
+				</tr>
+				<tr>
+					<td><span>部门工作地点</span></td>
+					<td><input type="text" name="workSet"
+						placeholder="部门工作地点" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="添加"
+						class="btn btn-success"
+						style="width: 200px; position: relative; left: 200px;" id="dd" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

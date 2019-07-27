@@ -115,7 +115,7 @@ body {
 							<td th:text="${employee.employeeId}"></td>
 							<td th:text="${employee.employeeName}"></td>
 							<td style="text-align: center;"><a
-								th:href="@{/demanager/del/?(id=${employee.employeeId})}"
+								th:href="@{/demanager/del/id?(id=${employee.employeeId})}"
 								th:text="删除" class="btn btn-danger"></a></td>
 						</tr>
 					</tbody>
