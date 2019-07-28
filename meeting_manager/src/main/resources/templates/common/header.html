@@ -39,21 +39,16 @@ ul, li {
 		<div id="navbar" class="navbar-collapse collapse">
 			<!-- <div id="times" style="background:#000; color:#FFF">111</div> -->
 			<ul class="nav navbar-nav navbar-right">
-				<!-- <li><a th:text="${session.user?.managerName?}"></a></li> -->
-				<li>
-					<a th:if="${session.Employee!=null}" th:text="${session.Employee.employeeName}"></a>
-					<a th:if="${session.Manager!=null}" th:text="${session.Manager.managerName}"></a>
 				<li>
 					<a  id="times"></a>
 				</li>
 				<!-- <li><a th:text="${session.user?.managerName?}"></a></li> -->
 				<li><a th:if="${session.Employee!=null}"
-					th:text="${session.Employee.employeeName}"></a> <a
-					th:if="${session.Manager!=null}"
-					th:text="${session.Manager.managerName}"></a>
+					th:text="${session.Employee.employeeName}"></a>
 				<li>
 				<li><a th:href="@{/manager/}">退出管理系统</a></li>
 			</ul>
 		</div>
 	</div>
 </div>
+

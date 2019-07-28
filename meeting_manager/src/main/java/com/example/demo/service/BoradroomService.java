@@ -21,7 +21,7 @@ public interface BoradroomService {
 	public List<Boradroom> getBoradrooms(String status);
 
 //	查询单个会议室
-	public Optional<Boradroom> getCroom(Integer bid);
+	public Boradroom getCroom(Integer bid);
 
 //	更新会议室信息
 	public void updateCroom(Boradroom boradroom);

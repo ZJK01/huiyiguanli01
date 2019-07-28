@@ -12,19 +12,25 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+
 
 import com.example.demo.common.util.RedisUtil;
 import com.example.demo.dao.BoradroomDao;
 import com.example.demo.entity.Boradroom;
 import com.example.demo.service.BoradroomService;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 @Service(value = "BoradroomServiceImpl")
 public class BoradroomServiceImpl implements BoradroomService {
 	
 	@Autowired
 	private RedisUtil redisUtil;
-
+	
 	@Resource
 	private BoradroomDao boradroomDao;
 
@@ -37,14 +43,35 @@ public class BoradroomServiceImpl implements BoradroomService {
 	@Override
 	public List<Boradroom> getCrooms() {
 		// TODO Auto-generated method stub
-		return boradroomDao.findAll();
+		String key = "crooms";
+		Boolean haskey = redisUtil.hasKey(key);
+		if (haskey) {
+			JSONArray array = (JSONArray) redisUtil.lGet(key, 0, -1);
+			@SuppressWarnings({ "deprecation", "unchecked", "static-access" })
+			List<Boradroom> boradrooms = array.toList(array, Boradroom.class);
+			return boradrooms;
+		}else {
+			JSONArray array = JSONArray.fromObject(boradroomDao.findAll());
+			redisUtil.lSet(key, array);
+			return boradroomDao.findAll();
+		} 
+		
 	}
 
 	@Override
 //	@Cacheable(cacheNames = "croom", key = "#bid.toString()")
-	public Optional<Boradroom> getCroom(Integer bid) {
+	public Boradroom getCroom(Integer bid) {
 		// TODO Auto-generated method stub
-		return boradroomDao.findById(bid);
+		String key = "crooms";
+		Boolean haskey = redisUtil.hasKey(key);
+		if (haskey) {
+			JSONArray array = (JSONArray) redisUtil.lGet(key, 0, -1);
+			@SuppressWarnings({ "deprecation", "unchecked", "static-access" })
+			List<Boradroom> boradrooms = array.toList(array, Boradroom.class);
+			return boradrooms.get(boradrooms.indexOf(boradroomDao.findById(bid)));
+			
+		}
+		return boradroomDao.findById(bid).get();
 	}
 
 	@Override
@@ -52,12 +79,27 @@ public class BoradroomServiceImpl implements BoradroomService {
 	public void updateCroom(Boradroom boradroom) {
 		// TODO Auto-generated method stub
 		boradroomDao.saveAndFlush(boradroom);
+		String key = "crooms";
+		Boolean haskey = redisUtil.hasKey(key);
+		if (haskey) {
+			JSONArray array = (JSONArray) redisUtil.lGet(key, 0, -1);
+			@SuppressWarnings({ "deprecation", "unchecked", "static-access" })
+			List<Boradroom> boradrooms = array.toList(array, Boradroom.class);
+			long index= boradrooms.indexOf(boradroom);
+			redisUtil.lUpdateIndex(key, index, boradroom);	
+		}
+		
 	}
 
 	@Override
 	public void deleteCroom(Integer bid) {
 		// TODO Auto-generated method stub
 		boradroomDao.deleteById(bid);
+		String key = "crooms";
+		Boolean haskey = redisUtil.hasKey(key);
+		if (haskey) {
+			redisUtil.del(key);	
+		}
 	}
 
 	@Override
@@ -78,7 +120,18 @@ public class BoradroomServiceImpl implements BoradroomService {
 	@Override
 	public List<Boradroom> getBoradrooms(String status) {
 		// TODO Auto-generated method stub
-		return boradroomDao.findAllByboradRoomStatus(status);
+		String key = "crooms1";
+		Boolean haskey = redisUtil.hasKey(key);
+		if (haskey) {
+			JSONArray array = (JSONArray) redisUtil.lGet(key, 0, -1);
+			@SuppressWarnings({ "deprecation", "unchecked", "static-access" })
+			List<Boradroom> boradrooms = array.toList(array, Boradroom.class);
+			return boradrooms;
+		}else {
+			JSONArray array = JSONArray.fromObject(boradroomDao.findAllByboradRoomStatus(status));
+			redisUtil.lSet(key, array);
+			return boradroomDao.findAllByboradRoomStatus(status);
+		}
 	}
 
 }

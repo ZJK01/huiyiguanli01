@@ -32,6 +32,7 @@
 
 	<div
 		style="position: absolute; left: 263px; top: 51px; width: 83.5%; border: 2px solid red;">
+<<<<<<< HEAD
 		<form style="width: 720px;" class="container" method="post">
 			
 			<input type="text" id="matterId" th:value="${matter.matterId}"
@@ -183,6 +184,175 @@
 				$('#matterPassword').attr("disabled", "disabled");
 			}
 		}
+=======
+		<form style="width: 720px;" class="container" method="post">
+			<input type="text" id="matterId" th:value="${matter.matterId}"
+				hidden="hidden">
+			<div class="form-group">
+				<label for="exampleInputEmail1">文件名</label> <input type="text"
+					class="form-control" id="matterName"
+					th:value="${matter.matterName}">
+			</div>
+			<div class="form-group">
+				<label for="exampleInputPassword1">上传人(工号)</label> <input
+					type="text" class="form-control" disabled="disabled"
+					id="matterUserid" th:value="${matter.matterUserid}">
+			</div>
+			<div class="checkbox">
+				<label> <input type="checkbox" id="matterEncryption"
+					onclick="matter()" th:value="${matter.matterEncryption}">修改密码
+				</label>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputFile">新修改密码</label> <input type="password"
+					class="form-control" id="matterPassword" disabled="disabled"
+					th:value="${matter.matterPassword}" />
+			</div>
+
+			<div class="form-group">
+				<!-- 判断是否是经理登陆 -->
+				<select id="deptnoId" th:if="${Sub_department} eq null" id="departMent">
+					
+				</select>
+				<!-- 判断是否是普通职员登陆 -->
+				<select id="deptnoId" th:if="${matter.deptnoId} ne 40">
+					<option th:value="${Sub_department}">部门</option>
+					<option value="40">公网</option>
+				</select>
+				<select id="deptnoId" th:if="${matter.deptnoId} eq 40">
+					<option value="40">公网</option>
+					<option th:value="${Sub_department}">部门</option>
+				</select>
+			</div>
+			<div id="div1"></div>
+			<button type="button" class="btn btn-default" id="sub1">提交修改</button>
+			<button type="button" class="btn btn-default" id="sub2">恢复初始状态</button>
+		</form>
+		<p id="txt" hidden="hidden" th:text="${matter.matterContent}"></p>
+	</div>
+
+	<script type="text/javascript">
+		//wangeditor
+		var E = window.wangEditor;
+		var editor = new E('#div1');
+		editor.customConfig.uploadImgShowBase64 = true; // 使用 base64 保存图片
+		editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+		editor.customConfig.showLinkImg = false // 隐藏“网络图片”tab
+		// 自定义菜单配置
+		editor.customConfig.menus = [ 'head', // 标题
+		'bold', // 粗体
+		'fontSize', // 字号
+		'fontName', // 字体
+		'underline', // 下划线
+		'strikeThrough', // 删除线
+		'foreColor', // 文字颜色
+		'link', // 插入链接
+		'list', // 列表
+		'image', // 插入图片
+		'table', // 表格
+		'video', // 插入视频
+		'code', // 插入代码
+		'undo', // 撤销
+		'redo' // 重复
+		]
+
+		editor.create();
+		//全屏显示
+		E.fullscreen.init('#div1');
+
+		//赋值
+		$(function() {
+			//设置文本框值
+			var txt = $('#txt').text();
+			editor.txt.html(txt);
+		})
+
+		//编辑器自带的监听onchange功能
+		editor.customConfig.onchange = function(html) {
+			// html 即编辑器中的内容
+			$("#div1").val(html);
+		};
+
+		//恢复文件未修改状态(刷新页面)
+		$('#sub2').click(function() {
+			window.location.reload();
+		})
+
+		$('#matterPassword').blur(function() {  					//获得焦点时
+			var length=$.trim($(this).val()).length;				//去除空格
+			if (length ==0) {
+				$('#matterEncryption').val('false');
+				if($('#matterEncryption').prop("checked")){
+						alert("您的密码将设置为空");
+				}
+			}
+		});
+		
+		//提交修改
+		$('#sub1')
+				.click(
+						function() {
+							var matterId = $('#matterId').val();
+							var matterName = $('#matterName').val();
+							var matteruserid = $('#matterUserid').val();
+							var matterEncryption = $('#matterEncryption').val();
+							var matterPassword = $('#matterPassword').val();
+							var deptnoId = $('#deptnoId').val();
+							var editorhtml = editor.txt.html() + "";
+
+							$.ajax({
+										url : "/filemanager/updatefile",
+										type : "POST",
+										data : {
+											matterId : matterId,
+											matterName : matterName,
+											matterUserid : matteruserid,
+											matterEncryption : matterEncryption,
+											matterPassword : matterPassword,
+											deptnoId : deptnoId,
+											mattercontent : editorhtml
+										},
+										success : function(result) {
+											alert("修改成功正在返回页面");
+											window.location
+													.replace("http://localhost/filemanager/look"); //跳转页面
+										},
+										error : function() {
+											alert("更新失败");
+										}
+									})
+
+						})
+
+		//根据是否加密来调整密码框的情况
+		function matter() {
+			/* alert($('#matterEncryption').is(":checked")); */
+			if ($('#matterEncryption').is(":checked")) {
+				$("#matterPassword").removeAttr("disabled");
+			} else {
+				$('#matterPassword').attr("disabled", "disabled");
+			}
+		}
+		
+		//部门加载
+		var departMent=$('#departMent');
+		$.ajax({
+			url:"/manager/getdepartment",
+			type:'GET',
+			success:function(result){
+				result=JSON.parse(result);
+				/* var tt=JSON.stringify(result);
+				alert(tt); */
+				var ss="<option value='40'>公网(默认选中)</option>"
+				$.each(result,function(index,item){
+					ss+="<option value="+item.departMentId+">"+item.departMentName+"</option>"
+				});
+				departMent.append(ss);
+			}
+		});
+		
+	});
+>>>>>>> branch 'dev01' of https://github.com/ZJK01/huiyiguanli01.git
 	</script>
 </body>
 </html>

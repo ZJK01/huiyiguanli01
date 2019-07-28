@@ -47,7 +47,6 @@ ul, li {
 			<!-- 			<li><a th:href="@{/percenter/}">会议预订</a></li> -->
 			<!-- 			<li><a th:href="@{/calendar/}">会议日历</a></li> -->
 		</ul>
-
 		<div class="pubdiv" id="2"
 			style="text-align: center; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px; line-height: 35px;">
 			<a th:href="@{/percenter/}">会议预订</a>
@@ -73,21 +72,21 @@ ul, li {
 		<ul id="44" style="display: none; padding: 0px;">
 			<li><a th:href="@{/demanager/zc}">员工注册</a></li>
 			<li><a th:href="@{/demanager/pagefy/0}">员工管理</a></li>
-			<li><a href="#">部门管理</a></li>
+			<li><a th:href="@{/demanager/department/id}">部门管理</a></li>
 		</ul>
+
 		<div class="pubdiv"
 			style="text-align: center; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px; line-height: 35px;"
-			onclick="clickHandler(55)">
+>
 			邮件管理<b class="caret"></b>
 		</div>
 		<ul id="55" style="display: none; padding: 0px;">
 			<li><a th:href="@{/email/}">发送邮件</a></li>
 			<li><a href="#">查看邮件</a></li>
 		</ul>
-
 		<div class="pubdiv"
 			style="text-align: center; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px; line-height: 35px;"
-			onclick="clickHandler(66)">
+>
 			文件管理<b class="caret"></b>
 		</div>
 		<ul id="66" style="display: none; padding: 0px;">
@@ -100,7 +99,6 @@ ul, li {
 				style="text-align: center; line-height: 35px; cursor: pointer; width: 258px; height: 35px; border-top: solid 1px lightgray; cursor: pointer;">
 				<a th:href="@{/calendar/}">会议日历</a>
 			</div>
-		</div>
 	</div>
 </body>
 </html>

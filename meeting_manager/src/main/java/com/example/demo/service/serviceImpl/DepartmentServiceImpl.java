@@ -3,32 +3,18 @@ package com.example.demo.service.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.DepartmentDao;
 import com.example.demo.entity.Department;
+import com.example.demo.entity.Employee;
 import com.example.demo.service.DepartmentService;
 
 @Service(value = "DepartmentServiceImpl")
 public class DepartmentServiceImpl implements DepartmentService {
-
-	@Autowired
-	private DepartmentDao departmentDao;
-
-	@Override
-	public List<Department> findallByDepartmentid(Integer did) {
-		// TODO Auto-generated method stub
-		return departmentDao.findAllBydepartmentId(did);
-	}
-
-//	@Override
-//	public List<Department> findallByDepartmentidNot(Integer did) {
-//		// TODO Auto-generated method stub
-//		return departmentDao.findAllBydepartmentIdNot(did);
-//	}
-
 	
-
 	@Autowired
 	DepartmentDao departmentdao;
 	
@@ -40,8 +26,61 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public List<Department> findAllDepartmentIdNot(Integer idInteger) {
-		
 		return departmentdao.findAllBydepartmentIdNot(idInteger);
+	}
+
+
+	public List<Department> like(String workset ) {
+		List<Department> like=departmentdao.like(workset);		
+		List<Department>  likeDepartmentname=departmentdao.likeDepartmentname(workset);
+		like.addAll(likeDepartmentname);
+		return like;
+	}
+
+	
+	@Override
+	public List<Department> likeDepartmentname(String departmentname) {
+		List<Department>  likeDepartmentname=departmentdao.likeDepartmentname(departmentname);
+		return likeDepartmentname;
+	}
+
+	@Override
+	public void deleteById(Integer id) {
+		departmentdao.deleteById(id);
+	}
+
+	@Override
+	public void save(Department dp) {
+		departmentdao.save(dp);
+	}
+
+
+	@Override
+	public Integer count() {
+		Integer dp= (int) departmentdao.count();
+		return dp;
+	}
+
+
+	@Override
+	public Page<Department> fy(Integer pageCurrent, Integer pageCount) {
+		PageRequest pageable = new PageRequest(pageCurrent, pageCount);
+		Page<Department> dp = departmentdao.findAll(pageable);		
+		return dp;
+	}
+
+
+	@Override
+	public List<Department> findAllDepartmentId(Integer idInteger) {
+		// TODO Auto-generated method stub
+		return departmentdao.findAllBydepartmentId(idInteger);
+	}
+
+
+	@Override
+	public List<Employee> findByDepartmentId(Integer idInteger) {
+		// TODO Auto-generated method stub
+		return departmentdao.findBydepartmentId(idInteger);
 	}
 
 }

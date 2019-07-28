@@ -45,6 +45,7 @@
 					type="text" class="form-control" 
 					disabled="disabled" id="matterUserid"
 					th:value="${matter.matterUserid}">
+<<<<<<< HEAD
 			</div> 
 			<div id="div1"></div>
 			<button type="button" class="btn btn-default" id="sub1">返回上一层</button>
@@ -141,5 +142,57 @@
 			window.location.replace("http://localhost/filemanager/look");  //跳转页面
 		})
 	</script>
+=======
+			</div> 
+			<div id="div1" ></div>
+			<button type="button" class="btn btn-default" id="sub1">返回上一层</button>
+		</form>
+		<p th:text="${matter.matterContent}" id="txt"      hidden="hidden"></p>
+	</div>
+
+	<script type="text/javascript">
+		//wangeditor
+		var E = window.wangEditor;
+		var editor = new E('#div1');
+		editor.customConfig.uploadImgShowBase64 = true; // 使用 base64 保存图片
+		editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+		editor.customConfig.showLinkImg = false // 隐藏“网络图片”tab
+		// 自定义菜单配置
+		editor.customConfig.menus = [ 'head', // 标题
+		'bold', // 粗体
+		'fontSize', // 字号
+		'fontName', // 字体
+		'underline', // 下划线
+		'strikeThrough', // 删除线
+		'foreColor', // 文字颜色
+		'link', // 插入链接
+		'list', // 列表
+		'image', // 插入图片
+		'table', // 表格
+		'video', // 插入视频
+		'code', // 插入代码
+		'undo', // 撤销
+		'redo' // 重复
+		]
+
+		editor.create();
+		//全屏显示
+		E.fullscreen.init('#div1');
+
+		//赋值
+		$(function() {
+			//设置文本框值
+			var txt = $('#txt').text();
+			editor.txt.html(txt);
+			// 禁用编辑功能
+			editor.$textElem.attr('contenteditable', false);
+		})
+		
+		//提交修改
+		$('#sub1').click(function(){
+			window.location.replace("http://localhost/filemanager/look");  //跳转页面
+		})
+	</script>
+>>>>>>> branch 'dev01' of https://github.com/ZJK01/huiyiguanli01.git
 </body>
 </html>

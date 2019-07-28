@@ -64,6 +64,7 @@ public class MatterServiceImpl implements MatterService {
 	@Override
 	public Integer count(String deptnoId) {
 		return (int) MatterDao.count(new Specification<Matter>() {
+
 			@Override
 			public Predicate toPredicate(Root<Matter> root, CriteriaQuery<?> query, CriteriaBuilder cr) {
 				Predicate predicate=cr.conjunction();

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>部门管理界面</title>
+<link href=" /css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<link href=" /css/bootstrap.css" rel="stylesheet" />
+<script type="text/javascript" src="/js/clickHandler.js"></script>
+
+</head>
+<style type="text/css">
+#td {
+	font-size: 30px;
+	text-align: center;
+	height: 40px;
+	width: 100px;
+}
+
+#tx {
+	border-radius: 8px;
+	width: 250px;
+}
+
+#header {
+	border: #000000 1px solid;
+	height: 50px;
+	width: 100%;
+	background-color: #000000;
+	position: absolute;
+	top: 0;
+}
+
+a:hover {
+	background: #12b7f5;
+	text-decoration: none;
+	color: white;
+}
+
+#table {
+	position: absolute;
+	left: 300px;
+}
+
+body {
+	margin: 0 auto;
+	font-size: 16px;
+}
+
+#ct {
+	font-size: 30px;
+	color: white;
+}
+
+}
+#l {
+	display: inline;
+}
+
+#x {
+	position: absolute;
+	top: 51px;
+	width: 265px;
+	height: 87%;
+}
+
+ul, li {
+	margin: 0;
+	list-style: none;
+	text-align: center;
+}
+
+body {
+	margin: 0 auto;
+	font-size: 16px;
+}
+</style>
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		style="background: #23527C; position: absolute;">
+		<div th:replace="common/header :: header"></div>
+	</nav>
+
+	<!-- 左边start  -->
+	<div id="x">
+		<div th:replace="common/left :: left"></div>
+	</div>
+	<!-- 左边end -->
+
+	<div style="position: absolute; left: 263px; top: 51px; width: 1300px;">
+		<div class="container">
+				<form th:action="@{/demanager/department/like}">
+					<table class="table">
+						<tr>
+							<td colspan="2"><input class="form-control" type="text"
+								name="workSet" placeholder="请输入你需要查询部门的搜索内容"
+								style="height: 30px; width: 350px;"  required="required"/></td>
+							<td style="width: 250px;"><input type="submit" value="查询"
+								style="height: 30px;" class="btn btn-success"></td>
+							<td style="width: 250px; text-align: center;"><input
+								type="reset" value="重置" style="height: 30px;"
+								class="btn btn-success" /></td>
+							<td style="text-align: center;"><a
+								th:href="@{/demanager/zj}" th:text="添加部门及工作地点"
+								class="btn btn-default"></a></td>
+						</tr>
+						<tr style="width: 600px;">
+							<th>部门id</th>
+							<th>部门名称</th>
+							<th>工作地点</th>
+							<th style="text-align: center;">操作</th>
+							<td></td>
+						</tr>
+						<tbody>
+							<tr th:each="department:${dp2}">
+								<td th:text="${department.departmentId}"></td>
+								<td th:text="${department.departMentName}"></td>
+								<td th:text="${department.workSet}"></td>
+								<td style="text-align: center;"><a
+									th:href="@{/demanager/deldeptno/id?(id=${department.departmentId})}"
+									th:text="删除" class="btn btn-danger"></a></td>
+								<td></td>
+							</tr>
+						</tbody>
+						<tr>
+							<td colspan="5" style="text-align: center;"><a
+								th:href="@{/demanager/department/id?(id=${0})}"
+								class="btn btn-default">首页</a> <a
+								th:href="@{/demanager/department/id?(id=${pageCurrent-1 ge 0? pageCurrent-1:0})}"
+								class="btn btn-default">上一页</a> <a
+								th:href="@{/demanager/department/id?(id=${pageCurrent+1 le pages-1? pageCurrent+1:pages})}"
+								class="btn btn-default">下一页</a> <a
+								th:href="@{/demanager/department/id?(id=${pages})}"
+								class="btn btn-default">末页</a></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	<script type="text/javascript">
+		 function clearForm() {
+   			   $('#mailForm')[0].reset();
+    	 }
+	</script>
+</body>
+</html>

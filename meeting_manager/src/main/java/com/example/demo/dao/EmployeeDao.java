@@ -24,6 +24,7 @@ public interface EmployeeDao extends JpaRepository<Employee, Integer>, JpaSpecif
 	 * */
 	@Query("from Employee where employeeName=:#{#employee.employeeName}  and employeePassword=:#{#employee.employeePassword}")
 	public Employee findByemployeeNameAndemployeePassword(Employee employee);
+
+//	public List<Employee> findAllBydepartmentId(Integer did);
 	
-	public List<Employee> findAllBydepartMent(String did);
 }

@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 
 /**
  * 文件表
@@ -26,6 +29,19 @@ public class Matter implements Serializable {
 	private String matterPassword; // 加密密码
 	private String deptnoId; // 部门关联
 	private String matterContent; // 文件内容
+	
+	@ManyToOne
+	@JoinColumn(name="employee_id")
+	private Employee employee;
+	
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 
 	public Integer getMatterId() {
 		return matterId;

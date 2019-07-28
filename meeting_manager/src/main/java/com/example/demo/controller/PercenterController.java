@@ -29,7 +29,6 @@ import com.example.demo.service.BoradroomService;
 import com.example.demo.service.DepartmentService;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.MeetingService;
-import com.example.demo.service.PostitionService;
 
 import net.sf.json.JSONArray;
 
@@ -56,8 +55,6 @@ public class PercenterController {
 	//会议
 	private MeetingService meetingService;
 	
-	@Autowired
-	private PostitionService postitionService;
 
 	@PostMapping("/meetingroom")
 	@ResponseBody
@@ -77,24 +74,24 @@ public class PercenterController {
 		String status = "启用";
 		// 获取所有启用状态的会议室
 		List<Boradroom> boradrooms = boradroomSerivce.getBoradrooms(status);
-		Optional<Boradroom> boradroom;
+		Boradroom boradroom;
 		// 查询已预订的所有会议
 		List<Meeting> meetings = meetingService.findMeetings();
 		// 获取需要移除的会议室集合
 		List<Boradroom> boradrooms2 = new ArrayList<Boradroom>();
 		// 遍历所有会议
 		for (Meeting meeting : meetings) {
-			int starttime = date1.compareTo(meeting.getStarttime());
-			int start = date1.compareTo(meeting.getEndtime());
-			int endtime = date2.compareTo(meeting.getEndtime());
-			int end = date2.compareTo(meeting.getStarttime());
+			int starttime = date1.compareTo(meeting.getStartTime());
+			int start = date1.compareTo(meeting.getEndTime());
+			int endtime = date2.compareTo(meeting.getEndTime());
+			int end = date2.compareTo(meeting.getStartTime());
 
 			// 时间比较，等于1大于比较时间，小于1小于比较时间，等于0时间相等
 			if ((starttime == 1 && start == -1) || (starttime == -1 && end == 1)
 					|| (starttime == -1 && (end == 1 && endtime == -1))) {
 				// 获取时间冲突的会议室对象
-				boradroom = boradroomSerivce.getCroom(meeting.getBroomid());
-				boradrooms2.add(boradroom.get());
+				boradroom = boradroomSerivce.getCroom(meeting.getBroomId());
+				boradrooms2.add(boradroom);
 
 			}
 		}
@@ -106,8 +103,8 @@ public class PercenterController {
 	@PostMapping("/employee")
 	@ResponseBody
 	//根据前端选择的部门信息实时返回部门员工数据
-	public String ajax03(@RequestParam String department) {
-		List<Employee> employees = employeeService.findAllByDepatment(department);
+	public String ajax03(@RequestParam Integer department) {
+		List<Employee> employees = departmentService.findByDepartmentId(department);
 		
 		JSONArray array = JSONArray.fromObject(employees);
 		return array.toString();
@@ -121,14 +118,13 @@ public class PercenterController {
 //		获取部门信息
 		List<Department> departments;
 		Employee employee = (Employee) session.getAttribute("Employee");
-		Integer positionid = employee.getPostitionId();
-		Postition postition = postitionService.findById(positionid).get();
-		if ("经理" ==postition.getPositionname()) {
+		String positionname = employee.getDepartment().getDepartMentName();
+		if ("经理" ==positionname) {
 			did = 40;
 			departments = departmentService.findAllDepartmentIdNot(did);
 		} else {		
-			did = employee.getDepartMent();
-			departments = departmentService.findallByDepartmentid(did);
+			did = employee.getDepartment().getDepartmentId();
+			departments = departmentService.findAllDepartmentId(did);
 		}
 		model.addAttribute("departments", departments);
 		return "cmeeting/bookmeeting";

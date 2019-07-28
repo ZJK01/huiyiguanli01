@@ -41,14 +41,14 @@ public class FilemanagerController {
 	public String filemain(ModelMap model, HttpSession session) {
 		Employee employee = (Employee) session.getAttribute("Employee");
 		model.addAttribute("id", employee.getEmployeeAccount());
-		model.addAttribute("deptno", employee.getDepartMent());
+		model.addAttribute("deptno", employee.getDepartment().getDepartmentId());
 		return "/filemanager/sendfile";
 	}
 
 	@PostMapping("/fileup")
 	public String fileup(@ModelAttribute Matter matter) {
 		try {
-			Editor.docFile(matter.getMattercontent(), matter.getMatterName());
+			Editor.docFile(matter.getMatterContent(), matter.getMatterName());
 		} catch (Exception e) {
 			System.out.println("写入失败");
 			e.printStackTrace();
@@ -68,7 +68,7 @@ public class FilemanagerController {
 		try {
 			if (null != session.getAttribute("Employee")) {
 				Employee employee = (Employee) session.getAttribute("Employee");
-				deptnoId = employee.getDepartMent();
+				deptnoId = employee.getDepartment().getDepartmentId();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -176,7 +176,7 @@ public class FilemanagerController {
 		Integer sub_deptno = null;							   //当前上传人的部门
 		Employee employee = (Employee) session.getAttribute("Employee");
 		userString = employee.getEmployeeAccount();
-		sub_deptno=employee.getDepartMent();
+		sub_deptno=employee.getDepartment().getDepartmentId();
 		
 		map.addAttribute("matter", matter); // 存储在model
 		map.addAttribute("Sub_department",sub_deptno); //当前登陆人的部门
@@ -194,7 +194,7 @@ public class FilemanagerController {
 	@ResponseBody
 	public String updateFile(@ModelAttribute Matter matter) {
 		try {
-			Editor.docFile(matter.getMattercontent(), matter.getMatterName());
+			Editor.docFile(matter.getMatterContent(), matter.getMatterName());
 		} catch (Exception e) {
 			System.out.println("写入失败");
 			e.printStackTrace();

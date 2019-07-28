@@ -5,10 +5,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+
+import com.example.demo.entity.Boradroom;
 
 /**
  * redisTemplate封装
@@ -18,7 +21,8 @@ import org.springframework.util.CollectionUtils;
 @Component
 public class RedisUtil {
 
-	@Autowired
+//	特别注意的是这里的注入，由于之前配置了redisTemplate及其子类，故需要使用@Resource注解进行！
+	@Resource
 	private RedisTemplate<String, Object> redisTemplate;
 
 	public RedisUtil(RedisTemplate<String, Object> redisTemplate) {

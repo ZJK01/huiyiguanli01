@@ -38,6 +38,8 @@ public class CRoomController {
 
 //	会议室添加
 
+//	会议室添加
+	@PostMapping("/addroom")
 	public String addCroom(@ModelAttribute Boradroom boradroom) {
 		boradroomService.addCroom(boradroom);
 		return "redirect:/croom/lookcroom";
@@ -70,14 +72,14 @@ public class CRoomController {
 
 	@GetMapping("/updatecroom/{bid}")
 	public String updateCroom(@PathVariable Integer bid, Model model) {
-		Optional<Boradroom> boradroom = boradroomService.getCroom(bid);
-		String statu = boradroom.get().getBoradRoomStatus();
-		if (boradroom.get().getBoradRoomStatus().equals("启用")) {
+		Boradroom boradroom = boradroomService.getCroom(bid);
+		String statu = boradroom.getBoradRoomStatus();
+		if (boradroom.getBoradRoomStatus().equals("启用")) {
 			statu = "启用";
 		} else {
 			statu = "no";
 		}
-		model.addAttribute("boradroom", boradroom.get());
+		model.addAttribute("boradroom", boradroom);
 		model.addAttribute("status", statu);
 		return "/croom/croomupdate";
 	}
