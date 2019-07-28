@@ -48,7 +48,9 @@
 						<td>上传人</td>
 						<td>是否加密</td>
 						<td>查看</td>
-						<td colspan="2">编辑</td>
+						<div shiro:hasPermission="file:view">
+							<td colspan="2">编辑</td>
+						</div>
 					</tr>
 					<tr th:each="pfile:${publicFile}" th:if="${publicFile !=null}">
 						<td th:text="${pfile.matterId}" th:value="${pfile.matterId}"></td>
@@ -59,7 +61,9 @@
 							th:value="${pfile.matterEncryption}"></td>
 						<td><button class="btn btn-default"
 								th:onclick="|show(${pfile.matterId},${pfile.matterEncryption})|">查看</button></td>
-						<td colspan="2"><button th:value="${pfile.matterId}" onclick="downfile(this)">下载文件</button></td>
+						<div shiro:hasPermission="file:view">
+							<td colspan="2"><button class="btn" th:value="${pfile.matterId}" onclick="downfile(this)">下载文件</button></td>
+						</div>
 					</tr>
 					<tr th:each="pfile:${publicList}" th:if="${publicList !=null}">
 						<td th:text="${pfile.matterId}" th:value="${pfile.matterId}"></td>
@@ -70,7 +74,9 @@
 							th:value="${pfile.matterEncryption}"></td>
 						<td><button class="btn btn-default"
 								th:onclick="|show(${pfile.matterId},${pfile.matterEncryption})|">查看</button></td>
-						<td colspan="2"><button th:value="${pfile.matterId}" onclick="downfile(this)">下载文件</button></td>
+						<div shiro:hasPermission="file:view">
+							<td colspan="2"><button class="btn" th:value="${pfile.matterId}" onclick="downfile(this)">下载文件</button></td>
+						</div>
 					</tr>
 				</table>
 				<div style="text-align: right; margin-right: 10px;">
@@ -95,7 +101,9 @@
 						<td>上传人</td>
 						<td>是否加密</td>
 						<td>查看</td>
-						<td colspan="2">编辑</td>
+						<div shiro:hasPermission="file:view">
+							<td colspan="2">编辑</td>
+						</div>
 					</tr>
 					<tr th:each="deptno:${deptnoFile}" th:if="${deptnoFile !=null}">
 						<td th:text="${deptno.matterId}" th:value="${deptno.matterId}"></td>
@@ -107,7 +115,9 @@
 						<td><button class="btn btn-default"
 								th:onclick="|show(${deptno.matterId},${deptno.matterEncryption})|">查看
 							</button></td>
-						<td colspan="2"><a  th:text="${deptno.matterId}" onclick="downfile(this)">下载附件</a></td>
+						<div shiro:hasPermission="file:view">
+							<td colspan="2"><button class="btn" th:value="${deptno.matterId}" onclick="downfile(this)">下载文件</button></td>
+						</div>
 					</tr>
 					<tr th:each="deptno:${deptnoList}" th:if="${deptnoList !=null}">
 						<td th:text="${deptno.matterId}" th:value="${deptno.matterId}"></td>
@@ -119,7 +129,9 @@
 						<td><button class="btn btn-default"
 								th:onclick="|show(${deptno.matterId},${deptno.matterEncryption})|">查看
 							</button></td>
-						<td colspan="2"><a th:text="${deptno.matterId}" onclick="downfile(this)">下载附件</a></td>
+						<div shiro:hasPermission="file:view">
+							<td colspan="2"><button class="btn" th:value="${deptno.matterId}" onclick="downfile(this)">下载文件</button></td>
+						</div>
 					</tr>
 				</table>
 				<div style="text-align: right; margin-right: 10px;">

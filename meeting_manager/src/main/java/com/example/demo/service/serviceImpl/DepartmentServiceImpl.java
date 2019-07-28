@@ -68,4 +68,11 @@ public class DepartmentServiceImpl  implements DepartmentService {
 		return dp;
 	}
 
+
+	@Override
+	public Department findDeptnoId(String departMent) {
+		return departmentdao.findBydepartmentId(Integer.parseInt(departMent));
+		
+	}
+
 }

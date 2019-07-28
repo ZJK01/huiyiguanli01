@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -61,17 +61,31 @@ ul, li {
 			<li><a th:href="@{/croom/}">添加会议室</a></li>
 			<li><a th:href="@{/croom/lookcroom}">查看会议室</a></li>
 		</ul>
-
-		<div class=""
-			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
-			onclick="clickHandler(44)">
-			部门管理 <b class="caret"></b>
+		<!-- start shiro-role -->
+		<div shiro:hasRole="主管">
+			<div class=""
+				style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
+				onclick="clickHandler(44)">
+				部门管理 <b class="caret"></b>
+			</div>
+			<ul id="44" style="display: none; padding: 0px;">
+				<li><a th:href="@{/demanager/zc}">员工注册</a></li>
+				<li><a th:href="@{/demanager/pagefy/0}">员工管理</a></li>
+			</ul>
 		</div>
-		<ul id="44" style="display: none; padding: 0px;">
-			<li><a th:href="@{/demanager/zc}">员工注册</a></li>
-			<li><a th:href="@{/demanager/pagefy/0}">员工管理</a></li>
-			<li><a th:href="@{/demanager/department/id}">部门管理</a></li>
-		</ul>
+		<div shiro:hasRole="经理">
+			<div class=""
+				style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
+				onclick="clickHandler(44)">
+				部门管理 <b class="caret"></b>
+			</div>
+			<ul id="44" style="display: none; padding: 0px;">
+				<li><a th:href="@{/demanager/zc}">员工注册</a></li>
+				<li><a th:href="@{/demanager/pagefy/0}">员工管理</a></li>
+				<li><a th:href="@{/demanager/department/id}">部门管理</a></li>
+			</ul>
+		</div>
+		<!-- end shiro-role -->
 		<div class=""
 			style="text-align: center; line-height: 35px; border-right: 0px; border-left: 0px; border-bottom: 0px; border-top: solid 1px lightgray; cursor: pointer; width: 258px; height: 35px;"
 			onclick="clickHandler(55)">

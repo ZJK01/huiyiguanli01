@@ -3,8 +3,6 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.entity.Boradroom;
 import com.example.demo.service.BoradroomService;
@@ -36,6 +32,7 @@ public class CRoomController {
 	}
 
 //	会议室添加
+	@PostMapping("/addroom")
 	public String addCroom(@ModelAttribute Boradroom boradroom) {
 		boradroomService.addCroom(boradroom);
 		return "redirect:/croom/lookcroom";
@@ -51,14 +48,14 @@ public class CRoomController {
 
 	@GetMapping("/updatecroom/{bid}")
 	public String updateCroom(@PathVariable Integer bid, Model model) {
-		Optional<Boradroom> boradroom = boradroomService.getCroom(bid);
-		String statu=boradroom.get().getBoradRoomStatus();
-		if (boradroom.get().getBoradRoomStatus().equals("启用")) {
+		Boradroom boradroom = boradroomService.getCroom(bid);
+		String statu=boradroom.getBoradRoomStatus();
+		if (boradroom.getBoradRoomStatus().equals("启用")) {
 			statu = "启用";
 		} else {
 			statu = "no";
 		}
-		model.addAttribute("boradroom", boradroom.get());
+		model.addAttribute("boradroom", boradroom);
 		model.addAttribute("status", statu);
 		return "/croom/croomupdate";
 	}

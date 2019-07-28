@@ -14,26 +14,26 @@ import javax.persistence.ManyToMany;
 
 /**
  * 权限表
- * */
+ */
 @Entity
 public class SysPermission implements Serializable {
-  
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;//主键
-    private String name;//名称
-    @Column(columnDefinition="enum('menu','button')")
-    private String resourceType;//资源类型，[menu|button]
-    private String url;			//资源路径
-    private String permission; 	//权限字符串,menu例子：role:*，button例子：role:create,role:update,role:delete,role:view
-    
-    @ManyToMany
-    @JoinTable(name="SysRolePermission",joinColumns={@JoinColumn(name="permissionId")},inverseJoinColumns={@JoinColumn(name="roleId")})
-    private List<SysRole> roles;
-    
-    
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;// 主键
+	private String name;// 名称
+	@Column(columnDefinition = "enum('menu','button')")
+	private String resourceType;// 资源类型，[menu|button]
+	private String url; // 资源路径
+	private String permission; // 权限字符串,menu例子：role:*，button例子：role:create,role:update,role:delete,role:view
+
+	@ManyToMany
+	@JoinTable(name = "SysRolePermission", joinColumns = { @JoinColumn(name = "permissionId") }, inverseJoinColumns = {
+			@JoinColumn(name = "roleId") })
+	private List<SysRole> roles;
+
 	public Integer getId() {
 		return id;
 	}
@@ -74,18 +74,12 @@ public class SysPermission implements Serializable {
 		this.permission = permission;
 	}
 
-	
-
 	public List<SysRole> getRoles() {
 		return roles;
 	}
 
 	public void setRoles(List<SysRole> roles) {
 		this.roles = roles;
-	}
-
-	public SysPermission() {
-		super();
 	}
 
 	public SysPermission(Integer id, String name, String resourceType, String url, String permission,
@@ -98,5 +92,9 @@ public class SysPermission implements Serializable {
 		this.permission = permission;
 		this.roles = roles;
 	}
-    
+
+	public SysPermission() {
+		super();
+	}
+
 }

@@ -42,25 +42,29 @@ public class Employee implements Serializable {
 	@JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "employeeId") }, inverseJoinColumns = {
 			@JoinColumn(name = "roleId") })
 	private List<SysRole> roleList; // 一个用户有多个角色
-	
-	@OneToMany(mappedBy="employeeId")
+
+	@OneToMany(mappedBy = "employeeId")
 	private List<Meeting> meetingreservAtionuserId;
-	
 
-	public List<Matter> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<Matter> files) {
+	public Employee(Integer employeeId, String employeeName, String employeeAccount, String employeePassword,
+			String power, String employeeEmail, com.example.demo.entity.Department department, List<Matter> files,
+			List<SysRole> roleList, List<Meeting> meetingreservAtionuserId) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+		this.employeeAccount = employeeAccount;
+		this.employeePassword = employeePassword;
+		this.power = power;
+		this.employeeEmail = employeeEmail;
+		Department = department;
 		this.files = files;
-	}
-
-	public List<SysRole> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<SysRole> roleList) {
 		this.roleList = roleList;
+		this.meetingreservAtionuserId = meetingreservAtionuserId;
+	}
+
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getEmployeeId() {
@@ -111,21 +115,6 @@ public class Employee implements Serializable {
 		this.employeeEmail = employeeEmail;
 	}
 
-	public Employee(Integer employeeId, String employeeName, String employeeAccount, String employeePassword,
-			String power, String employeeEmail, com.example.demo.entity.Department department, List<Matter> files,
-			List<SysRole> roleList) {
-		super();
-		this.employeeId = employeeId;
-		this.employeeName = employeeName;
-		this.employeeAccount = employeeAccount;
-		this.employeePassword = employeePassword;
-		this.power = power;
-		this.employeeEmail = employeeEmail;
-		Department = department;
-		this.files = files;
-		this.roleList = roleList;
-	}
-
 	public Department getDepartment() {
 		return Department;
 	}
@@ -134,21 +123,28 @@ public class Employee implements Serializable {
 		Department = department;
 	}
 
-	public Employee() {
-		super();
+	public List<Matter> getFiles() {
+		return files;
 	}
 
-	public Employee(String employeeName, String employeePassword) {
-		super();
-		this.employeeName = employeeName;
-		this.employeePassword = employeePassword;
+	public void setFiles(List<Matter> files) {
+		this.files = files;
 	}
 
-	@Override
-	public String toString() {
-		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", employeeAccount="
-				+ employeeAccount + ", employeePassword=" + employeePassword + ", power=" + power + ", employeeEmail="
-				+ employeeEmail + ", Department=" + Department + ", files=" + files + ", roleList=" + roleList + "]";
+	public List<SysRole> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<SysRole> roleList) {
+		this.roleList = roleList;
+	}
+
+	public List<Meeting> getMeetingreservAtionuserId() {
+		return meetingreservAtionuserId;
+	}
+
+	public void setMeetingreservAtionuserId(List<Meeting> meetingreservAtionuserId) {
+		this.meetingreservAtionuserId = meetingreservAtionuserId;
 	}
 
 }

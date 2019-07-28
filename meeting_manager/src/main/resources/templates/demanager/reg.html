@@ -109,10 +109,13 @@ body {
 						type="password" name="employeePassword" placeholder="密码" required="required"/>
 				</div>
 				<div class="form-group" style="margin: 5px;">
-					<label>部门</label> <select name="departMent" class="form-control" id="departMent"></select>
+					<label>部门</label> <select name="departMent" class="form-control">
+						<option th:each="dept:${departments}" th:text="${dept.departMentName}"  th:value="${dept.departmentId}">
+					</select>
 				</div>
 				<div class="form-group" style="margin: 5px;">
 					<label>职位</label> <select name="SysRole" class="form-control" id="SysRole">
+							<option th:each="sys:${sysrole}" th:text="${sys.role}"  th:value="${sys.id}">
 					</select>
 				</div>
 				<div class="form-group" style="margin: 5px;">
@@ -128,7 +131,7 @@ body {
 		</div>
 	</div>
 	<script type="text/javascript">
-		$(function(){
+		/* $(function(){
 			var postitionId=$('#SysRole');
 			$.ajax({
 				url:"/manager/getSysRole",
@@ -137,30 +140,29 @@ body {
 					result=JSON.parse(result);
 					var ss=""
 					$.each(result,function(index,item){
-						ss+="<option value="+item.positionid+">"+item.positionname+"</option>"
+						ss+="<option value="+item.id+">"+item.role+"</option>"
 					});
 					postitionId.append(ss);
 				}
-			});
+			}); */
 			
-			var departMent=$('#departMent');
+			//获得部门
+		/* 	 var departMent=$('#departMent');
 			$.ajax({
 				url:"/manager/getdepartment",
 				type:'GET',
 				success:function(result){
+					alert("1");
 					result=JSON.parse(result);
-					/* var tt=JSON.stringify(result);
-					alert(tt); */
 					var ss=""
 					$.each(result,function(index,item){
-						
 						ss+="<option value="+item.departMentId+">"+item.departMentName+"</option>"
 					});
 					departMent.append(ss);
 				}
-			});
-			
-		});
+			}); */
+			 
+		/* }); */
 	</script>
 </body>
 </html>

@@ -48,7 +48,7 @@ public class FilemanagerController {
 	@PostMapping("/fileup")
 	public String fileup(@ModelAttribute Matter matter) {
 		try {
-			Editor.docFile(matter.getMattercontent(), matter.getMatterName());
+			Editor.docFile(matter.getMatterContent(), matter.getMatterName());
 		} catch (Exception e) {
 			System.out.println("写入失败");
 			e.printStackTrace();
@@ -194,7 +194,7 @@ public class FilemanagerController {
 	@ResponseBody
 	public String updateFile(@ModelAttribute Matter matter) {
 		try {
-			Editor.docFile(matter.getMattercontent(), matter.getMatterName());
+			Editor.docFile(matter.getMatterContent(), matter.getMatterName());
 		} catch (Exception e) {
 			System.out.println("写入失败");
 			e.printStackTrace();

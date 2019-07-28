@@ -16,6 +16,8 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 
 import com.example.demo.entity.Employee;
+import com.example.demo.entity.SysPermission;
+import com.example.demo.entity.SysRole;
 import com.example.demo.service.EmployeeService;
 
 public class MyRealm extends AuthorizingRealm {
@@ -30,15 +32,16 @@ public class MyRealm extends AuthorizingRealm {
 		// 给资源赋予权限
 		// 获取当前登录用户
 		Subject subject = SecurityUtils.getSubject();
-		Employee employee = (Employee) subject.getPrincipal(); // 通过getPrincipal拿到的就是下边的认证登录逻辑中的返回时候的第一个参数user
-
-		/*
-		 * //通过循环赋予用户权限 for(SysRole role:employee.getRoleList()){
-		 * simpleInfo.addRole(role.getRole()); //添加角色 for(SysPermission
-		 * p:role.getPermissions()){ //添加权限
-		 * simpleInfo.addStringPermission(p.getPermission()); } }
-		 */
-
+		// 通过getPrincipal拿到的就是下边的认证登录逻辑中的返回时候的第一个参数user
+		Employee employee = (Employee) subject.getPrincipal();
+		
+		// 通过循环赋予用户权限
+		for (SysRole role : employee.getRoleList()) {
+			simpleInfo.addRole(role.getRole()); // 添加角色
+			for (SysPermission p : role.getPermissions()) { // 添加权限
+				simpleInfo.addStringPermission(p.getPermission());
+			}
+		}
 		return simpleInfo;
 	}
 
@@ -60,6 +63,7 @@ public class MyRealm extends AuthorizingRealm {
 			return null;
 		} else {
 			// 判断密码
+			System.out.println(employee.getEmployeePassword());
 			return new SimpleAuthenticationInfo(employee, employee.getEmployeePassword(), salt, "MyRealm");
 		}
 

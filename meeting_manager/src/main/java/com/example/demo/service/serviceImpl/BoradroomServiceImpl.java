@@ -5,9 +5,6 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.BoradroomDao;
@@ -35,9 +32,9 @@ public class BoradroomServiceImpl implements BoradroomService {
 
 	@Override
 //	@Cacheable(cacheNames = "croom", key = "#bid.toString()")
-	public Optional<Boradroom> getCroom(Integer bid) {
+	public Boradroom getCroom(Integer bid) {
 		// TODO Auto-generated method stub
-		return boradroomDao.findById(bid);
+		return boradroomDao.findById(bid).get();
 	}
 
 	@Override

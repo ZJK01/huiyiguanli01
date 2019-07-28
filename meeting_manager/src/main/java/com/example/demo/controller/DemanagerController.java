@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.entity.Department;
 import com.example.demo.entity.Employee;
 import com.example.demo.entity.Meeting;
+import com.example.demo.entity.SysRole;
 import com.example.demo.service.DepartmentService;
 import com.example.demo.service.MeetingService;
+import com.example.demo.service.SysRoleService;
 import com.example.demo.service.serviceImpl.EmployeeServiceImpl;
 
 
@@ -39,6 +42,9 @@ public class DemanagerController {
 	@Resource(name="DepartmentServiceImpl")
 	private DepartmentService departmentService;
 	
+	@Resource(name="SysRoleServiceImpl")
+	private SysRoleService sysRoleService;
+	
 	
 	//添加部门和职位
 	@RequestMapping("/zj")
@@ -47,7 +53,15 @@ public class DemanagerController {
 	}
 
 	@GetMapping("/zc")
-	public String zcc() {
+	public String zcc(Model model) {
+		//获得部门
+		Integer idInteger=40;
+		List<Department> departments=departmentService.findAllDepartmentIdNot(idInteger);
+		//获得等级(角色)
+		List<SysRole> SysRole = sysRoleService.findAll();
+	
+		model.addAttribute("departments",departments);
+		model.addAttribute("sysrole",SysRole);
 		return "/demanager/reg";
 	}
 	
@@ -100,8 +114,16 @@ public class DemanagerController {
 
 	// 注册用户
 	@PostMapping("reg")
-	public String adduser(@ModelAttribute Employee employee, HttpSession session, Model model) {
+	public String adduser(@ModelAttribute Employee employee,String departMent,String SysRole,HttpSession session, Model model) {
 		if(employee!=null) {
+			Department department2=departmentService.findDeptnoId(departMent);
+			employee.setDepartment(department2);  //给与部门
+			
+			SysRole sysRole2=sysRoleService.findByid(Integer.parseInt(SysRole));
+			List<SysRole> roleList=new ArrayList<SysRole>();
+			roleList.add(sysRole2);
+			employee.setRoleList(roleList);		  //给与角色
+			
 			//设置加密规则(shiro)
 			employee.setEmployeePassword((new SimpleHash("MD5",employee.getEmployeePassword(),ByteSource.Util.bytes("123"),1024)).toString());
 			employeeServiceImpl.add(employee);
@@ -109,14 +131,20 @@ public class DemanagerController {
 		}else {
 			return "redirect:zc";
 		}
-			
 	}
+	
+	//错误界面(403)
+	@GetMapping("/403")
+	public String  errorpage() {
+		return "/403";
+	}
+	
+	
 	
 
 	// 预定会议
 	@PostMapping("/ht1")
 	public String ht(@ModelAttribute Meeting meeting, Model model) {
-		
 		if (meeting.getReservAtionTime() !=null) {
 			if (meeting.getStartTime() !=null) {
 				if (meeting.getBroomId() !=null) {

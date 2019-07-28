@@ -23,4 +23,6 @@ public interface DepartmentService {
 	public Integer count();
 
 	Page<Department> fy(Integer pageCurrent, Integer pageCount);
+
+	Department findDeptnoId(String departMent);
 }

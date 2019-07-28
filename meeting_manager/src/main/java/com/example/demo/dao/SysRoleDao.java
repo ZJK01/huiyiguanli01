@@ -8,4 +8,6 @@ import com.example.demo.entity.SysRole;
 
 public interface SysRoleDao extends JpaRepository<SysRole, Integer>, JpaSpecificationExecutor<SysRole> {
 
+	public SysRole findByid(Integer sysRole);
+
 }

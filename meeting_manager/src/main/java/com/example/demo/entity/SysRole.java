@@ -11,14 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
 /**
  * 角色
- * */
+ */
 @Entity
 public class SysRole implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id; // 编号
@@ -30,53 +31,48 @@ public class SysRole implements Serializable {
 			@JoinColumn(name = "permissionId") })
 	private List<SysPermission> permissions;
 
-	
 	// 用户 - 角色关系定义;
 	@ManyToMany
 	@JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "roleId") }, inverseJoinColumns = {
 			@JoinColumn(name = "employeeId") })
 	private List<Employee> employees;// 一个角色对应多个用户
-
+	
 
 	public Integer getId() {
 		return id;
 	}
 
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	public String getRole() {
 		return role;
 	}
 
-
 	public void setRole(String role) {
 		this.role = role;
 	}
-
 
 	public List<SysPermission> getPermissions() {
 		return permissions;
 	}
 
-
 	public void setPermissions(List<SysPermission> permissions) {
 		this.permissions = permissions;
 	}
-
 
 	public List<Employee> getEmployees() {
 		return employees;
 	}
 
-
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
 
+	public SysRole() {
+		super();
+	}
 
 	public SysRole(Integer id, String role, List<SysPermission> permissions, List<Employee> employees) {
 		super();
@@ -86,12 +82,5 @@ public class SysRole implements Serializable {
 		this.employees = employees;
 	}
 
-
-	public SysRole() {
-		super();
-	}
-	
-	
-	
 	
 }

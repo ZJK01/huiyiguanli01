@@ -28,19 +28,10 @@ public class Matter implements Serializable {
 	private String matterPassword; // 加密密码
 	private String deptnoId; // 部门关联
 	private String matterContent; // 文件内容
-	
+
 	@ManyToOne
-	@JoinColumn(name="employee_id")
+	@JoinColumn(name = "employee_id")
 	private Employee employee;
-	
-
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
 
 	public Integer getMatterId() {
 		return matterId;
@@ -90,9 +81,6 @@ public class Matter implements Serializable {
 		this.matterPassword = matterPassword;
 	}
 
-	
-
-	
 	public String getDeptnoId() {
 		return deptnoId;
 	}
@@ -109,16 +97,16 @@ public class Matter implements Serializable {
 		this.matterContent = matterContent;
 	}
 
-	public String getMattercontent() {
-		return matterContent;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setMattercontent(String mattercontent) {
-		this.matterContent = mattercontent;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public Matter(Integer matterId, String matterName, Integer matterUserid, Date matterTime, Boolean matterEncryption,
-			String matterPassword, String deptnoId, String matterContent) {
+			String matterPassword, String deptnoId, String matterContent, Employee employee) {
 		super();
 		this.matterId = matterId;
 		this.matterName = matterName;
@@ -128,17 +116,11 @@ public class Matter implements Serializable {
 		this.matterPassword = matterPassword;
 		this.deptnoId = deptnoId;
 		this.matterContent = matterContent;
+		this.employee = employee;
 	}
 
 	public Matter() {
 		super();
-	}
-
-	@Override
-	public String toString() {
-		return "Matter [matterId=" + matterId + ", matterName=" + matterName + ", matterUserid=" + matterUserid
-				+ ", matterTime=" + matterTime + ", matterEncryption=" + matterEncryption + ", matterPassword="
-				+ matterPassword + ", deptnoId=" + deptnoId + ", matterContent=" + matterContent + "]";
 	}
 
 }

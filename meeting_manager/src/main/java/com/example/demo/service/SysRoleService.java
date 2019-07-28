@@ -10,4 +10,6 @@ public interface SysRoleService {
 
 	public List<SysRole> findAll();
 
+	public SysRole findByid(Integer i);
+
 }

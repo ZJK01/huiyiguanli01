@@ -2,6 +2,7 @@
 package com.example.demo.service.serviceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Override
 	public List<SysRole> findAll() {
 		return SysRole.findAll();
+	}
+
+	@Override
+	public SysRole findByid(Integer sysRole) {
+		
+		return SysRole.findByid(sysRole);
 	}
 
 }
