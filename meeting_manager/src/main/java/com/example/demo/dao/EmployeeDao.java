@@ -26,5 +26,5 @@ public interface EmployeeDao extends JpaRepository<Employee, Integer>, JpaSpecif
 	public Employee findByemployeeNameAndemployeePassword(Employee employee);
 
 //	public List<Employee> findAllBydepartmentId(Integer did);
-	
+	public List<Employee> findBydepartment_departmentId(Integer did);
 }

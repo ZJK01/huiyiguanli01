@@ -26,7 +26,7 @@ public class Boradroom implements Serializable {
 	private String boradRoomType; // 类型
 	private String boradRoomStatus; // 会议室状态
 	
-	@ManyToMany(mappedBy="boradrooms")
+	@ManyToMany(mappedBy="boradrooms",fetch=FetchType.EAGER)
 	private List<Meeting> meetings;
 
 	public Integer getBoradroomId() {
@@ -77,8 +77,16 @@ public class Boradroom implements Serializable {
 		this.boradRoomStatus = boradRoomStatus;
 	}
 
+	public List<Meeting> getMeetings() {
+		return meetings;
+	}
+
+	public void setMeetings(List<Meeting> meetings) {
+		this.meetings = meetings;
+	}
+
 	public Boradroom(Integer boradroomId, String boradroomName, String boradRoomNumber, String boradRoomreMark,
-			String boradRoomType, String boradRoomStatus) {
+			String boradRoomType, String boradRoomStatus, List<Meeting> meetings) {
 		super();
 		this.boradroomId = boradroomId;
 		this.boradroomName = boradroomName;
@@ -86,23 +94,12 @@ public class Boradroom implements Serializable {
 		this.boradRoomreMark = boradRoomreMark;
 		this.boradRoomType = boradRoomType;
 		this.boradRoomStatus = boradRoomStatus;
+		this.meetings = meetings;
 	}
 
 	public Boradroom() {
 		super();
 	}
 
-	@Override
-	public String toString() {
-		return "Boradroom [boradroomId=" + boradroomId + ", boradroomName=" + boradroomName + ", boradRoomNumber="
-				+ boradRoomNumber + ", boradRoomreMark=" + boradRoomreMark + ", boradRoomType=" + boradRoomType
-				+ ", boradRoomStatus=" + boradRoomStatus + "]";
-	}
-
-
-
 	
-	
-	
-
 }

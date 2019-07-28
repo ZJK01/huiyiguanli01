@@ -21,4 +21,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return SysRole.findAll();
 	}
 
+	@Override
+	public SysRole findByid(Integer sysRole) {
+		
+		return SysRole.findByid(sysRole);
+	}
+
 }

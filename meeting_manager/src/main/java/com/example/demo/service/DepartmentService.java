@@ -35,4 +35,8 @@ public interface DepartmentService {
 
 	// 分页
 	public Page<Department> fy(Integer pageCurrent, Integer pageCount);
+
+
+
+	Department findDeptnoId(String departMent);
 }

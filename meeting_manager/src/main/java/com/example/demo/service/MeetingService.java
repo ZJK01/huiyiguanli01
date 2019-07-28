@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import com.example.demo.entity.Meeting;
 
 public interface MeetingService {
+
 	
 	public void add(Meeting meeting);
 

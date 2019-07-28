@@ -109,12 +109,7 @@ public class MailVo implements Serializable {
 	}
 
 	public MailVo() {
-	}
-
-	@Override
-	public String toString() {
-		return "MailVo [id=" + id + ", fromone=" + fromone + ", touser=" + touser + ", subject=" + subject + ", text="
-				+ text + ", sentDate=" + sentDate + ", status=" + status + ", error=" + error + "]";
+		super();
 	}
 
 }

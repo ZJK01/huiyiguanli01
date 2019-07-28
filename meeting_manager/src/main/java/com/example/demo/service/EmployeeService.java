@@ -16,6 +16,7 @@ public interface EmployeeService {
 	
 //	分部门查找员工
 //	public List<Employee> findAllByDepatment(Integer did);
+	public List<Employee> findByEmployeeBydepartmentId(Integer did);
 	
 	public void delEmployee(Integer id);
 	

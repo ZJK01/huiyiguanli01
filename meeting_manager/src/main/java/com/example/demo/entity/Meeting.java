@@ -5,12 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -20,7 +18,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Meeting implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +33,30 @@ public class Meeting implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "employeeId")
 	private Employee employeeId;
-	
+
 	@ManyToMany
-    @JoinTable(name="boradroom_meeting",joinColumns={@JoinColumn(name="meeting_id",referencedColumnName="meetingId")},inverseJoinColumns={@JoinColumn(name="boradroom",referencedColumnName="boradroomId")})
+	@JoinTable(name = "boradroom_meeting", joinColumns = {
+			@JoinColumn(name = "meeting_id", referencedColumnName = "meetingId") }, inverseJoinColumns = {
+					@JoinColumn(name = "boradroom", referencedColumnName = "boradroomId") })
 	private List<Boradroom> boradrooms;
-	
+
+	public Meeting(Integer meetingId, Integer broomId, Integer meetingCount, Date startTime, Date endTime,
+			String meetingStas, Date reservAtionTime, Employee employeeId, List<Boradroom> boradrooms) {
+		super();
+		this.meetingId = meetingId;
+		this.broomId = broomId;
+		this.meetingCount = meetingCount;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.meetingStas = meetingStas;
+		this.reservAtionTime = reservAtionTime;
+		this.employeeId = employeeId;
+		this.boradrooms = boradrooms;
+	}
+
+	public Meeting() {
+		super();
+	}
 
 	public Integer getMeetingId() {
 		return meetingId;
@@ -97,7 +114,6 @@ public class Meeting implements Serializable {
 		this.reservAtionTime = reservAtionTime;
 	}
 
-	
 	public Employee getEmployeeId() {
 		return employeeId;
 	}
@@ -106,22 +122,14 @@ public class Meeting implements Serializable {
 		this.employeeId = employeeId;
 	}
 
-
-	public Meeting(Integer meetingId, Integer broomId, Integer meetingCount, Date startTime, Date endTime,
-			String meetingStas, Date reservAtionTime, Employee employeeId) {
-		super();
-		this.meetingId = meetingId;
-		this.broomId = broomId;
-		this.meetingCount = meetingCount;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.meetingStas = meetingStas;
-		this.reservAtionTime = reservAtionTime;
-		this.employeeId = employeeId;
+	public List<Boradroom> getBoradrooms() {
+		return boradrooms;
 	}
 
-	public Meeting() {
-		super();
+	public void setBoradrooms(List<Boradroom> boradrooms) {
+		this.boradrooms = boradrooms;
 	}
+	
+	
 
 }

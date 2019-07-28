@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import net.bytebuddy.asm.Advice.This;
 
+
 @Component
 public class Editor {
 
@@ -24,7 +25,6 @@ public class Editor {
 	public static final String DOWNADDRESS=new String("C:\\Users\\Administrator\\Desktop\\downfile\\");
 
 	public void docFile(String context, String filename) throws Exception {
-		/* InputStream cssIs2 = new FileInputStream("D:\\java\\zyf.css"); */
 		String body = context;
 		/* String css2 = this.getContent(cssIs2); */
 		// 拼一个标准的HTML格式文档
@@ -50,6 +50,7 @@ public class Editor {
 	 */
 
 	private  void inputStreamToWord(InputStream is, OutputStream os) throws IOException {
+
 		POIFSFileSystem fs = new POIFSFileSystem();
 		// 对应于org.apache.poi.hdf.extractor.WordDocument
 		fs.createDocument(is, "WordDocument");
@@ -80,6 +81,8 @@ public class Editor {
 		return null;
 	}
 	
+
+	
 	/**
 	 * 下载文件
 	 * */
@@ -101,26 +104,4 @@ public class Editor {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * 下载文件
-	 * */
-//	public  void downfile(String filename) {
-//		try {
-//			InputStream is = new FileInputStream(new File(FILEADDRESS+filename+".doc"));
-//			String context=getContent(is);							//以UTF-8编码取出
-//			InputStream iss = new ByteArrayInputStream(context.getBytes("UTF-8"));
-//			
-//			File file=new File(DOWNADDRESS);			//判断文件夹是否存在
-//			if(!file.exists()) {
-//				file.mkdirs();
-//			}
-//			OutputStream os = new FileOutputStream(new File(DOWNADDRESS+filename + ".doc"));
-//			this.inputStreamToWord(iss,os);
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
 }

@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -15,22 +14,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.example.demo.entity.Boradroom;
 import com.example.demo.entity.Department;
 import com.example.demo.entity.Employee;
 import com.example.demo.entity.Meeting;
-import com.example.demo.entity.Postition;
 import com.example.demo.service.BoradroomService;
 import com.example.demo.service.DepartmentService;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.MeetingService;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 
 /**
  * 会议预定
@@ -104,9 +108,10 @@ public class PercenterController {
 	@ResponseBody
 	//根据前端选择的部门信息实时返回部门员工数据
 	public String ajax03(@RequestParam Integer department) {
-		List<Employee> employees = departmentService.findByDepartmentId(department);
-		
-		JSONArray array = JSONArray.fromObject(employees);
+		List<Employee> employees = employeeService.findByEmployeeBydepartmentId(department);
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+		JSONArray array = JSONArray.fromObject(employees,jsonConfig);
 		return array.toString();
 	}
 
@@ -118,8 +123,9 @@ public class PercenterController {
 //		获取部门信息
 		List<Department> departments;
 		Employee employee = (Employee) session.getAttribute("Employee");
-		String positionname = employee.getDepartment().getDepartMentName();
-		if ("经理" ==positionname) {
+		String positionname = employee.getRoleList().get(0).getRole();
+		System.out.println(positionname);
+		if ("经理".equals(positionname)) {
 			did = 40;
 			departments = departmentService.findAllDepartmentIdNot(did);
 		} else {		
@@ -128,6 +134,22 @@ public class PercenterController {
 		}
 		model.addAttribute("departments", departments);
 		return "cmeeting/bookmeeting";
+	}
+	
+	@PostMapping("/meeting")
+	@ResponseBody
+	public String meeting(@ModelAttribute Meeting meeting,@RequestParam("start") String start,@RequestParam("end") String end,@RequestParam("hidden") String hidden) {
+		System.out.println(start);
+		System.out.println(end);
+		System.out.println(meeting.getMeetingStas());
+		System.out.println(meeting.getEmployeeId());
+		System.out.println(meeting.getMeetingCount());
+		Date date = new Date();
+		SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+		meeting.setReservAtionTime(date);
+		System.out.println(meeting.getReservAtionTime());
+		System.out.println(hidden);
+		return "cfghljkfcolgiho";
 	}
 
 }

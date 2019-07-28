@@ -5,11 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.DepartmentDao;
 import com.example.demo.entity.Department;
+
 import com.example.demo.entity.Employee;
+
 import com.example.demo.service.DepartmentService;
 
 @Service(value = "DepartmentServiceImpl")
@@ -81,6 +85,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public List<Employee> findByDepartmentId(Integer idInteger) {
 		// TODO Auto-generated method stub
 		return departmentdao.findBydepartmentId(idInteger);
+	}
+
+
+	@Override
+	public Department findDeptnoId(String departMent) {
+		return departmentdao.findBydepartmentId(Integer.parseInt(departMent));
+		
 	}
 
 }

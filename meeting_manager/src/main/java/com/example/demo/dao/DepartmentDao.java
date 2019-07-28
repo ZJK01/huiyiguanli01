@@ -16,9 +16,12 @@ public interface DepartmentDao extends JpaRepository<Department, Integer>, JpaSp
 	public List<Department> findAllBydepartmentId(Integer did);
 
 	public List<Employee> findBydepartmentId(Integer did);
-//
-//	public List<Department> findAllBydepartmentIdNot(String did);
 
+	public List<Department> findAllBydepartmentId(String did);
+
+	public List<Department> findAllBydepartmentIdNot(String did);
+	
+	@Query("From Department where departmentId!=:#{#idInteger}")
 	public List<Department> findAllBydepartmentIdNot(Integer idInteger);
 
 	@Query("FROM Department WHERE work_set LIKE %:#{#workset}%")
@@ -26,5 +29,7 @@ public interface DepartmentDao extends JpaRepository<Department, Integer>, JpaSp
     
     @Query("FROM Department WHERE depart_ment_name LIKE %:#{#departmentname}%") 
    	public List<Department> likeDepartmentname(@Param("departmentname")String departmentname);
+
+	public Department findBydepartmentId(int parseInt);
 
 }

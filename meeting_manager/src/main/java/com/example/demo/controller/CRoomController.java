@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import com.example.demo.entity.Boradroom;
 import com.example.demo.service.BoradroomService;
@@ -33,12 +34,8 @@ public class CRoomController {
 		return "/croom/croom";
 	}
 
-
 //	会议室添加
 
-//	会议室添加
-
-//	会议室添加
 	@PostMapping("/addroom")
 	public String addCroom(@ModelAttribute Boradroom boradroom) {
 		boradroomService.addCroom(boradroom);
@@ -63,7 +60,7 @@ public class CRoomController {
 			one = id;
 		}
 		
-		Page<Boradroom> boradrooms = boradroomService.getBrooms(start, pages);
+		Page<Boradroom> boradrooms = boradroomService.getBrooms(one, pages);
 		model.addAttribute("one", one);
 		model.addAttribute("start", start);
 		model.addAttribute("boradrooms", boradrooms);
@@ -74,6 +71,7 @@ public class CRoomController {
 	public String updateCroom(@PathVariable Integer bid, Model model) {
 		Boradroom boradroom = boradroomService.getCroom(bid);
 		String statu = boradroom.getBoradRoomStatus();
+
 		if (boradroom.getBoradRoomStatus().equals("启用")) {
 			statu = "启用";
 		} else {

@@ -44,6 +44,7 @@ public class MatterServiceImpl implements MatterService {
 		return MatterDao.findByMatterId(matterId);
 	}
 
+
 	@Override
 	public Page<Matter> Paging(Integer id, Integer numberpage, Integer deptno) {
 		Pageable pageable=new PageRequest(id,numberpage);

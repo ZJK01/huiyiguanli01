@@ -1,12 +1,11 @@
 package com.example.demo.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-import com.example.demo.common.util.RedisUtil;
+
+
 import com.example.demo.entity.Boradroom;
 
 public interface BoradroomService {
@@ -31,6 +30,11 @@ public interface BoradroomService {
 		
 //	分页
 	public Page<Boradroom> getBrooms(Integer pages,Integer page);
-	
+
 	public Integer getcount();
+//
+//	public Page<Boradroom> getBrooms(Integer pages, Integer page);
+//
+//	public List<Boradroom> getBoradrooms(String status);
+
 }

@@ -46,13 +46,17 @@ public class FilemanagerController {
 	}
 
 	@PostMapping("/fileup")
-	public String fileup(@ModelAttribute Matter matter) {
+	public String fileup(@ModelAttribute Matter matter,HttpSession session) {
 		try {
 			Editor.docFile(matter.getMatterContent(), matter.getMatterName());
 		} catch (Exception e) {
 			System.out.println("写入失败");
 			e.printStackTrace();
 		}
+		//设置关联
+		Employee employee=(Employee)session.getAttribute("Employee");
+		matter.setEmployee(employee);
+		
 		matter.setMatterTime(new Date());
 		//文件密码加密
 		matter.setMatterPassword((new SimpleHash("MD5",matter.getMatterPassword(),ByteSource.Util.bytes("123"),1024)).toString());

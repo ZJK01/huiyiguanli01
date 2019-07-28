@@ -14,7 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-
 /**
  * 员工表
  */
@@ -31,10 +30,10 @@ public class Employee implements Serializable {
 	private String employeePassword; // 登录密码
 	private String power; // 权力
 	private String employeeEmail; // 邮箱
-	
+
 	@ManyToOne
 	@JoinColumn(name = "departmentid")
-	private Department Department;
+	private Department department;
 
 	@OneToMany(mappedBy = "employee")
 	private List<Matter> files; // 设置和文件表的级联
@@ -43,25 +42,29 @@ public class Employee implements Serializable {
 	@JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "employeeId") }, inverseJoinColumns = {
 			@JoinColumn(name = "roleId") })
 	private List<SysRole> roleList; // 一个用户有多个角色
-	
-	@OneToMany(mappedBy="employeeId")
+
+	@OneToMany(mappedBy = "employeeId")
 	private List<Meeting> meetingreservAtionuserId;
-	
 
-	public List<Matter> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<Matter> files) {
+	public Employee(Integer employeeId, String employeeName, String employeeAccount, String employeePassword,
+			String power, String employeeEmail, Department department, List<Matter> files, List<SysRole> roleList,
+			List<Meeting> meetingreservAtionuserId) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+		this.employeeAccount = employeeAccount;
+		this.employeePassword = employeePassword;
+		this.power = power;
+		this.employeeEmail = employeeEmail;
+		this.department = department;
 		this.files = files;
-	}
-
-	public List<SysRole> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<SysRole> roleList) {
 		this.roleList = roleList;
+		this.meetingreservAtionuserId = meetingreservAtionuserId;
+	}
+
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getEmployeeId() {
@@ -112,15 +115,32 @@ public class Employee implements Serializable {
 		this.employeeEmail = employeeEmail;
 	}
 
+
+
 	public Department getDepartment() {
-		return Department;
+		return department;
 	}
 
 	public void setDepartment(Department department) {
-		Department = department;
+		this.department = department;
 	}
-	
-	
+
+	public List<Matter> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<Matter> files) {
+		this.files = files;
+	}
+
+	public List<SysRole> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<SysRole> roleList) {
+		this.roleList = roleList;
+	}
+
 	public List<Meeting> getMeetingreservAtionuserId() {
 		return meetingreservAtionuserId;
 	}
@@ -128,41 +148,5 @@ public class Employee implements Serializable {
 	public void setMeetingreservAtionuserId(List<Meeting> meetingreservAtionuserId) {
 		this.meetingreservAtionuserId = meetingreservAtionuserId;
 	}
-
-	public Employee() {
-		super();
-	}
-
-	public Employee(String employeeName, String employeePassword) {
-		super();
-		this.employeeName = employeeName;
-		this.employeePassword = employeePassword;
-	}
-
-	public Employee(Integer employeeId, String employeeName, String employeeAccount, String employeePassword,
-			String power, String employeeEmail, com.example.demo.entity.Department department, List<Matter> files,
-			List<SysRole> roleList, List<Meeting> meetingreservAtionuserId) {
-		super();
-		this.employeeId = employeeId;
-		this.employeeName = employeeName;
-		this.employeeAccount = employeeAccount;
-		this.employeePassword = employeePassword;
-		this.power = power;
-		this.employeeEmail = employeeEmail;
-		Department = department;
-		this.files = files;
-		this.roleList = roleList;
-		this.meetingreservAtionuserId = meetingreservAtionuserId;
-	}
-
-	@Override
-	public String toString() {
-		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", employeeAccount="
-				+ employeeAccount + ", employeePassword=" + employeePassword + ", power=" + power + ", employeeEmail="
-				+ employeeEmail + ", Department=" + Department + ", files=" + files + ", roleList=" + roleList
-				+ ", meetingreservAtionuserId=" + meetingreservAtionuserId + "]";
-	}
-
-	
 
 }

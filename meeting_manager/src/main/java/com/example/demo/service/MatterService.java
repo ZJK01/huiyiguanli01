@@ -18,5 +18,8 @@ public interface MatterService {
 
 	public Integer count(String deptnoId);
 
+
 	public Page<Matter> Paging(Integer id, Integer numberpage, Integer deptno);
+
+
 }
